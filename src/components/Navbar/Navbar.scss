@@ -1,0 +1,61 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  background: #161819;
+  padding: 2.5rem 2rem;
+  border-radius: 0 20px 20px 0;
+  header {
+    margin-left: 5px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 60px;
+      border-radius: 20px;
+      outline: 7px solid #232525;
+    }
+    .name {
+      margin-left: 20px;
+      font-size: 1.3rem;
+      color: white;
+    }
+    &::after {
+      content: "";
+      display: block;
+      right: 0;
+      margin-top: -20px;
+      margin-left: 5px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #75c695;
+    }
+  }
+  .search {
+    margin-top: 2rem;
+    position: relative;
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-left: 10px;
+      color: white;
+    }
+    .search-input {
+      background-color: #252728;
+      color: white;
+      outline: none;
+      border: none;
+      padding: 10px 10px 10px 35px;
+      width: 100%;
+      border-radius: 10px;
+    }
+    input[type="search"]::-webkit-search-cancel-button {
+      /* Remove default */
+      -webkit-appearance: none;
+      /*Your new styles */
+    }
+  }
+}
