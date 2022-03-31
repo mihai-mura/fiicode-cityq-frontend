@@ -11,8 +11,7 @@ function App() {
 	return (
 		<div className='App'>
 			<Router>
-				{/*//! plug redux */}
-				<Authentification open={null} close={null} type={0} /> {/*1 register | 0 login */}
+				<Authentification />
 				<Sidebar />
 				<div className='main'>
 					<Navbar />
