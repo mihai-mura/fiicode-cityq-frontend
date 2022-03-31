@@ -1,10 +1,11 @@
 .sidebar {
-	border-radius: 0px 20px 20px 0px;
+	box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
 	background-color: #fdfdfd;
 	color: white;
 	height: 100vh;
 	padding: 2.5rem 1.5rem;
 	position: relative;
+	z-index: 6;
 }
 
 // LOGO AND ARROW DESIGN
@@ -15,11 +16,11 @@
 	margin-bottom: 2rem;
 	gap: 10px;
 	img {
+		margin-top: 5px;
 		width: 40px;
 		cursor: pointer;
 	}
 	.logo-name {
-		margin-top: -6px;
 		color: #2a3033;
 		font-weight: 400;
 		-webkit-touch-callout: none;
@@ -43,6 +44,11 @@
 		border-radius: 50%;
 		width: 30px;
 		height: 30px;
+		display: none;
+
+		@media only screen and (min-width: 600px) {
+			display: inherit;
+		}
 	}
 }
 
@@ -72,4 +78,30 @@ a {
 	background-color: #efefef;
 	color: #2a3033;
 	transition: all 0.2s;
+}
+
+.search {
+	position: absolute;
+	right: -27rem;
+	align-items: center;
+	gap: 10px;
+	border: 3px solid #f4f4f4;
+	border-radius: 20px;
+	padding: 5px 100px 5px 10px;
+	display: none;
+	@media only screen and (min-width: 600px) {
+		display: flex;
+	}
+
+	.search-icon {
+		margin-top: 2px;
+		color: #9a9ca0;
+		font-size: 1.5rem;
+	}
+
+	.search-input {
+		font-size: 1rem;
+		border: none;
+		outline: none;
+	}
 }

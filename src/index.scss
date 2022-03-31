@@ -10,9 +10,19 @@ body {
 	background-color: #e7e9eb;
 }
 
+.main {
+	display: flex;
+	flex-direction: column;
+}
 .App {
 	width: 100vw;
 	height: 100vh;
 	display: flex;
 	flex-direction: row;
+}
+
+.page {
+	margin-top: 10rem; //trebe maree pentru ca navbar e absolute (nu e in dom)
+	margin-left: 5.5rem;
+	font-size: 3rem;
 }

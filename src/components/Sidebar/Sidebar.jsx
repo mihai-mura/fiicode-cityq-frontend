@@ -8,6 +8,7 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import AtlasLogo from '../../images/logo-atlas.svg';
 import './Sidebar.scss';
 import { useState } from 'react';
+import { FiSearch } from 'react-icons/fi';
 
 const routes = [
 	{
@@ -38,7 +39,7 @@ const Sidebar = () => {
 	const toggle = () => setIsOpen(!isOpen);
 
 	return (
-		<motion.div animate={{ width: isOpen ? '250px' : '90px' }} className='sidebar'>
+		<motion.div animate={{ width: isOpen ? '210px' : '90px' }} className='sidebar'>
 			<div className='top-section'>
 				<NavLink to='/'>
 					<img src={AtlasLogo} alt='logo' to='/' />
@@ -54,6 +55,12 @@ const Sidebar = () => {
 						<MdOutlineKeyboardArrowRight onClick={toggle} />
 					</div>
 				)}
+				<div className='search'>
+					<div className='search-icon'>
+						<FiSearch />
+					</div>
+					<input className='search-input' placeholder='Search anything' />
+				</div>
 			</div>
 			<section className='routes'>
 				{routes.map((route) => (
