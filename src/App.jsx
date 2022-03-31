@@ -5,11 +5,14 @@ import Settings from './pages/Settings';
 import Explore from './pages/Explore';
 import Sidebar from './components/Sidebar/Sidebar';
 import Navbar from './components/Navbar/Navbar';
+import Authentification from './components/Authentification/Authentification';
 
 function App() {
 	return (
 		<div className='App'>
 			<Router>
+				{/*//! plug redux */}
+				<Authentification open={null} close={null} type={0} /> {/*1 register | 0 login */}
 				<Sidebar />
 				<div className='main'>
 					<Navbar />
