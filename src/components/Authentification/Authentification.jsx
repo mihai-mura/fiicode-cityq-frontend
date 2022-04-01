@@ -6,8 +6,9 @@ import './Authentification.scss';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { changeAuthModal } from '../../redux/actions';
+import FileDropzone from './FileDropzone';
 
-const Authentification = (props) => {
+const Authentification = () => {
 	const dispatch = useDispatch();
 	const authModal = useSelector((state) => state.authModal);
 
@@ -45,7 +46,7 @@ const Authentification = (props) => {
 				<Input className='auth-input' icon={<CgPassword />} variant='filled' placeholder='Confirm Password' radius='md' />
 				<Input className='auth-input' icon={<FaRegAddressCard />} variant='filled' placeholder='Address' radius='md' />
 				<p>Add ID/Driving licence photo:</p>
-				{/*//! add picture input */}
+				<FileDropzone />
 				<div className='auth-footer'>
 					<div>
 						<p>Already have an account?</p>
