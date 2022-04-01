@@ -55,12 +55,6 @@ const Sidebar = () => {
 						<MdOutlineKeyboardArrowRight onClick={toggle} />
 					</div>
 				)}
-				<div className='search'>
-					<div className='search-icon'>
-						<FiSearch />
-					</div>
-					<input className='search-input' placeholder='Search anything' />
-				</div>
 			</div>
 			<section className='routes'>
 				{routes.map((route) => (

@@ -15,6 +15,7 @@ function App() {
 				<Sidebar />
 				<div className='main'>
 					<Navbar />
+
 					<Routes>
 						<Route path='/' element={<Explore />} />
 						<Route path='/dashboard' element={<Dashboard />} />
