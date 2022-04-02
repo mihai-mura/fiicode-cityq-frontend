@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { changeAuthModal } from '../../redux/actions';
 import FileDropzone from './FileDropzone';
+import { IconUser } from '@tabler/icons';
 
 const Authentification = () => {
 	const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Authentification = () => {
 
 	return (
 		<>
-			<Modal opened={authModal.login} onClose={() => dispatch(changeAuthModal('login', false))} title='Login'>
+			<Modal centered opened={authModal.login} onClose={() => dispatch(changeAuthModal('login', false))} title='Login'>
 				<Input className='auth-input' icon={<MdAlternateEmail />} variant='filled' placeholder='Your email' radius='md' />
 				<Input className='auth-input' icon={<CgPassword />} variant='filled' placeholder='Password' radius='md' />
 				<div className='auth-footer'>
@@ -37,11 +38,20 @@ const Authentification = () => {
 					</Button>
 				</div>
 			</Modal>
-			<Modal opened={authModal.register} onClose={() => dispatch(changeAuthModal('register', false))} title='Register'>
-				<Input className='auth-input' icon={<CgRename />} variant='filled' placeholder='First Name' radius='md' />
-				<Input className='auth-input' icon={<CgRename />} variant='filled' placeholder='Last Name' radius='md' />
-				<Input className='auth-input' icon={<MdAlternateEmail />} variant='filled' placeholder='Username' radius='md' />
-				<Input className='auth-input' icon={<MdAlternateEmail />} variant='filled' placeholder='Your email' radius='md' />
+			<Modal
+				size='lg'
+				centered
+				opened={authModal.register}
+				onClose={() => dispatch(changeAuthModal('register', false))}
+				title='Register'>
+				<div className='register-name-field'>
+					<Input className='auth-input' icon={<CgRename />} variant='filled' placeholder='First Name' radius='md' />
+					<Input className='auth-input' icon={<CgRename />} variant='filled' placeholder='Last Name' radius='md' />
+				</div>
+				<div className='register-name-field'>
+					<Input className='auth-input' icon={<IconUser size={20} />} variant='filled' placeholder='Username' radius='md' />
+					<Input className='auth-input' icon={<MdAlternateEmail />} variant='filled' placeholder='Your email' radius='md' />
+				</div>
 				<Input className='auth-input' icon={<CgPassword />} variant='filled' placeholder='Password' radius='md' />
 				<Input className='auth-input' icon={<CgPassword />} variant='filled' placeholder='Confirm Password' radius='md' />
 				<Input className='auth-input' icon={<FaRegAddressCard />} variant='filled' placeholder='Address' radius='md' />

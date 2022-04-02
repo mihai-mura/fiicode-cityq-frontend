@@ -1,6 +1,7 @@
-import { Group, Text } from '@mantine/core';
+import { Group } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
 import { Dropzone } from '@mantine/dropzone';
+import { useState } from 'react';
 
 function getIconColor(status) {
 	return status.accepted ? '#3378F7' : status.rejected ? 'red' : 'gray';
@@ -18,30 +19,47 @@ function ImageUploadIcon({ status, ...props }) {
 	return <IconPhoto {...props} />;
 }
 
-export const dropzoneChildren = (status) => (
-	<Group position='center' spacing='xl' style={{ minHeight: 150, pointerEvents: 'none' }}>
-		<ImageUploadIcon status={status} style={{ color: getIconColor(status) }} size={80} />
+export const dropzoneChildren = (status, file = null) => {
+	//! portrait image too big
+	return (
+		<Group position='center' spacing='xl' style={{ minHeight: 150, pointerEvents: 'none' }}>
+			{file ? (
+				<img style={{ width: 350 }} src={file} alt='id preview' />
+			) : (
+				<>
+					<ImageUploadIcon status={status} style={{ color: getIconColor(status) }} size={80} />
 
-		<div>
-			<Text size='xl' inline>
-				Drag images here or click to select files
-			</Text>
-			<Text size='sm' color='dimmed' inline mt={7}>
-				Attach as many files as you like, each file should not exceed 5mb
-			</Text>
-		</div>
-	</Group>
-);
+					<div>
+						<p>Drag image here or click to select files</p>
+					</div>
+				</>
+			)}
+		</Group>
+	);
+};
 
 const FileDropzone = () => {
+	const [file, setFile] = useState(null);
+
+	const fileAdded = (files) => {
+		const reader = new FileReader();
+		reader.addEventListener(
+			'load',
+			() => {
+				setFile(reader.result);
+			},
+			false
+		);
+		reader.readAsDataURL(files[0]);
+	};
 	return (
 		<Dropzone
 			multiple={false}
-			onDrop={(files) => console.log('accepted files', files)}
+			onDrop={(files) => fileAdded(files)}
 			onReject={(files) => console.log('rejected files', files)}
 			maxSize={3 * 1024 ** 2}
 			accept={['image/png', 'image/jpeg', 'image/sgv+xml']}>
-			{(status) => dropzoneChildren(status)}
+			{(status) => dropzoneChildren(status, file)}
 		</Dropzone>
 	);
 };
