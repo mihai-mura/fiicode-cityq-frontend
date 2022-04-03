@@ -4,7 +4,7 @@ import { Dropzone } from '@mantine/dropzone';
 import { useState } from 'react';
 
 function getIconColor(status) {
-	return status.accepted ? '#3378F7' : status.rejected ? 'red' : 'gray';
+	return status.accepted ? '#3378F7' : status.rejected ? '#ed404e' : 'gray';
 }
 
 function ImageUploadIcon({ status, ...props }) {
@@ -19,10 +19,18 @@ function ImageUploadIcon({ status, ...props }) {
 	return <IconPhoto {...props} />;
 }
 
-export const dropzoneChildren = (status, file = null) => {
+export const dropzoneChildren = (status, file = null, noFileError) => {
 	//! portrait image too big
 	return (
-		<Group position='center' spacing='xl' style={{ minHeight: 150, pointerEvents: 'none' }}>
+		<Group
+			position='center'
+			spacing='xl'
+			style={{
+				minHeight: 150,
+				pointerEvents: 'none',
+				backgroundColor: noFileError && file === null ? '#ed404e' : '#fff',
+				borderRadius: '5px',
+			}}>
 			{file ? (
 				<img style={{ width: 350 }} src={file} alt='id preview' />
 			) : (
@@ -30,7 +38,7 @@ export const dropzoneChildren = (status, file = null) => {
 					<ImageUploadIcon status={status} style={{ color: getIconColor(status) }} size={80} />
 
 					<div>
-						<p>Drag image here or click to select files</p>
+						<p>{noFileError ? 'A picture is required to verify your address' : 'Drag image here or click to select files'}</p>
 					</div>
 				</>
 			)}
@@ -60,7 +68,7 @@ const FileDropzone = (props) => {
 			onReject={(files) => console.log('rejected files', files)}
 			maxSize={3 * 1024 ** 2}
 			accept={['image/png', 'image/jpeg', 'image/sgv+xml']}>
-			{(status) => dropzoneChildren(status, file)}
+			{(status) => dropzoneChildren(status, file, props.noFileError)}
 		</Dropzone>
 	);
 };
