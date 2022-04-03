@@ -38,10 +38,11 @@ export const dropzoneChildren = (status, file = null) => {
 	);
 };
 
-const FileDropzone = () => {
+const FileDropzone = (props) => {
 	const [file, setFile] = useState(null);
 
 	const fileAdded = (files) => {
+		props.setInputFile(files[0]);
 		const reader = new FileReader();
 		reader.addEventListener(
 			'load',
