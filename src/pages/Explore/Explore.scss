@@ -1,0 +1,11 @@
+.explore {
+	box-sizing: border-box;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding: 3rem;
+	overflow: hidden;
+	overflow-y: scroll;
+	overflow-y: overlay;
+	flex-direction: column;
+}
