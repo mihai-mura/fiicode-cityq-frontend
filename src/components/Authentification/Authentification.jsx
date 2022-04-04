@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { changeAuthModal } from '../../redux/actions';
 import { useEffect, useState } from 'react';
-import FileDropzone from './FileDropzone';
 import imageCompression from 'browser-image-compression';
+import FileDropzone from './FileDropzone';
+import PasswordStrength from './PasswordStrength';
 
 const Authentification = () => {
 	const dispatch = useDispatch();
@@ -303,6 +304,13 @@ const Authentification = () => {
 						}}
 						error={registerPasswordError}
 					/>
+					{/*//* ⬇️⬇️pretty cool⬇️⬇️ */}
+					{/* <PasswordStrength
+						value={registerPassword}
+						setRegisterPassword={setRegisterPassword}
+						setRegisterPasswordError={setRegisterPasswordError}
+						error={registerPasswordError}
+					/> */}
 					<PasswordInput
 						className='auth-input'
 						icon={<CgPassword />}

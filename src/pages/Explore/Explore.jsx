@@ -5,9 +5,9 @@ import { PostsData } from '../../components/Post/PostsData';
 
 const Explore = () => {
 	return (
-		<div className='explore' style={{ marginTop: '80px' }}>
-			{PostsData.map((slide) => (
-				<Post image={slide.image} user={slide.user} title={slide.title} description={slide.description} status={slide.status} />
+		<div className='page page-explore'>
+			{PostsData.map((item) => (
+				<Post image={item.image} user={item.user} title={item.title} description={item.description} status={item.status} />
 			))}
 		</div>
 	);

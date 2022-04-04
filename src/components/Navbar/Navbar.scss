@@ -1,11 +1,24 @@
 .navbar {
 	height: 120px;
+	background-color: #fdfdfd;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	display: flex;
+	justify-content: flex-end;
+	padding-right: 3rem;
+	// border-bottom: 2px solid #e7e9eb;
+}
+
+//! make it slide:))
+.slide-content {
+	height: 100%;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 20px;
 	z-index: 5;
-	position: relative;
 	padding-left: 3rem;
 
 	.search {
@@ -33,32 +46,33 @@
 	}
 }
 
-.buttons {
+.navbar-buttons {
 	z-index: 10;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 20px;
-}
-.log-in-button {
-	cursor: pointer;
-	color: #3378f7;
-	padding: 0.5rem 1.2rem;
-	border: 2px solid #3378f7;
-	border-radius: 0px 15px 15px 15px;
-}
 
-.log-in-button:hover {
-	background-color: #f3f6fb;
-}
+	.log-in-button {
+		cursor: pointer;
+		color: #3378f7;
+		padding: 0.5rem 1.2rem;
+		border: 2px solid #3378f7;
+		border-radius: 0px 15px 15px 15px;
+	}
 
-.sign-up-button {
-	cursor: pointer;
-	color: white;
-	padding: 0.6rem 1.2rem;
-	background-color: #3378f7;
-	border-radius: 15px 15px 15px 15px;
-}
-.sign-up-button:hover {
-	background-color: #4089fd;
+	.log-in-button:hover {
+		background-color: #f3f6fb;
+	}
+
+	.sign-up-button {
+		cursor: pointer;
+		color: white;
+		padding: 0.6rem 1.2rem;
+		background-color: #3378f7;
+		border-radius: 15px 15px 15px 15px;
+	}
+	.sign-up-button:hover {
+		background-color: #4089fd;
+	}
 }

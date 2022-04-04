@@ -8,26 +8,8 @@
 
 body {
 	background-color: #e7e9eb;
-	// background-color: #fdfdfd;
 }
 
-.main {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-}
-.navbar-background {
-	height: 120px;
-	background-color: #fdfdfd;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100vw;
-	display: flex;
-	justify-content: flex-end;
-	padding-right: 3rem;
-	// border-bottom: 2px solid #e7e9eb;
-}
 .App {
 	width: 100vw;
 	height: 100vh;
@@ -35,7 +17,11 @@ body {
 	flex-direction: row;
 }
 
+.main {
+	width: 100%;
+	height: 100vh;
+}
 .page {
-	font-size: 3rem;
-	padding: 3.5rem;
+	margin-top: 120px;
+	height: calc(100% - 120px);
 }

@@ -1,11 +1,13 @@
-.explore {
-	box-sizing: border-box;
+.page-explore {
 	width: 100%;
-	display: flex;
-	align-items: center;
-	padding: 3rem;
+	padding-top: 50px;
+	padding-bottom: 20px;
 	overflow: hidden;
 	overflow-y: scroll;
+	scroll-behavior: smooth;
 	overflow-y: overlay;
+	display: flex;
 	flex-direction: column;
+	align-items: center;
+	gap: 50px;
 }
