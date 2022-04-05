@@ -8,7 +8,6 @@ import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import AtlasLogo from '../../images/logo-atlas.svg';
 import './Sidebar.scss';
 import { useState } from 'react';
-import { FiSearch } from 'react-icons/fi';
 
 const routes = [
 	{

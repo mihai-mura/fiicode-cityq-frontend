@@ -7,7 +7,16 @@ const Explore = () => {
 	return (
 		<div className='page page-explore'>
 			{PostsData.map((item) => (
-				<Post image={item.image} user={item.user} title={item.title} description={item.description} status={item.status} />
+				<Post
+					image={item.image}
+					user={item.user}
+					city={item.city}
+					title={item.title}
+					description={item.description}
+					status={item.status}
+					upvotes={item.upvotes}
+					downvotes={item.downvotes}
+				/>
 			))}
 		</div>
 	);

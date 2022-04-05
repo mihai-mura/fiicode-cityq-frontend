@@ -1,14 +1,15 @@
 import './Authentification.scss';
-import { Modal, TextInput, Button, PasswordInput, LoadingOverlay } from '@mantine/core';
+import { Modal, TextInput, Button, PasswordInput, LoadingOverlay, NativeSelect } from '@mantine/core';
 import { MdAlternateEmail } from 'react-icons/md';
 import { CgRename, CgPassword } from 'react-icons/cg';
 import { FaRegAddressCard } from 'react-icons/fa';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { changeAuthModal } from '../../redux/actions';
+import { IconBuilding } from '@tabler/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { changeAuthModal, changeUserLogged } from '../../redux/actions';
 import { useEffect, useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import FileDropzone from './FileDropzone';
+import cities from './cities';
 import PasswordStrength from './PasswordStrength';
 
 const Authentification = () => {
@@ -24,6 +25,7 @@ const Authentification = () => {
 	const [address, setAddress] = useState('');
 	const [loginEmail, setLoginEmail] = useState('');
 	const [loginPassword, setLoginPassword] = useState('');
+	const [city, setCity] = useState('');
 	//errors
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
@@ -33,6 +35,7 @@ const Authentification = () => {
 	const [registerPasswordError, setRegisterPasswordError] = useState(false);
 	const [confirmPasswordError, setConfirmPasswordError] = useState(false);
 	const [loginPasswordError, setLoginPasswordError] = useState(false);
+	const [cityError, setCityError] = useState(false);
 	const [noFileError, setNoFileError] = useState(false);
 
 	//overlay
@@ -66,6 +69,9 @@ const Authentification = () => {
 		if (address === '') {
 			setAddressError('Address is required');
 		}
+		if (city === '' || city === 'Select city') {
+			setCityError('City is required');
+		}
 		//email format verification
 		if (registerEmail.indexOf('@') === -1 || registerEmail.lastIndexOf('.') < registerEmail.indexOf('@')) {
 			setRegisterEmailError('Invalid email format');
@@ -90,6 +96,7 @@ const Authentification = () => {
 			address !== '' &&
 			registerEmail.indexOf('@') !== -1 &&
 			registerEmail.lastIndexOf('.') > registerEmail.indexOf('@') &&
+			city !== '' &&
 			registerPassword.length >= 8 &&
 			registerPassword === confirmPassword &&
 			inputFile !== null
@@ -103,6 +110,7 @@ const Authentification = () => {
 				},
 				body: JSON.stringify({
 					email: registerEmail,
+					city: city,
 					firstName: firstName,
 					lastName: lastName,
 					address: address,
@@ -129,7 +137,7 @@ const Authentification = () => {
 				});
 				if (res2.status === 200) {
 					dispatch(changeAuthModal('register', false));
-					//! user logged in
+					dispatch(changeUserLogged(true));
 				}
 			} else if (res.status === 409) {
 				setRegisterEmailError('Email already in use');
@@ -175,7 +183,7 @@ const Authentification = () => {
 				const token = await res.text();
 				localStorage.setItem('api-token', token);
 				dispatch(changeAuthModal('login', false));
-				//! user logged in
+				dispatch(changeUserLogged(true));
 			} else if (res.status === 403) {
 				setLoginPasswordError('Incorrect password');
 			} else if (res.status === 404) {
@@ -186,7 +194,17 @@ const Authentification = () => {
 
 	return (
 		<>
-			<Modal centered opened={authModal.login} onClose={() => dispatch(changeAuthModal('login', false))} title='Login'>
+			<Modal
+				centered
+				opened={authModal.login}
+				onClose={() => {
+					dispatch(changeAuthModal('login', false));
+					setLoginEmail('');
+					setLoginPassword('');
+					setLoginEmailError(false);
+					setLoginPasswordError(false);
+				}}
+				title='Login'>
 				<div style={{ width: '100%', position: 'relative' }}>
 					<LoadingOverlay visible={loading} />
 					<TextInput
@@ -224,8 +242,8 @@ const Authentification = () => {
 								color='#3378F7'
 								radius='md'
 								onClick={() => {
-									dispatch(changeAuthModal('login', false));
 									dispatch(changeAuthModal('register', true));
+									dispatch(changeAuthModal('login', false));
 									setLoginEmail('');
 									setLoginPassword('');
 									setLoginEmailError(false);
@@ -244,11 +262,29 @@ const Authentification = () => {
 				size='lg'
 				centered
 				opened={authModal.register}
-				onClose={() => dispatch(changeAuthModal('register', false))}
+				onClose={() => {
+					dispatch(changeAuthModal('register', false));
+					setFirstName('');
+					setLastName('');
+					setRegisterEmail('');
+					setCity('');
+					setRegisterPassword('');
+					setConfirmPassword('');
+					setAddress('');
+					setInputFile(null);
+					setRegisterEmailError(false);
+					setCityError(false);
+					setRegisterPasswordError(false);
+					setConfirmPasswordError(false);
+					setAddressError(false);
+					setFirstNameError(false);
+					setLastNameError(false);
+					setNoFileError(false);
+				}}
 				title='Register'>
 				<div style={{ width: '100%', position: 'relative' }}>
 					<LoadingOverlay visible={loading} />
-					<div className='register-name-field'>
+					<div className='register-field-row'>
 						<TextInput
 							className='auth-input'
 							icon={<CgRename />}
@@ -276,20 +312,34 @@ const Authentification = () => {
 							error={lastNameError}
 						/>
 					</div>
-					<TextInput
-						className='auth-input'
-						icon={<MdAlternateEmail />}
-						variant='filled'
-						placeholder='Your email'
-						radius='md'
-						type={'email'}
-						value={registerEmail}
-						onChange={(e) => {
-							setRegisterEmail(e.target.value);
-							setRegisterEmailError(false);
-						}}
-						error={registerEmailError}
-					/>
+					<div className='register-field-row'>
+						<TextInput
+							className='auth-input'
+							icon={<MdAlternateEmail />}
+							variant='filled'
+							placeholder='Your email'
+							radius='md'
+							type={'email'}
+							value={registerEmail}
+							onChange={(e) => {
+								setRegisterEmail(e.target.value);
+								setRegisterEmailError(false);
+							}}
+							error={registerEmailError}
+						/>
+						<NativeSelect
+							data={cities}
+							placeholder='Select city'
+							radius='md'
+							variant='filled'
+							icon={<IconBuilding style={{ width: 20 }} />}
+							onChange={(e) => {
+								setCity(e.currentTarget.value);
+								setCityError(false);
+							}}
+							error={cityError}
+						/>
+					</div>
 					<PasswordInput
 						className='auth-input'
 						icon={<CgPassword />}
@@ -348,16 +398,18 @@ const Authentification = () => {
 								color='#3378F7'
 								radius='md'
 								onClick={() => {
-									dispatch(changeAuthModal('register', false));
 									dispatch(changeAuthModal('login', true));
+									dispatch(changeAuthModal('register', false));
 									setFirstName('');
 									setLastName('');
 									setRegisterEmail('');
+									setCity('');
 									setRegisterPassword('');
 									setConfirmPassword('');
 									setAddress('');
 									setInputFile(null);
 									setRegisterEmailError(false);
+									setCityError(false);
 									setRegisterPasswordError(false);
 									setConfirmPasswordError(false);
 									setAddressError(false);

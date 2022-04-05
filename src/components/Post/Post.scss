@@ -1,5 +1,4 @@
 .post-container {
-	cursor: pointer;
 	background-color: #fdfdfd;
 	width: 300px;
 	border-radius: 15px;
@@ -13,9 +12,20 @@
 	}
 }
 
-.post-user {
-	font-size: 0.8rem;
+.post-header {
 	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+
+	.post-user {
+		font-size: 0.9rem;
+	}
+
+	.post-city {
+		font-size: 0.8rem;
+		color: #8f8f8f;
+	}
 }
 
 .post-title {
@@ -31,11 +41,37 @@
 	padding: 0 1rem;
 }
 
-.post-status {
+.post-footer {
 	display: flex;
-	justify-content: flex-end;
+	align-items: center;
+	justify-content: space-between;
 	padding: 1rem;
-	font-size: 0.8rem;
+
+	.votes {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 5px;
+		font-size: 0.9rem;
+		color: #828282;
+
+		.upvote-icon {
+			cursor: pointer;
+			color: #00a8ff;
+		}
+
+		.downvote-icon {
+			cursor: pointer;
+		}
+
+		p {
+			cursor: default;
+		}
+	}
+	.post-status {
+		cursor: default;
+		font-size: 0.8rem;
+	}
 }
 
 //carousel
