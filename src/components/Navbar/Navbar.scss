@@ -97,4 +97,18 @@
 	.sign-up-button:hover {
 		background-color: #4089fd;
 	}
+
+	.user-icon {
+		width: 30px;
+		height: 30px;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	.user-profilePic {
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+	}
 }

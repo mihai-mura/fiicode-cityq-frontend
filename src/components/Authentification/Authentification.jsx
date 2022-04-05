@@ -118,8 +118,9 @@ const Authentification = () => {
 				}),
 			});
 			if (res.status === 201) {
-				const token = await res.text();
-				localStorage.setItem('api-token', token);
+				const response = await res.json();
+				localStorage.setItem('api-token', response.token);
+				localStorage.setItem('userId', response._id);
 				//* send id picture to backend compressed
 				const options = {
 					maxSizeMB: 1,
@@ -131,15 +132,24 @@ const Authentification = () => {
 				const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
 					method: 'POST',
 					headers: {
-						Authorization: `Bearer ${token}`,
+						Authorization: `Bearer ${response.token}`,
 					},
 					body: idPicture,
 				});
 				if (res2.status === 200) {
 					dispatch(changeAuthModal('register', false));
 					dispatch(changeUserLogged(true));
+					setFirstName('');
+					setLastName('');
+					setRegisterEmail('');
+					setRegisterPassword('');
+					setConfirmPassword('');
+					setAddress('');
+					setCity('');
+					setInputFile(null);
 				}
 			} else if (res.status === 409) {
+				setLoading(false);
 				setRegisterEmailError('Email already in use');
 			}
 		}
@@ -180,13 +190,18 @@ const Authentification = () => {
 				}),
 			});
 			if (res.status === 200) {
-				const token = await res.text();
-				localStorage.setItem('api-token', token);
+				const response = await res.json();
+				localStorage.setItem('api-token', response.token);
+				localStorage.setItem('userId', response._id);
 				dispatch(changeAuthModal('login', false));
 				dispatch(changeUserLogged(true));
+				setLoginEmail('');
+				setLoginPassword('');
 			} else if (res.status === 403) {
+				setLoading(false);
 				setLoginPasswordError('Incorrect password');
 			} else if (res.status === 404) {
+				setLoading(false);
 				setLoginEmailError('User not found');
 			}
 		}
