@@ -28,17 +28,22 @@ export const dropzoneChildren = (status, file = null, noFileError) => {
 			style={{
 				minHeight: 150,
 				pointerEvents: 'none',
-				backgroundColor: noFileError && file === null ? '#ed404e' : '#fff',
 				borderRadius: '5px',
 			}}>
 			{file ? (
 				<img style={{ width: 350 }} src={file} alt='id preview' />
 			) : (
 				<>
-					<ImageUploadIcon status={status} style={{ color: getIconColor(status) }} size={80} />
+					<ImageUploadIcon
+						status={status}
+						style={{ color: noFileError && file === null ? '#ed404e' : getIconColor(status) }}
+						size={80}
+					/>
 
 					<div>
-						<p>{noFileError ? 'A picture is required to verify your address' : 'Drag image here or click to select files'}</p>
+						<p style={{ color: noFileError && file === null ? '#ed404e' : '#000' }}>
+							{noFileError ? 'A picture is required to verify your address' : 'Drag image here or click to select files'}
+						</p>
 					</div>
 				</>
 			)}

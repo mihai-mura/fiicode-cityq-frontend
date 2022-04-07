@@ -2,10 +2,10 @@ import React from 'react';
 import './Navbar.scss';
 import { FiBell } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
-import UserImage from '../../images/user-image.png';
 import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeAuthModal } from '../../redux/actions';
+import getFirebaseFileURL from '../../utils/firebaseFileURL';
 
 const Navbar = () => {
 	const dispatch = useDispatch();
@@ -27,9 +27,10 @@ const Navbar = () => {
 			<BiCommentDetail className='user-icon comments' />
 			<FiBell className='user-icon notifications' />
 			<img
-				src={`${process.env.REACT_APP_API_URL}/users/profile-pic/${localStorage.getItem('userId')}`}
+				// src={`${process.env.REACT_APP_API_URL}/users/profile-pic/${localStorage.getItem('userId')}`}
+				src={getFirebaseFileURL('user-profilePics', `${localStorage.getItem('userId')}.jpg`)}
 				alt='user'
-				className='user-profilePic'
+				className='user-icon user-profilePic'
 			/>
 		</>
 	);
