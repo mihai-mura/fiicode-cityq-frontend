@@ -4,8 +4,7 @@ import { FiBell } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
 import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAuthModal, changeUserLogged } from '../../redux/actions';
-import getFirebaseFileURL from '../../utils/firebaseFileURL';
+import { changeAuthModal, setLoggedUser } from '../../redux/actions';
 import { NavLink } from 'react-router-dom';
 import UrlFromNodeImg from '../UrlFromNodeImg';
 
@@ -13,10 +12,10 @@ const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const toggle = () => setIsOpen(!isOpen);
 	const dispatch = useDispatch();
-	const userLogged = useSelector((state) => state.userLogged);
+	const loggedUser = useSelector((state) => state.loggedUser);
 
 	const handleLoggout = () => {
-		dispatch(changeUserLogged(false));
+		dispatch(setLoggedUser(null));
 		localStorage.removeItem('api-token');
 	};
 
@@ -35,7 +34,12 @@ const Navbar = () => {
 		<>
 			<BiCommentDetail className='user-icon comments' />
 			<FiBell className='user-icon notifications' />
-			<UrlFromNodeImg alt='user' className='user-icon user-profilePic' onClick={toggle} />
+			<UrlFromNodeImg
+				imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser && loggedUser._id}`}
+				alt='user'
+				className='user-icon user-profilePic'
+				onClick={toggle}
+			/>
 			{isOpen && (
 				<div className='log-out'>
 					<div className='logout-top-part'>
@@ -64,7 +68,7 @@ const Navbar = () => {
 					<input className='search-input' placeholder='Search anything' />
 				</div>
 			</div> */}
-			<div className='navbar-buttons'>{userLogged ? userLoggedIcons : userNotLoggedIcons}</div>
+			<div className='navbar-buttons'>{loggedUser ? userLoggedIcons : userNotLoggedIcons}</div>
 		</div>
 	);
 };

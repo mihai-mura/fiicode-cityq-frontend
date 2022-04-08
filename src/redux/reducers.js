@@ -11,11 +11,12 @@ const authModal = (state = { login: false, register: false }, action) => {
 	}
 };
 
-const userLogged = (state = false, action) => {
+const loggedUser = (state = null, action) => {
 	switch (action.type) {
-		case 'changeUserLogged':
+		case 'setLoggedUser':
 			return action.payload;
-
+		case 'changeLoggedUser':
+			return action.payload;
 		default:
 			return state;
 	}
@@ -23,7 +24,7 @@ const userLogged = (state = false, action) => {
 
 const Masterducer = combineReducers({
 	authModal,
-	userLogged,
+	loggedUser,
 });
 
 export default Masterducer;

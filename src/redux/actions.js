@@ -3,7 +3,13 @@ export const changeAuthModal = (type, payload) => ({
 	payload,
 });
 
-export const changeUserLogged = (payload) => ({
-	type: 'changeUserLogged',
+//!for later
+export const changeLoggedUser = (payload) => ({
+	type: 'changeLoggedUser',
+	payload,
+});
+
+export const setLoggedUser = (payload) => ({
+	type: 'setLoggedUser',
 	payload,
 });

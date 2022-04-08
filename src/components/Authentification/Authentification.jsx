@@ -5,7 +5,7 @@ import { CgRename, CgPassword } from 'react-icons/cg';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { IconBuilding } from '@tabler/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeAuthModal, changeUserLogged } from '../../redux/actions';
+import { changeAuthModal, setLoggedUser } from '../../redux/actions';
 import { useEffect, useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import FileDropzone from './FileDropzone';
@@ -118,26 +118,25 @@ const Authentification = () => {
 				}),
 			});
 			if (res.status === 201) {
-				const response = await res.text();
-				localStorage.setItem('api-token', response);
+				const response = await res.json();
+				localStorage.setItem('api-token', response.token);
 				//* send id picture to backend compressed
 				const options = {
 					maxSizeMB: 1,
 				};
 				const compressedFile = await imageCompression(inputFile, options);
-				console.log(compressedFile);
 				const idPicture = new FormData();
 				idPicture.append('idPic', compressedFile);
 				const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
 					method: 'POST',
 					headers: {
-						Authorization: `Bearer ${response}`,
+						Authorization: `Bearer ${response.token}`,
 					},
 					body: idPicture,
 				});
 				if (res2.status === 200) {
 					dispatch(changeAuthModal('register', false));
-					dispatch(changeUserLogged(true));
+					dispatch(setLoggedUser(response.user));
 					setFirstName('');
 					setLastName('');
 					setRegisterEmail('');
@@ -189,10 +188,10 @@ const Authentification = () => {
 				}),
 			});
 			if (res.status === 200) {
-				const response = await res.text();
-				localStorage.setItem('api-token', response);
+				const response = await res.json();
+				localStorage.setItem('api-token', response.token);
 				dispatch(changeAuthModal('login', false));
-				dispatch(changeUserLogged(true));
+				dispatch(setLoggedUser(response.user));
 				setLoginEmail('');
 				setLoginPassword('');
 			} else if (res.status === 403) {
