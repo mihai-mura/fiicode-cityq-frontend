@@ -118,9 +118,8 @@ const Authentification = () => {
 				}),
 			});
 			if (res.status === 201) {
-				const response = await res.json();
-				localStorage.setItem('api-token', response.token);
-				localStorage.setItem('userId', response._id);
+				const response = await res.text();
+				localStorage.setItem('api-token', response);
 				//* send id picture to backend compressed
 				const options = {
 					maxSizeMB: 1,
@@ -132,7 +131,7 @@ const Authentification = () => {
 				const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
 					method: 'POST',
 					headers: {
-						Authorization: `Bearer ${response.token}`,
+						Authorization: `Bearer ${response}`,
 					},
 					body: idPicture,
 				});
@@ -190,9 +189,8 @@ const Authentification = () => {
 				}),
 			});
 			if (res.status === 200) {
-				const response = await res.json();
-				localStorage.setItem('api-token', response.token);
-				localStorage.setItem('userId', response._id);
+				const response = await res.text();
+				localStorage.setItem('api-token', response);
 				dispatch(changeAuthModal('login', false));
 				dispatch(changeUserLogged(true));
 				setLoginEmail('');

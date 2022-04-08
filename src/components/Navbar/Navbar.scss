@@ -111,4 +111,32 @@
 		width: 40px;
 		height: 40px;
 	}
+	.log-out {
+		position: absolute;
+		padding: 1rem;
+		background-color: #fdfdfd;
+		box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+		border-radius: 20px;
+		top: 90px;
+		right: 2rem;
+		padding: 2rem 3rem;
+		transition: all 1s;
+		.logout-top-part {
+			border-bottom: 1px solid #d8d8d8;
+			display: flex;
+			flex-direction: column;
+		}
+		.logout-link {
+			display: block;
+			color: #949699;
+
+			&:hover {
+				color: #2a3033;
+			}
+
+			&:nth-child(2) {
+				padding: 1rem 0;
+			}
+		}
+	}
 }
