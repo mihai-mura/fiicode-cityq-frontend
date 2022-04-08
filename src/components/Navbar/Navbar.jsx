@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeAuthModal, changeUserLogged } from '../../redux/actions';
 import getFirebaseFileURL from '../../utils/firebaseFileURL';
 import { NavLink } from 'react-router-dom';
+import UrlFromNodeImg from '../UrlFromNodeImg';
 
 const Navbar = () => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -34,13 +35,7 @@ const Navbar = () => {
 		<>
 			<BiCommentDetail className='user-icon comments' />
 			<FiBell className='user-icon notifications' />
-			<img
-				// src={`${process.env.REACT_APP_API_URL}/users/profile-pic/${localStorage.getItem('userId')}`}
-				src={getFirebaseFileURL('user-profilePics', `${localStorage.getItem('userId')}.jpg`)}
-				alt='user'
-				className='user-icon user-profilePic'
-				onClick={toggle}
-			/>
+			<UrlFromNodeImg alt='user' className='user-icon user-profilePic' onClick={toggle} />
 			{isOpen && (
 				<div className='log-out'>
 					<div className='logout-top-part'>
@@ -51,7 +46,7 @@ const Navbar = () => {
 							View Profile
 						</NavLink>
 					</div>
-					<NavLink className='logout-link' to='/dashboard' onClick={handleLoggout}>
+					<NavLink className='logout-link' to='/' onClick={handleLoggout}>
 						Log out
 					</NavLink>
 				</div>
