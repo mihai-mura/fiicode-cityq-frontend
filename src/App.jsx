@@ -6,8 +6,34 @@ import Explore from './pages/Explore/Explore';
 import Sidebar from './components/Sidebar/Sidebar';
 import Navbar from './components/Navbar/Navbar';
 import Authentification from './components/Authentification/Authentification';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLoggedUser } from './redux/actions';
 
 function App() {
+	const loggedUser = useSelector((state) => state.loggedUser);
+	const dispatch = useDispatch();
+	//setLoggedUser
+	useEffect(() => {
+		(async () => {
+			if (localStorage.getItem('api-token') && !loggedUser) {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+					},
+				});
+				const user = await res.json();
+				if (res.status === 200) {
+					dispatch(setLoggedUser(user));
+					if (user.success) {
+						return user.data;
+					}
+				}
+			}
+		})();
+	}, [dispatch, loggedUser]);
+
 	return (
 		<div className='App'>
 			<Router>

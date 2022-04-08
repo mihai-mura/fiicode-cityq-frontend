@@ -6,8 +6,9 @@ import { PostsData } from '../../components/Post/PostsData';
 const Explore = () => {
 	return (
 		<div className='page page-explore'>
-			{PostsData.map((item) => (
+			{PostsData.map((item, index) => (
 				<Post
+					key={index}
 					image={item.image}
 					user={item.user}
 					city={item.city}
