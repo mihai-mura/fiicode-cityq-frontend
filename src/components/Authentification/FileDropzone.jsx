@@ -2,6 +2,7 @@ import { Group } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX } from '@tabler/icons';
 import { Dropzone } from '@mantine/dropzone';
 import { useState } from 'react';
+import LANGUAGE from '../../utils/languages.json';
 
 function getIconColor(status) {
 	return status.accepted ? '#3378F7' : status.rejected ? '#ed404e' : 'gray';
@@ -42,7 +43,9 @@ export const dropzoneChildren = (status, file = null, noFileError) => {
 
 					<div>
 						<p style={{ color: noFileError && file === null ? '#ed404e' : '#000' }}>
-							{noFileError ? 'A picture is required to verify your address' : 'Drag image here or click to select files'}
+							{noFileError
+								? `${LANGUAGE.register_modal_id_pic_error.en}`
+								: `${LANGUAGE.register_modal_add_id_pic_drag_image_here.en}`}
 						</p>
 					</div>
 				</>

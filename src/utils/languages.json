@@ -1,0 +1,166 @@
+{
+	"login_modal_title": {
+		"en": "Login",
+		"ro": "Autentificare"
+	},
+	"login_modal_email": {
+		"en": "Your email",
+		"ro": "Email_ul tau"
+	},
+	"login_modal_password": {
+		"en": "Your password",
+		"ro": "Parola ta"
+	},
+	"login_modal_submit": {
+		"en": "Login",
+		"ro": "Autentificare"
+	},
+	"login_modal_go_to_register": {
+		"en": "Register here",
+		"ro": "Inregistrare aici"
+	},
+	"login_modal_no_account": {
+		"en": "Don't have an account?",
+		"ro": "Nu ai un cont?"
+	},
+	"login_modal_invalid_email_format": {
+		"en": "Invalid email format",
+		"ro": "Format invalid de email"
+	},
+	"login_modal_password_empty": {
+		"en": "Password required",
+		"ro": "Parola este obligatorie"
+	},
+	"login_modal_email_empty": {
+		"en": "Email required",
+		"ro": "Email este obligatoriu"
+	},
+	"login_modal_password_too_short": {
+		"en": "Password invalid",
+		"ro": "Parola este invalida"
+	},
+	"login_modal_email_not_found": {
+		"en": "User not found",
+		"ro": "User-ul nu a fost gasit"
+	},
+	"login_modal_password_wrong": {
+		"en": "Wrong password",
+		"ro": "Parola este gresita"
+	},
+	"register_modal_title": {
+		"en": "Register",
+		"ro": "Inregistrare"
+	},
+	"register_modal_email": {
+		"en": "Your email",
+		"ro": "Email_ul tau"
+	},
+	"register_modal_first_name": {
+		"en": "First name",
+		"ro": "Prenume"
+	},
+	"register_modal_last_name": {
+		"en": "Last name",
+		"ro": "Nume"
+	},
+	"register_modal_city": {
+		"en": "Select City",
+		"ro": "Selectare Oras"
+	},
+	"register_modal_password": {
+		"en": "Your password",
+		"ro": "Parola ta"
+	},
+	"register_modal_password_description": {
+		"en": "Password must be at least 8 characters long",
+		"ro": "Parola trebuie sa aiba minim 8 caractere"
+	},
+	"register_modal_confirm_password": {
+		"en": "Confirm password",
+		"ro": "Confirmare parola"
+	},
+	"register_modal_address": {
+		"en": "Address",
+		"ro": "Adresa"
+	},
+	"register_modal_add_id_pic_title": {
+		"en": "Add ID/Driving licience photo:",
+		"ro": "Adauga poza cu buletinul/permisul auto:"
+	},
+	"register_modal_add_id_pic_drag_image_here": {
+		"en": "Drag image here or click to select file",
+		"ro": "Trage imaginea aici sau apasa pentru a selecta fisierul"
+	},
+	"register_modal_submit": {
+		"en": "Register",
+		"ro": "Inregistrare"
+	},
+	"register_modal_already_have_account": {
+		"en": "Already have an account?",
+		"ro": "Ai deja un cont?"
+	},
+	"register_modal_go_to_login": {
+		"en": "Login here",
+		"ro": "Autentificare aici"
+	},
+	"register_modal_first_name_error": {
+		"en": "First name is required",
+		"ro": "Prenumele este obligatoriu"
+	},
+	"register_modal_last_name_error": {
+		"en": "Last name is required",
+		"ro": "Numele este obligatoriu"
+	},
+	"register_modal_email_error": {
+		"en": "Email is required",
+		"ro": "Email-ul este obligatoriu"
+	},
+	"register_modal_password_error": {
+		"en": "Password is required",
+		"ro": "Parola este obligatorie"
+	},
+	"register_modal_address_error": {
+		"en": "Address is required",
+		"ro": "Adresa este obligatorie"
+	},
+	"register_modal_city_error": {
+		"en": "City is required",
+		"ro": "Orasul este obligatoriu"
+	},
+	"register_modal_id_pic_error": {
+		"en": "A picture is required to verify your address",
+		"ro": "O poza este obligatorie pentru a verifica adresa ta"
+	},
+	"register_modal_invaid_email_format": {
+		"en": "Invalid email format",
+		"ro": "Format invalid de email"
+	},
+	"register_modal_invalid_password_format": {
+		"en": "Password has less than 8 characters",
+		"ro": "Parola are mai putin de 8 caractere"
+	},
+	"register_modal_confirm_password_error": {
+		"en": "Passwords do not match",
+		"ro": "Parolele nu se potrivesc"
+	},
+	"register_modal_email_already_exists": {
+		"en": "Email already exists",
+		"ro": "Email-ul exista deja"
+	},
+	"navbar_button_login": {
+		"en": "Log in",
+		"ro": "Autentificare"
+	},
+	"navbar_button_register": {
+		"en": "Sign up",
+		"ro": "Inregistrare"
+	},
+	"navbar_user_menu_logout": {
+		"en": "Log out",
+		"ro": "Delogare"
+	},
+	"sidebar_button_settings": {
+		"en": "Settings",
+		"ro": "Setari"
+	}
+}

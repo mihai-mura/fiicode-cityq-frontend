@@ -8,6 +8,7 @@ import { changeAuthModal, setLoggedUser } from '../../redux/actions';
 import { NavLink } from 'react-router-dom';
 import UrlFromNodeImg from '../UrlFromNodeImg';
 import { useClickOutside } from '@mantine/hooks';
+import LANGUAGE from '../../utils/languages.json';
 
 const Navbar = () => {
 	const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -23,10 +24,10 @@ const Navbar = () => {
 	const userNotLoggedIcons = (
 		<>
 			<div className='log-in-button' onClick={() => dispatch(changeAuthModal('login', true))}>
-				Log In
+				{LANGUAGE.navbar_button_login.en}
 			</div>
 			<div className='sign-up-button' onClick={() => dispatch(changeAuthModal('register', true))}>
-				Sign Up
+				{LANGUAGE.navbar_button_register.en}
 			</div>
 		</>
 	);
@@ -54,7 +55,7 @@ const Navbar = () => {
 						</NavLink>
 					</div>
 					<NavLink className='logout-link' to='/' onClick={handleLoggout}>
-						Log out
+						{LANGUAGE.navbar_user_menu_logout.en}
 					</NavLink>
 				</div>
 			)}
