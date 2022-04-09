@@ -12,6 +12,10 @@ const UrlFromNodeImg = (props) => {
 			}
 		})();
 	}, [props.imageurl]);
+<<<<<<< HEAD
+=======
+	// eslint-disable-next-line jsx-a11y/alt-text
+>>>>>>> 92da9d61902df421f0364a1d070cadd11e731c64
 	return url ? (
 		// eslint-disable-next-line jsx-a11y/alt-text
 		<img
