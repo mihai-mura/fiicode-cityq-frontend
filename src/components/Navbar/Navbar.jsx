@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Navbar.scss';
 import { FiBell } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
-import { FiSearch } from 'react-icons/fi';
+// import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeAuthModal, setLoggedUser } from '../../redux/actions';
 import { NavLink } from 'react-router-dom';
 import UrlFromNodeImg from '../UrlFromNodeImg';
+import { useClickOutside } from '@mantine/hooks';
 
 const Navbar = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const toggle = () => setIsOpen(!isOpen);
+	const [userMenuOpen, setUserMenuOpen] = useState(false);
 	const dispatch = useDispatch();
 	const loggedUser = useSelector((state) => state.loggedUser);
+	const userModalRef = useClickOutside(() => setUserMenuOpen(false));
 
 	const handleLoggout = () => {
 		dispatch(setLoggedUser(null));
@@ -38,10 +39,12 @@ const Navbar = () => {
 				imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser && loggedUser._id}`}
 				alt='user'
 				className='user-icon user-profilePic'
-				onClick={toggle}
+				onClick={() => {
+					if (!userMenuOpen) setUserMenuOpen(true);
+				}}
 			/>
-			{isOpen && (
-				<div className='log-out'>
+			{userMenuOpen && (
+				<div className='log-out' ref={userModalRef}>
 					<div className='logout-top-part'>
 						<NavLink className='logout-link' to='/'>
 							Profile settings
