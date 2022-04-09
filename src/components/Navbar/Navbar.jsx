@@ -18,10 +18,10 @@ const Navbar = () => {
 	const userNotLoggedIcons = (
 		<>
 			<div className='log-in-button' onClick={() => dispatch(changeAuthModal('login', true))}>
-				{LANGUAGE.navbar_button_login[`${selectedLanguage}`]}
+				{LANGUAGE.navbar_button_login[selectedLanguage]}
 			</div>
 			<div className='sign-up-button' onClick={() => dispatch(changeAuthModal('register', true))}>
-				{LANGUAGE.navbar_button_register[`${selectedLanguage}`]}
+				{LANGUAGE.navbar_button_register[selectedLanguage]}
 			</div>
 		</>
 	);

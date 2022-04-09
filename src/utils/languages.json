@@ -159,6 +159,10 @@
 		"en": "Log out",
 		"ro": "Delogare"
 	},
+	"navbar_user_menu_profile_settings": {
+		"en": "Profile settings",
+		"ro": "Setarile profilului"
+	},
 	"sidebar_button_settings": {
 		"en": "Settings",
 		"ro": "Setari"

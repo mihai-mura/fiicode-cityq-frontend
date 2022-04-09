@@ -23,11 +23,11 @@ const UserMenu = (props) => {
 			<div className='user-menu-top-part'>
 				<div className='user-menu-link'>{`${loggedUser.firstName} ${loggedUser.lastName}`}</div>
 				<NavLink className='user-menu-link' to='/settings'>
-					Profile settings
+					{LANGUAGE.navbar_user_menu_profile_settings[selectedLanguage]}
 				</NavLink>
 			</div>
 			<NavLink className='user-menu-link' to='/' onClick={handleLoggout}>
-				{LANGUAGE.navbar_user_menu_logout[`${selectedLanguage}`]}
+				{LANGUAGE.navbar_user_menu_logout[selectedLanguage]}
 			</NavLink>
 		</div>
 	);

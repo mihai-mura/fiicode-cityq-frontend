@@ -45,8 +45,8 @@ export const dropzoneChildren = (status, file = null, noFileError, selectedLangu
 					<div>
 						<p style={{ color: noFileError && file === null ? '#ed404e' : '#000' }}>
 							{noFileError
-								? `${LANGUAGE.register_modal_id_pic_error[`${selectedLanguage}`]}`
-								: `${LANGUAGE.register_modal_add_id_pic_drag_image_here[`${selectedLanguage}`]}`}
+								? `${LANGUAGE.register_modal_id_pic_error[selectedLanguage]}`
+								: `${LANGUAGE.register_modal_add_id_pic_drag_image_here[selectedLanguage]}`}
 						</p>
 					</div>
 				</>
