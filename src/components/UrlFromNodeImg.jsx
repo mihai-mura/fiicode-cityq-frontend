@@ -5,13 +5,10 @@ const UrlFromNodeImg = (props) => {
 	const [url, setUrl] = useState('');
 	useEffect(() => {
 		(async () => {
-			while (true) {
-				const res = await fetch(props.imageurl);
-				if (res.status === 200) {
-					const res2 = await res.text();
-					setUrl(res2);
-					break;
-				}
+			const res = await fetch(props.imageurl);
+			if (res.status === 200) {
+				const res2 = await res.text();
+				setUrl(res2);
 			}
 		})();
 	}, [props.imageurl]);
