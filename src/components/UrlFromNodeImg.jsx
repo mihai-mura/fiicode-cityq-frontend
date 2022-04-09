@@ -13,7 +13,19 @@ const UrlFromNodeImg = (props) => {
 		})();
 	}, [props.imageurl]);
 	// eslint-disable-next-line jsx-a11y/alt-text
-	return url ? <img src={url} {...props} /> : <Loader {...props} />;
+	return url ? (
+		// eslint-disable-next-line jsx-a11y/alt-text
+		<img
+			src={url}
+			onError={({ currentTarget }) => {
+				currentTarget.onerror = null; // prevents looping
+				currentTarget.src = url;
+			}}
+			{...props}
+		/>
+	) : (
+		<Loader {...props} />
+	);
 };
 
 export default UrlFromNodeImg;

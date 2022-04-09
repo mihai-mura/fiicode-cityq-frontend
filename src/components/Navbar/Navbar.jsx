@@ -44,12 +44,17 @@ const Navbar = () => {
 				}}
 			/>
 			{userMenuOpen && (
-				<div className='log-out' ref={userModalRef}>
+				<div
+					className='log-out'
+					ref={userModalRef}
+					onClick={() => {
+						if (userMenuOpen) setUserMenuOpen(false);
+					}}>
 					<div className='logout-top-part'>
-						<NavLink className='logout-link' to='/'>
+						<NavLink className='logout-link' to='/settings'>
 							Profile settings
 						</NavLink>
-						<NavLink className='logout-link' to='/'>
+						<NavLink className='logout-link' to='/profile'>
 							View Profile
 						</NavLink>
 					</div>

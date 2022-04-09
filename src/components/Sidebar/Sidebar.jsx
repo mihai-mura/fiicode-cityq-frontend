@@ -9,7 +9,48 @@ import AtlasLogo from '../../images/logo-atlas.svg';
 import './Sidebar.scss';
 import { useState } from 'react';
 
-const routes = [
+const UserRoutes = [
+	{
+		path: '/',
+		name: 'Explore',
+		icon: <MdOutlineExplore />,
+	},
+	{
+		path: '/profile',
+		name: 'Profile',
+		icon: <AiOutlineUser />,
+	},
+	{
+		path: '/settings',
+		name: 'Settings',
+		icon: <FiSettings />,
+	},
+];
+
+const ModeratorRoutes = [
+	{
+		path: '/',
+		name: 'Explore',
+		icon: <MdOutlineExplore />,
+	},
+	{
+		path: '/dashboard',
+		name: 'Dashboard',
+		icon: <MdOutlineDashboardCustomize />,
+	},
+	{
+		path: '/users',
+		name: 'Users',
+		icon: <AiOutlineUser />,
+	},
+	{
+		path: '/settings',
+		name: 'Settings',
+		icon: <FiSettings />,
+	},
+];
+
+const AdminRoutes = [
 	{
 		path: '/',
 		name: 'Explore',
@@ -56,7 +97,7 @@ const Sidebar = () => {
 				)}
 			</div>
 			<section className='routes'>
-				{routes.map((route) => (
+				{UserRoutes.map((route) => (
 					<NavLink to={route.path} key={route.name} className='link'>
 						<div className='icon'>{route.icon}</div>
 						{isOpen && <div className='link_text'>{route.name}</div>}
