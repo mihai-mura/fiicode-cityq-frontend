@@ -16,6 +16,7 @@ import PasswordStrength from './PasswordStrength';
 const Authentification = () => {
 	const dispatch = useDispatch();
 	const authModal = useSelector((state) => state.authModal);
+	const selectedLanguage = useSelector((state) => state.language);
 
 	//inputs
 	const [firstName, setFirstName] = useState('');
@@ -53,36 +54,36 @@ const Authentification = () => {
 
 	const handleRegister = async () => {
 		if (firstName === '') {
-			setFirstNameError(LANGUAGE.register_modal_first_name_error.en);
+			setFirstNameError(LANGUAGE.register_modal_first_name_error[`${selectedLanguage}`]);
 		}
 		if (lastName === '') {
-			setLastNameError(LANGUAGE.register_modal_last_name_error.en);
+			setLastNameError(LANGUAGE.register_modal_last_name_error[`${selectedLanguage}`]);
 		}
 		if (registerEmail === '') {
-			setRegisterEmailError(LANGUAGE.register_modal_email_error.en);
+			setRegisterEmailError(LANGUAGE.register_modal_email_error[`${selectedLanguage}`]);
 		}
 		if (registerPassword === '') {
-			setRegisterPasswordError(LANGUAGE.register_modal_password_error.en);
+			setRegisterPasswordError(LANGUAGE.register_modal_password_error[`${selectedLanguage}`]);
 		}
 		if (confirmPassword === '') {
 			setConfirmPasswordError(true);
 		}
 		if (address === '') {
-			setAddressError(LANGUAGE.register_modal_address_error.en);
+			setAddressError(LANGUAGE.register_modal_address_error[`${selectedLanguage}`]);
 		}
 		if (city === '' || city === 'Select city') {
-			setCityError(LANGUAGE.register_modal_city_error.en);
+			setCityError(LANGUAGE.register_modal_city_error[`${selectedLanguage}`]);
 		}
 		//email format verification
 		if (registerEmail.indexOf('@') === -1 || registerEmail.lastIndexOf('.') < registerEmail.indexOf('@')) {
-			setRegisterEmailError(LANGUAGE.register_modal_invaid_email_format.en);
+			setRegisterEmailError(LANGUAGE.register_modal_invaid_email_format[`${selectedLanguage}`]);
 		}
 		//password format verification
 		if (registerPassword.length < 8 && registerPassword.length > 0) {
-			setRegisterPasswordError(LANGUAGE.register_modal_invalid_password_format.en);
+			setRegisterPasswordError(LANGUAGE.register_modal_invalid_password_format[`${selectedLanguage}`]);
 		}
 		if (registerPassword !== confirmPassword) {
-			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error.en);
+			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error[`${selectedLanguage}`]);
 		}
 		if (inputFile === null) {
 			setNoFileError(true);
@@ -149,7 +150,7 @@ const Authentification = () => {
 				}
 			} else if (res.status === 409) {
 				setLoading(false);
-				setRegisterEmailError(LANGUAGE.register_modal_email_already_exists.en);
+				setRegisterEmailError(LANGUAGE.register_modal_email_already_exists[`${selectedLanguage}`]);
 			}
 		}
 	};
@@ -159,14 +160,14 @@ const Authentification = () => {
 		}
 		//password format verification
 		if (loginPassword.length < 8 && loginPassword.length > 0) {
-			setLoginPasswordError(LANGUAGE.login_modal_password_too_short.en);
+			setLoginPasswordError(LANGUAGE.login_modal_password_too_short[`${selectedLanguage}`]);
 		}
 		if (loginPassword === '') {
-			setLoginPasswordError(LANGUAGE.login_modal_password_empty.en);
+			setLoginPasswordError(LANGUAGE.login_modal_password_empty[`${selectedLanguage}`]);
 		}
 		//email format verification
 		if (loginEmail.indexOf('@') === -1 || loginEmail.lastIndexOf('.') < loginEmail.indexOf('@')) {
-			setLoginEmailError(LANGUAGE.login_modal_invalid_email_format.en);
+			setLoginEmailError(LANGUAGE.login_modal_invalid_email_format[`${selectedLanguage}`]);
 		}
 
 		if (
@@ -197,10 +198,10 @@ const Authentification = () => {
 				setLoginPassword('');
 			} else if (res.status === 403) {
 				setLoading(false);
-				setLoginPasswordError(LANGUAGE.login_modal_password_wrong.en);
+				setLoginPasswordError(LANGUAGE.login_modal_password_wrong[`${selectedLanguage}`]);
 			} else if (res.status === 404) {
 				setLoading(false);
-				setLoginEmailError(LANGUAGE.login_modal_email_not_found.en);
+				setLoginEmailError(LANGUAGE.login_modal_email_not_found[`${selectedLanguage}`]);
 			}
 		}
 	};
@@ -217,14 +218,14 @@ const Authentification = () => {
 					setLoginEmailError(false);
 					setLoginPasswordError(false);
 				}}
-				title={LANGUAGE.login_modal_title.en}>
+				title={LANGUAGE.login_modal_title[`${selectedLanguage}`]}>
 				<div style={{ width: '100%', position: 'relative' }}>
 					<LoadingOverlay visible={loading} />
 					<TextInput
 						className='auth-input'
 						icon={<MdAlternateEmail />}
 						variant='filled'
-						placeholder={LANGUAGE.login_modal_email.en}
+						placeholder={LANGUAGE.login_modal_email[`${selectedLanguage}`]}
 						radius='md'
 						value={loginEmail}
 						onChange={(e) => {
@@ -237,7 +238,7 @@ const Authentification = () => {
 						className='auth-input'
 						icon={<CgPassword />}
 						variant='filled'
-						placeholder={LANGUAGE.login_modal_password.en}
+						placeholder={LANGUAGE.login_modal_password[`${selectedLanguage}`]}
 						radius='md'
 						value={loginPassword}
 						onChange={(e) => {
@@ -248,7 +249,7 @@ const Authentification = () => {
 					/>
 					<div className='auth-footer'>
 						<div>
-							<p>{LANGUAGE.login_modal_no_account.en}</p>
+							<p>{LANGUAGE.login_modal_no_account[`${selectedLanguage}`]}</p>
 							<Button
 								size='xs'
 								variant='subtle'
@@ -262,11 +263,11 @@ const Authentification = () => {
 									setLoginEmailError(false);
 									setLoginPasswordError(false);
 								}}>
-								{LANGUAGE.login_modal_go_to_register.en}
+								{LANGUAGE.login_modal_go_to_register[`${selectedLanguage}`]}
 							</Button>
 						</div>
 						<Button variant='filled' color='#3378F7' radius='md' onClick={handleLogin}>
-							{LANGUAGE.login_modal_submit.en}
+							{LANGUAGE.login_modal_submit[`${selectedLanguage}`]}
 						</Button>
 					</div>
 				</div>
@@ -294,7 +295,7 @@ const Authentification = () => {
 					setLastNameError(false);
 					setNoFileError(false);
 				}}
-				title={LANGUAGE.register_modal_title.en}>
+				title={LANGUAGE.register_modal_title[`${selectedLanguage}`]}>
 				<div style={{ width: '100%', position: 'relative' }}>
 					<LoadingOverlay visible={loading} />
 					<div className='register-field-row'>
@@ -302,7 +303,7 @@ const Authentification = () => {
 							className='auth-input'
 							icon={<CgRename />}
 							variant='filled'
-							placeholder={LANGUAGE.register_modal_first_name.en}
+							placeholder={LANGUAGE.register_modal_first_name[`${selectedLanguage}`]}
 							radius='md'
 							value={firstName}
 							onChange={(e) => {
@@ -315,7 +316,7 @@ const Authentification = () => {
 							className='auth-input'
 							icon={<CgRename />}
 							variant='filled'
-							placeholder={LANGUAGE.register_modal_last_name.en}
+							placeholder={LANGUAGE.register_modal_last_name[`${selectedLanguage}`]}
 							radius='md'
 							value={lastName}
 							onChange={(e) => {
@@ -330,7 +331,7 @@ const Authentification = () => {
 							className='auth-input'
 							icon={<MdAlternateEmail />}
 							variant='filled'
-							placeholder={LANGUAGE.register_modal_email.en}
+							placeholder={LANGUAGE.register_modal_email[`${selectedLanguage}`]}
 							radius='md'
 							type={'email'}
 							value={registerEmail}
@@ -342,7 +343,7 @@ const Authentification = () => {
 						/>
 						<NativeSelect
 							data={cities}
-							placeholder={LANGUAGE.register_modal_city.en}
+							placeholder={LANGUAGE.register_modal_city[`${selectedLanguage}`]}
 							radius='md'
 							variant='filled'
 							icon={<IconBuilding style={{ width: 20 }} />}
@@ -357,8 +358,8 @@ const Authentification = () => {
 						className='auth-input'
 						icon={<CgPassword />}
 						variant='filled'
-						placeholder={LANGUAGE.register_modal_password.en}
-						description={LANGUAGE.register_modal_password_description.en}
+						placeholder={LANGUAGE.register_modal_password[`${selectedLanguage}`]}
+						description={LANGUAGE.register_modal_password_description[`${selectedLanguage}`]}
 						radius='md'
 						value={registerPassword}
 						onChange={(e) => {
@@ -378,7 +379,7 @@ const Authentification = () => {
 						className='auth-input'
 						icon={<CgPassword />}
 						variant='filled'
-						placeholder={LANGUAGE.register_modal_confirm_password.en}
+						placeholder={LANGUAGE.register_modal_confirm_password[`${selectedLanguage}`]}
 						radius='md'
 						value={confirmPassword}
 						onChange={(e) => {
@@ -391,7 +392,7 @@ const Authentification = () => {
 						className='auth-input'
 						icon={<FaRegAddressCard />}
 						variant='filled'
-						placeholder={LANGUAGE.register_modal_address.en}
+						placeholder={LANGUAGE.register_modal_address[`${selectedLanguage}`]}
 						radius='md'
 						value={address}
 						onChange={(e) => {
@@ -400,11 +401,11 @@ const Authentification = () => {
 						}}
 						error={addressError}
 					/>
-					<p>{LANGUAGE.register_modal_add_id_pic_title.en}</p>
+					<p>{LANGUAGE.register_modal_add_id_pic_title[`${selectedLanguage}`]}</p>
 					<FileDropzone setInputFile={setInputFile} noFileError={noFileError} />
 					<div className='auth-footer'>
 						<div>
-							<p>{LANGUAGE.register_modal_already_have_account.en}</p>
+							<p>{LANGUAGE.register_modal_already_have_account[`${selectedLanguage}`]}</p>
 							<Button
 								size='xs'
 								variant='subtle'
@@ -430,11 +431,11 @@ const Authentification = () => {
 									setLastNameError(false);
 									setNoFileError(false);
 								}}>
-								{LANGUAGE.register_modal_go_to_login.en}
+								{LANGUAGE.register_modal_go_to_login[`${selectedLanguage}`]}
 							</Button>
 						</div>
 						<Button variant='filled' color='#3378F7' radius='md' onClick={handleRegister}>
-							{LANGUAGE.register_modal_submit.en}
+							{LANGUAGE.register_modal_submit[`${selectedLanguage}`]}
 						</Button>
 					</div>
 				</div>

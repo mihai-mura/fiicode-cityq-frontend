@@ -5,7 +5,7 @@
 	},
 	"login_modal_email": {
 		"en": "Your email",
-		"ro": "Email_ul tau"
+		"ro": "Email-ul tau"
 	},
 	"login_modal_password": {
 		"en": "Your password",
@@ -53,7 +53,7 @@
 	},
 	"register_modal_email": {
 		"en": "Your email",
-		"ro": "Email_ul tau"
+		"ro": "Email-ul tau"
 	},
 	"register_modal_first_name": {
 		"en": "First name",

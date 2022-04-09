@@ -3,13 +3,12 @@ export const changeAuthModal = (type, payload) => ({
 	payload,
 });
 
-//!for later
-export const changeLoggedUser = (payload) => ({
-	type: 'changeLoggedUser',
+export const setLoggedUser = (payload) => ({
+	type: 'setLoggedUser',
 	payload,
 });
 
-export const setLoggedUser = (payload) => ({
-	type: 'setLoggedUser',
+export const setLanguage = (payload) => ({
+	type: 'setLanguage',
 	payload,
 });

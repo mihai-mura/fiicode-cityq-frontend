@@ -1,0 +1,32 @@
+.user-menu {
+	position: absolute;
+	top: 90px;
+	right: 2rem;
+	background-color: #fdfdfd;
+	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+	border-radius: 20px;
+	padding: 1.3rem;
+	.user-menu-top-part {
+		border-bottom: 1px solid #d8d8d8;
+		display: flex;
+		flex-direction: column;
+	}
+	.user-menu-link {
+		display: block;
+		color: #949699;
+		padding: 0 0 0.5rem 0;
+
+		&:nth-child(1) {
+			color: #2a3033;
+			cursor: default;
+		}
+
+		&:hover {
+			color: #2a3033;
+		}
+
+		&:nth-child(2) {
+			padding: 0.8rem 0;
+		}
+	}
+}
