@@ -52,6 +52,38 @@ const Authentification = () => {
 		}
 	}, [authModal]);
 
+	//handle enter key
+	//! switching forms too slow
+	useEffect(() => {
+		const listener = (event) => {
+			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+				event.preventDefault();
+				if (authModal.login) {
+					handleLogin();
+				} else if (authModal.register) {
+					handleRegister();
+				}
+			}
+		};
+		document.addEventListener('keydown', listener);
+		return () => {
+			document.removeEventListener('keydown', listener);
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [
+		authModal.login,
+		authModal.register,
+		firstName,
+		lastName,
+		registerEmail,
+		registerPassword,
+		confirmPassword,
+		address,
+		loginEmail,
+		loginPassword,
+		city,
+	]);
+
 	const handleRegister = async () => {
 		if (firstName === '') {
 			setFirstNameError(LANGUAGE.register_modal_first_name_error[selectedLanguage]);

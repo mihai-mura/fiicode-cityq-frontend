@@ -163,7 +163,15 @@
 		"en": "Profile settings",
 		"ro": "Setarile profilului"
 	},
-	"sidebar_button_settings": {
+	"sidebar_explore": {
+		"en": "Explore",
+		"ro": "Descopera"
+	},
+	"sidebar_profile": {
+		"en": "Profile",
+		"ro": "Profil"
+	},
+	"sidebar_settings": {
 		"en": "Settings",
 		"ro": "Setari"
 	}

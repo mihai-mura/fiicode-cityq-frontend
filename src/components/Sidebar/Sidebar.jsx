@@ -1,3 +1,4 @@
+import './Sidebar.scss';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import { MdOutlineExplore, MdOutlineDashboardCustomize } from 'react-icons/md';
@@ -6,77 +7,74 @@ import { FiSettings } from 'react-icons/fi';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import AtlasLogo from '../../images/logo-atlas.svg';
-import './Sidebar.scss';
 import { useState } from 'react';
-
-const UserRoutes = [
-	{
-		path: '/',
-		name: 'Explore',
-		icon: <MdOutlineExplore />,
-	},
-	{
-		path: '/profile',
-		name: 'Profile',
-		icon: <AiOutlineUser />,
-	},
-	{
-		path: '/settings',
-		name: 'Settings',
-		icon: <FiSettings />,
-	},
-];
-
-const ModeratorRoutes = [
-	{
-		path: '/',
-		name: 'Explore',
-		icon: <MdOutlineExplore />,
-	},
-	{
-		path: '/dashboard',
-		name: 'Dashboard',
-		icon: <MdOutlineDashboardCustomize />,
-	},
-	{
-		path: '/users',
-		name: 'Users',
-		icon: <AiOutlineUser />,
-	},
-	{
-		path: '/settings',
-		name: 'Settings',
-		icon: <FiSettings />,
-	},
-];
-
-const AdminRoutes = [
-	{
-		path: '/',
-		name: 'Explore',
-		icon: <MdOutlineExplore />,
-	},
-	{
-		path: '/dashboard',
-		name: 'Dashboard',
-		icon: <MdOutlineDashboardCustomize />,
-	},
-	{
-		path: '/users',
-		name: 'Users',
-		icon: <AiOutlineUser />,
-	},
-	{
-		path: '/settings',
-		name: 'Settings',
-		icon: <FiSettings />,
-	},
-];
+import LANGUAGE from '../../utils/languages.json';
+import { useSelector } from 'react-redux';
 
 const Sidebar = () => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
+	const selectedLanguage = useSelector((state) => state.language);
 
 	const toggle = () => setIsOpen(!isOpen);
+
+	const UserRoutes = [
+		{
+			path: '/',
+			name: LANGUAGE.sidebar_explore[selectedLanguage],
+			icon: <MdOutlineExplore />,
+		},
+		{
+			path: '/profile',
+			name: LANGUAGE.sidebar_profile[selectedLanguage],
+			icon: <AiOutlineUser />,
+		},
+		{
+			path: '/settings',
+			name: LANGUAGE.sidebar_settings[selectedLanguage],
+			icon: <FiSettings />,
+		},
+	];
+
+	const ModeratorRoutes = [
+		{
+			path: '/',
+			name: 'Posts',
+			icon: <MdOutlineExplore />,
+		},
+		{
+			path: '/dashboard',
+			name: 'Requests',
+			icon: <MdOutlineDashboardCustomize />,
+		},
+		{
+			path: '/settings',
+			name: 'Settings',
+			icon: <FiSettings />,
+		},
+	];
+
+	const AdminRoutes = [
+		{
+			path: '/',
+			name: 'Explore',
+			icon: <MdOutlineExplore />,
+		},
+		{
+			path: '/dashboard',
+			name: 'Dashboard',
+			icon: <MdOutlineDashboardCustomize />,
+		},
+		{
+			path: '/users',
+			name: 'Users',
+			icon: <AiOutlineUser />,
+		},
+		{
+			path: '/settings',
+			name: 'Settings',
+			icon: <FiSettings />,
+		},
+	];
 
 	return (
 		<motion.div animate={{ width: isOpen ? '210px' : '90px' }} className='sidebar'>

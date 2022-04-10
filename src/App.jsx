@@ -9,11 +9,12 @@ import Navbar from './components/Navbar/Navbar';
 import Authentification from './components/Authentification/Authentification';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setLoggedUser } from './redux/actions';
+import { setLoggedUser, setLanguage } from './redux/actions';
 
 function App() {
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const dispatch = useDispatch();
+	//*inits
 	//setLoggedUser
 	useEffect(() => {
 		(async () => {
@@ -34,6 +35,10 @@ function App() {
 			}
 		})();
 	}, [dispatch, loggedUser]);
+
+	useEffect(() => {
+		if (localStorage.getItem('language')) dispatch(setLanguage(localStorage.getItem('language')));
+	}, [dispatch]);
 
 	return (
 		<div className='App'>

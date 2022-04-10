@@ -4,7 +4,7 @@ import { FiBell } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
 // import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAuthModal } from '../../redux/actions';
+import { changeAuthModal, setLanguage } from '../../redux/actions';
 import UrlFromNodeImg from '../UrlFromNodeImg';
 import LANGUAGE from '../../utils/languages.json';
 import UserMenu from '../UserMenu/UserMenu';
@@ -52,7 +52,22 @@ const Navbar = () => {
 					<input className='search-input' placeholder='Search anything' />
 				</div>
 			</div> */}
-			<div className='navbar-buttons'>{loggedUser ? userLoggedIcons : userNotLoggedIcons}</div>
+			<div
+				className='language-switch'
+				onClick={() => {
+					if (selectedLanguage === 'en') {
+						dispatch(setLanguage('ro'));
+						localStorage.setItem('language', 'ro');
+					} else {
+						dispatch(setLanguage('en'));
+						localStorage.setItem('language', 'en');
+					}
+				}}>
+				<span style={{ color: selectedLanguage === 'en' ? '#000' : '#afb0b3' }}>En</span>
+				<span>/</span>
+				<span style={{ color: selectedLanguage === 'ro' ? '#000' : '#afb0b3' }}>Ro</span>
+			</div>
+			<div className='fixed-content'>{loggedUser ? userLoggedIcons : userNotLoggedIcons}</div>
 		</div>
 	);
 };

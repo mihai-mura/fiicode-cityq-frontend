@@ -4,6 +4,8 @@
 	width: 100%;
 	display: flex;
 	justify-content: flex-end; //* change for sliding content
+	align-items: center;
+	gap: 20px;
 	padding-right: 3rem;
 
 	@media screen and (max-width: 1100px) {
@@ -47,8 +49,17 @@
 		}
 	}
 }
+.language-switch {
+	width: fit-content;
+	height: fit-content;
+	font-size: 1.1rem;
+	cursor: pointer;
+	span {
+		transition: all 0.5s;
+	}
+}
 
-.navbar-buttons {
+.fixed-content {
 	z-index: 10;
 	display: flex;
 	justify-content: space-between;
