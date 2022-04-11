@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Loader } from '@mantine/core';
 
-const UrlFromNodeImg = (props) => {
+const UrlFetchImg = (props) => {
 	const [url, setUrl] = useState('');
 	useEffect(() => {
 		(async () => {
@@ -27,4 +27,4 @@ const UrlFromNodeImg = (props) => {
 	);
 };
 
-export default UrlFromNodeImg;
+export default UrlFetchImg;

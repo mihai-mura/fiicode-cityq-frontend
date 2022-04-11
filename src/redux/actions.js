@@ -1,5 +1,5 @@
-export const changeAuthModal = (type, payload) => ({
-	type,
+export const changeModalState = (type, payload) => ({
+	type, //* type: login, register, createPost
 	payload,
 });
 

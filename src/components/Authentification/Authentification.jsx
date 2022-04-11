@@ -5,17 +5,17 @@ import { CgRename, CgPassword } from 'react-icons/cg';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { IconBuilding } from '@tabler/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeAuthModal, setLoggedUser } from '../../redux/actions';
+import { changeModalState, setLoggedUser } from '../../redux/actions';
 import { useEffect, useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import FileDropzone from './FileDropzone';
-import cities from './cities';
+import cities from '../../utils/cities';
 import LANGUAGE from '../../utils/languages.json';
 import PasswordStrength from './PasswordStrength';
 
 const Authentification = () => {
 	const dispatch = useDispatch();
-	const authModal = useSelector((state) => state.authModal);
+	const modals = useSelector((state) => state.modals);
 	const selectedLanguage = useSelector((state) => state.language);
 
 	//inputs
@@ -47,10 +47,10 @@ const Authentification = () => {
 
 	//stop overlay
 	useEffect(() => {
-		if (!authModal.login && !authModal.register) {
+		if (!modals.login && !modals.register) {
 			setLoading(false);
 		}
-	}, [authModal]);
+	}, [modals]);
 
 	//handle enter key
 	//! switching forms too slow
@@ -58,9 +58,9 @@ const Authentification = () => {
 		const listener = (event) => {
 			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
 				event.preventDefault();
-				if (authModal.login) {
+				if (modals.login) {
 					handleLogin();
-				} else if (authModal.register) {
+				} else if (modals.register) {
 					handleRegister();
 				}
 			}
@@ -71,8 +71,8 @@ const Authentification = () => {
 		};
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [
-		authModal.login,
-		authModal.register,
+		modals.login,
+		modals.register,
 		firstName,
 		lastName,
 		registerEmail,
@@ -169,7 +169,7 @@ const Authentification = () => {
 					body: idPicture,
 				});
 				if (res2.status === 200) {
-					dispatch(changeAuthModal('register', false));
+					dispatch(changeModalState('register', false));
 					dispatch(setLoggedUser(response.user));
 					setFirstName('');
 					setLastName('');
@@ -224,7 +224,7 @@ const Authentification = () => {
 			if (res.status === 200) {
 				const response = await res.json();
 				localStorage.setItem('api-token', response.token);
-				dispatch(changeAuthModal('login', false));
+				dispatch(changeModalState('login', false));
 				dispatch(setLoggedUser(response.user));
 				setLoginEmail('');
 				setLoginPassword('');
@@ -242,9 +242,9 @@ const Authentification = () => {
 		<>
 			<Modal
 				centered
-				opened={authModal.login}
+				opened={modals.login}
 				onClose={() => {
-					dispatch(changeAuthModal('login', false));
+					dispatch(changeModalState('login', false));
 					setLoginEmail('');
 					setLoginPassword('');
 					setLoginEmailError(false);
@@ -288,8 +288,8 @@ const Authentification = () => {
 								color='#3378F7'
 								radius='md'
 								onClick={() => {
-									dispatch(changeAuthModal('register', true));
-									dispatch(changeAuthModal('login', false));
+									dispatch(changeModalState('register', true));
+									dispatch(changeModalState('login', false));
 									setLoginEmail('');
 									setLoginPassword('');
 									setLoginEmailError(false);
@@ -307,9 +307,9 @@ const Authentification = () => {
 			<Modal
 				size='lg'
 				centered
-				opened={authModal.register}
+				opened={modals.register}
 				onClose={() => {
-					dispatch(changeAuthModal('register', false));
+					dispatch(changeModalState('register', false));
 					setFirstName('');
 					setLastName('');
 					setRegisterEmail('');
@@ -374,7 +374,7 @@ const Authentification = () => {
 							error={registerEmailError}
 						/>
 						<NativeSelect
-							data={cities}
+							data={cities.cities}
 							placeholder={LANGUAGE.register_modal_city[selectedLanguage]}
 							radius='md'
 							variant='filled'
@@ -444,8 +444,8 @@ const Authentification = () => {
 								color='#3378F7'
 								radius='md'
 								onClick={() => {
-									dispatch(changeAuthModal('login', true));
-									dispatch(changeAuthModal('register', false));
+									dispatch(changeModalState('login', true));
+									dispatch(changeModalState('register', false));
 									setFirstName('');
 									setLastName('');
 									setRegisterEmail('');

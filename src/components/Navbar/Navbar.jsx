@@ -4,8 +4,8 @@ import { FiBell } from 'react-icons/fi';
 import { BiCommentDetail } from 'react-icons/bi';
 // import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeAuthModal, setLanguage } from '../../redux/actions';
-import UrlFromNodeImg from '../UrlFromNodeImg';
+import { changeModalState, setLanguage } from '../../redux/actions';
+import UrlFetchImg from '../UrlFetchImage/UrlFetchImg';
 import LANGUAGE from '../../utils/languages.json';
 import UserMenu from '../UserMenu/UserMenu';
 
@@ -17,10 +17,10 @@ const Navbar = () => {
 
 	const userNotLoggedIcons = (
 		<>
-			<div className='log-in-button' onClick={() => dispatch(changeAuthModal('login', true))}>
+			<div className='log-in-button' onClick={() => dispatch(changeModalState('login', true))}>
 				{LANGUAGE.navbar_button_login[selectedLanguage]}
 			</div>
-			<div className='sign-up-button' onClick={() => dispatch(changeAuthModal('register', true))}>
+			<div className='sign-up-button' onClick={() => dispatch(changeModalState('register', true))}>
 				{LANGUAGE.navbar_button_register[selectedLanguage]}
 			</div>
 		</>
@@ -30,7 +30,7 @@ const Navbar = () => {
 		<>
 			<BiCommentDetail className='user-icon comments' />
 			<FiBell className='user-icon notifications' />
-			<UrlFromNodeImg
+			<UrlFetchImg
 				imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser && loggedUser._id}`}
 				alt='user'
 				className='user-icon user-profilePic'
@@ -52,22 +52,25 @@ const Navbar = () => {
 					<input className='search-input' placeholder='Search anything' />
 				</div>
 			</div> */}
-			<div
-				className='language-switch'
-				onClick={() => {
-					if (selectedLanguage === 'en') {
-						dispatch(setLanguage('ro'));
-						localStorage.setItem('language', 'ro');
-					} else {
-						dispatch(setLanguage('en'));
-						localStorage.setItem('language', 'en');
-					}
-				}}>
-				<span style={{ color: selectedLanguage === 'en' ? '#000' : '#afb0b3' }}>En</span>
-				<span>/</span>
-				<span style={{ color: selectedLanguage === 'ro' ? '#000' : '#afb0b3' }}>Ro</span>
+			<div className='fixed-content'>
+				<div
+					className='language-switch'
+					onClick={() => {
+						if (selectedLanguage === 'en') {
+							dispatch(setLanguage('ro'));
+							localStorage.setItem('language', 'ro');
+						} else {
+							dispatch(setLanguage('en'));
+							localStorage.setItem('language', 'en');
+						}
+					}}>
+					<span style={{ color: selectedLanguage === 'en' ? '#000' : '#afb0b3' }}>En</span>
+					<span>/</span>
+					<span style={{ color: selectedLanguage === 'ro' ? '#000' : '#afb0b3' }}>Ro</span>
+				</div>
+
+				{loggedUser ? userLoggedIcons : userNotLoggedIcons}
 			</div>
-			<div className='fixed-content'>{loggedUser ? userLoggedIcons : userNotLoggedIcons}</div>
 		</div>
 	);
 };

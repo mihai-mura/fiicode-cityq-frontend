@@ -49,15 +49,6 @@
 		}
 	}
 }
-.language-switch {
-	width: fit-content;
-	height: fit-content;
-	font-size: 1.1rem;
-	cursor: pointer;
-	span {
-		transition: all 0.5s;
-	}
-}
 
 .fixed-content {
 	z-index: 10;
@@ -65,6 +56,16 @@
 	justify-content: space-between;
 	align-items: center;
 	gap: 20px;
+
+	.language-switch {
+		width: fit-content;
+		height: fit-content;
+		font-size: 1.1rem;
+		cursor: pointer;
+		span {
+			transition: all 0.5s;
+		}
+	}
 
 	.log-in-button {
 		cursor: pointer;

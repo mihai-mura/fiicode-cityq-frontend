@@ -174,5 +174,37 @@
 	"sidebar_settings": {
 		"en": "Settings",
 		"ro": "Setari"
+	},
+	"create_post_button": {
+		"en": "Create a post",
+		"ro": "Creaza o postare"
+	},
+	"create_post_modal_modaltitle": {
+		"en": "Create a post",
+		"ro": "Creaza o postare"
+	},
+	"create_post_modal_title_label": {
+		"en": "Post Title",
+		"ro": "Titlul Postarii"
+	},
+	"create_post_modal_title_placeholder": {
+		"en": "Title...",
+		"ro": "Titlu"
+	},
+	"create_post_modal_description_label": {
+		"en": "Description",
+		"ro": "Descriere"
+	},
+	"create_post_modal_description_placeholder": {
+		"en": "Description...",
+		"ro": "Descriere..."
+	},
+	"create_post_modal_title_error": {
+		"en": "Title must have a maximum of 30 characters",
+		"ro": "Titlul trebuie sa aiba maxim 30 caractere"
+	},
+	"create_post_modal_description_error": {
+		"en": "Description must have a maximum of 200 characters",
+		"ro": "Descrierea trebuie sa aiba maxim 200 caractere"
 	}
 }

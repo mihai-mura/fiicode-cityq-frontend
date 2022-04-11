@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 
-const authModal = (state = { login: false, register: false }, action) => {
+const modals = (state = { login: false, register: false, createPost: false }, action) => {
 	switch (action.type) {
 		case 'login':
 			return { ...state, login: action.payload };
 		case 'register':
 			return { ...state, register: action.payload };
+		case 'createPost':
+			return { ...state, createPost: action.payload };
 		default:
 			return state;
 	}
@@ -32,7 +34,7 @@ const language = (state = 'en', action) => {
 
 const Masterducer = combineReducers({
 	language,
-	authModal,
+	modals,
 	loggedUser,
 });
 

@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Users from './pages/Users';
-import Settings from './pages/Settings';
+import UserSettings from './pages/UserSettings/UserSettings';
 import Explore from './pages/Explore/Explore';
 import Sidebar from './components/Sidebar/Sidebar';
 import Navbar from './components/Navbar/Navbar';
@@ -10,6 +10,7 @@ import Authentification from './components/Authentification/Authentification';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoggedUser, setLanguage } from './redux/actions';
+import CreatePostModal from './components/CreatePostModal/CreatePostModal';
 
 function App() {
 	const loggedUser = useSelector((state) => state.loggedUser);
@@ -44,6 +45,7 @@ function App() {
 		<div className='App'>
 			<Router>
 				<Authentification />
+				<CreatePostModal />
 				<Sidebar />
 				<div className='main'>
 					<Navbar />
@@ -53,7 +55,7 @@ function App() {
 						<Route path='/profile' element={<Profile />} />
 						<Route path='/dashboard' element={<Dashboard />} />
 						<Route path='/users' element={<Users />} />
-						<Route path='/settings' element={<Settings />} />
+						<Route path='/settings' element={<UserSettings />} />
 					</Routes>
 				</div>
 			</Router>
