@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux';
 import { changeModalState } from '../../redux/actions';
 import LANGUAGE from '../../utils/languages.json';
 import { useSelector } from 'react-redux';
+import WritePost from '../../components/WritePost/WritePost';
 
 const Explore = () => {
 	const dispatch = useDispatch();
@@ -15,19 +16,15 @@ const Explore = () => {
 
 	return (
 		<div className='page page-explore'>
-			<div className='header'>
-				<Button
-					radius='xl'
-					size='xl'
-					variant='gradient'
-					gradient={{ from: 'indigo', to: 'cyan' }}
-					leftIcon={<IconCirclePlus size={30} />}
+			<div className='createpost-header'>
+				<div
+					className='createpost-reactive'
 					onClick={() => {
 						if (!loggedUser) dispatch(changeModalState('login', true));
 						else dispatch(changeModalState('createPost', true));
 					}}>
-					{LANGUAGE.create_post_button[selectedLanguage]}
-				</Button>
+					<WritePost></WritePost>
+				</div>
 			</div>
 			{PostsData.map((item, index) => (
 				<Post

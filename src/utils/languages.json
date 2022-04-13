@@ -180,8 +180,8 @@
 		"ro": "Creaza o postare"
 	},
 	"create_post_modal_modaltitle": {
-		"en": "Create a post",
-		"ro": "Creaza o postare"
+		"en": "Create a post...",
+		"ro": "Creaza o postare..."
 	},
 	"create_post_modal_title_label": {
 		"en": "Post Title",

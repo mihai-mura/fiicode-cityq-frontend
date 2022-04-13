@@ -1,0 +1,33 @@
+.createpost-container {
+	.createpost-top-section {
+		display: flex;
+		align-items: center;
+		margin: 1rem 1rem 0 1rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid #f6f7f9;
+		.createpost-image {
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+		}
+		.createpost-text {
+			margin-left: 10px;
+			color: #b9b9b9;
+			font-size: 1rem;
+		}
+	}
+	.createpost-bottom-section {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.5rem 0.5rem 0.5rem 0;
+		.createpost-button {
+			background-color: #2984f8;
+			color: #ffffff;
+			border-radius: 10px;
+			font-size: 0.9rem;
+			font-weight: 300;
+			padding: 0.4rem 1.2rem;
+		}
+	}
+}
