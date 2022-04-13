@@ -206,5 +206,13 @@
 	"create_post_modal_description_error": {
 		"en": "Description must have a maximum of 200 characters",
 		"ro": "Descrierea trebuie sa aiba maxim 200 caractere"
+	},
+	"create_post_modal_pic_error": {
+		"en": "A picture is required",
+		"ro": "O poza este obligatorie"
+	},
+	"create_post_modal_add_pic_drag_image_here": {
+		"en": "Drag image here or click to select file",
+		"ro": "Trage imaginea aici sau apasa pentru a selecta fisierul"
 	}
 }

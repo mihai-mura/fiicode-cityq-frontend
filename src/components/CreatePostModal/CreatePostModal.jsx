@@ -1,11 +1,12 @@
 import './CreatePostModal.scss';
 import LANGUAGE from '../../utils/languages.json';
 import cities from '../../utils/cities.json';
-import { Modal, TextInput, Textarea, NativeSelect } from '@mantine/core';
+import { Modal, TextInput, Textarea, NativeSelect, Button } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconBuilding } from '@tabler/icons';
 import { changeModalState } from '../../redux/actions';
 import { useState } from 'react';
+import FileDropzone from '../FileDropzone/FileDropzone';
 
 const CreatePostModal = () => {
 	const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const CreatePostModal = () => {
 	const [descriptionError, setDescriptionError] = useState(null);
 	const [city, setCity] = useState('');
 	const [cityError, setCityError] = useState(null);
+	const [files, setFiles] = useState([]);
+	const [noFilesError, setNoFilesError] = useState(null);
 
 	return (
 		<Modal
@@ -28,8 +31,11 @@ const CreatePostModal = () => {
 				dispatch(changeModalState('createPost', false));
 				setTitle('');
 				setDescription('');
+				setCity('');
 				setTitleError(null);
 				setDescriptionError(null);
+				setCityError(null);
+				setFiles([]);
 			}}>
 			<TextInput
 				radius='md'
@@ -78,7 +84,13 @@ const CreatePostModal = () => {
 				}}
 				error={cityError}
 			/>
-			{/* //! add file dropzone and submit */}
+			<FileDropzone modal='createPost' setInputFile={setFiles} noFileError={noFilesError} />
+			<div className='create-post-modal-footer'>
+				<Button size='md' variant='filled' radius='md'>
+					{/* //! onclick */}
+					Submit
+				</Button>
+			</div>
 		</Modal>
 	);
 };

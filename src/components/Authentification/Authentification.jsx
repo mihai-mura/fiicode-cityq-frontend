@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { changeModalState, setLoggedUser } from '../../redux/actions';
 import { useEffect, useState } from 'react';
 import imageCompression from 'browser-image-compression';
-import FileDropzone from './FileDropzone';
+import FileDropzone from '../FileDropzone/FileDropzone';
 import cities from '../../utils/cities';
 import LANGUAGE from '../../utils/languages.json';
 import PasswordStrength from './PasswordStrength';
@@ -434,7 +434,7 @@ const Authentification = () => {
 						error={addressError}
 					/>
 					<p>{LANGUAGE.register_modal_add_id_pic_title[selectedLanguage]}</p>
-					<FileDropzone setInputFile={setInputFile} noFileError={noFileError} />
+					<FileDropzone setInputFile={setInputFile} noFileError={noFileError} modal='register' />
 					<div className='auth-footer'>
 						<div>
 							<p>{LANGUAGE.register_modal_already_have_account[selectedLanguage]}</p>
