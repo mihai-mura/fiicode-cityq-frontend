@@ -47,6 +47,10 @@
 		"en": "Wrong password",
 		"ro": "Parola este gresita"
 	},
+	"login_modal_forgot_password": {
+		"en": "Forgot password?",
+		"ro": "Ai uitat parola?"
+	},
 	"register_modal_title": {
 		"en": "Register",
 		"ro": "Inregistrare"

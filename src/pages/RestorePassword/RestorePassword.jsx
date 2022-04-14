@@ -1,0 +1,114 @@
+import './RestorePassword.scss';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { PasswordInput, Paper, Button, LoadingOverlay } from '@mantine/core';
+import { CgPassword } from 'react-icons/cg';
+import LANGUAGE from '../../utils/languages.json';
+
+//! invalid link page
+//! add language button
+const RestorePassword = () => {
+	const params = useParams();
+	const navigate = useNavigate();
+	const [linkExpired, setLinkExpired] = useState(false);
+	const [password, setPassword] = useState('');
+	const [confirmPassword, setConfirmPassword] = useState('');
+	const [passwordError, setPasswordError] = useState(null);
+	const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+
+	//overlay
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
+
+	useEffect(() => {
+		(async () => {
+			//verifies if token expired
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/restore-password-valid`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${params.token}`,
+				},
+			});
+			if (res.status === 401) setLinkExpired(true);
+		})();
+	}, [params.token]);
+	const handleSubmit = async () => {
+		//password format validation
+		if (password.length < 8 && password.length > 0) {
+			setPasswordError(LANGUAGE.register_modal_invalid_password_format.en);
+		}
+		if (password !== confirmPassword) {
+			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error.en);
+		}
+		//empty fields validation
+		if (password === '') {
+			setPasswordError(LANGUAGE.register_modal_password_error.en);
+		}
+		if (confirmPassword === '') {
+			setConfirmPasswordError(true);
+		}
+		if (password !== '' && confirmPassword !== '' && password.length >= 8 && password === confirmPassword) {
+			setLoadingOverlay(true);
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/restore-password`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${params.token}`,
+				},
+				body: JSON.stringify({
+					password: password,
+				}),
+			});
+			if (res.status === 200) {
+				//! mantine notification password changed
+				navigate('/');
+			}
+		}
+	};
+
+	const LinkInvalidPage = (
+		<>
+			<div>Link invalid</div>
+		</>
+	);
+
+	const RestorePasswordPage = (
+		<Paper className='paper' shadow='md' radius='lg' p='xl' withBorder>
+			<LoadingOverlay visible={loadingOverlay} />
+			<p className='title'>Set a new password</p>
+			<PasswordInput
+				className='auth-input'
+				icon={<CgPassword />}
+				variant='filled'
+				placeholder={LANGUAGE.register_modal_password.en}
+				description={LANGUAGE.register_modal_password_description.en}
+				radius='md'
+				value={password}
+				onChange={(e) => {
+					setPassword(e.target.value);
+					setPasswordError(false);
+				}}
+				error={passwordError}
+			/>
+
+			<PasswordInput
+				className='auth-input'
+				icon={<CgPassword />}
+				variant='filled'
+				placeholder={LANGUAGE.register_modal_confirm_password.en}
+				radius='md'
+				value={confirmPassword}
+				onChange={(e) => {
+					setConfirmPassword(e.target.value);
+					setConfirmPasswordError(false);
+				}}
+				error={confirmPasswordError}
+			/>
+			<Button radius='md' size='md' onClick={handleSubmit}>
+				Submit
+			</Button>
+		</Paper>
+	);
+
+	return <div className='page-restore-password'>{linkExpired ? LinkInvalidPage : RestorePasswordPage}</div>;
+};
+export default RestorePassword;

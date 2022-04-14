@@ -41,14 +41,14 @@ const Authentification = () => {
 	const [noFileError, setNoFileError] = useState(false);
 
 	//overlay
-	const [loading, setLoading] = useState(false);
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 
 	const [inputFile, setInputFile] = useState(null);
 
 	//stop overlay
 	useEffect(() => {
 		if (!modals.login && !modals.register) {
-			setLoading(false);
+			setLoadingOverlay(false);
 		}
 	}, [modals]);
 
@@ -85,6 +85,21 @@ const Authentification = () => {
 	]);
 
 	const handleRegister = async () => {
+		//email format verification
+		if (registerEmail.indexOf('@') === -1 || registerEmail.lastIndexOf('.') < registerEmail.indexOf('@')) {
+			setRegisterEmailError(LANGUAGE.register_modal_invaid_email_format[selectedLanguage]);
+		}
+		//password format verification
+		if (registerPassword.length < 8 && registerPassword.length > 0) {
+			setRegisterPasswordError(LANGUAGE.register_modal_invalid_password_format[selectedLanguage]);
+		}
+		if (registerPassword !== confirmPassword) {
+			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error[selectedLanguage]);
+		}
+		//empty fields verification
+		if (inputFile === null) {
+			setNoFileError(true);
+		}
 		if (firstName === '') {
 			setFirstNameError(LANGUAGE.register_modal_first_name_error[selectedLanguage]);
 		}
@@ -106,20 +121,6 @@ const Authentification = () => {
 		if (city === '' || city === 'Select city') {
 			setCityError(LANGUAGE.register_modal_city_error[selectedLanguage]);
 		}
-		//email format verification
-		if (registerEmail.indexOf('@') === -1 || registerEmail.lastIndexOf('.') < registerEmail.indexOf('@')) {
-			setRegisterEmailError(LANGUAGE.register_modal_invaid_email_format[selectedLanguage]);
-		}
-		//password format verification
-		if (registerPassword.length < 8 && registerPassword.length > 0) {
-			setRegisterPasswordError(LANGUAGE.register_modal_invalid_password_format[selectedLanguage]);
-		}
-		if (registerPassword !== confirmPassword) {
-			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error[selectedLanguage]);
-		}
-		if (inputFile === null) {
-			setNoFileError(true);
-		}
 
 		if (
 			firstName !== '' &&
@@ -136,7 +137,7 @@ const Authentification = () => {
 			inputFile !== null
 		) {
 			//togle overlay
-			setLoading(true);
+			setLoadingOverlay(true);
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
 				method: 'POST',
 				headers: {
@@ -181,25 +182,26 @@ const Authentification = () => {
 					setInputFile(null);
 				}
 			} else if (res.status === 409) {
-				setLoading(false);
+				setLoadingOverlay(false);
 				setRegisterEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
 			}
 		}
 	};
 	const handleLogin = async () => {
-		if (loginEmail === '') {
-			setLoginEmailError('Email is required');
-		}
 		//password format verification
 		if (loginPassword.length < 8 && loginPassword.length > 0) {
 			setLoginPasswordError(LANGUAGE.login_modal_password_too_short[selectedLanguage]);
 		}
-		if (loginPassword === '') {
-			setLoginPasswordError(LANGUAGE.login_modal_password_empty[selectedLanguage]);
-		}
 		//email format verification
 		if (loginEmail.indexOf('@') === -1 || loginEmail.lastIndexOf('.') < loginEmail.indexOf('@')) {
 			setLoginEmailError(LANGUAGE.login_modal_invalid_email_format[selectedLanguage]);
+		}
+		//empty fields verification
+		if (loginEmail === '') {
+			setLoginEmailError('Email is required');
+		}
+		if (loginPassword === '') {
+			setLoginPasswordError(LANGUAGE.login_modal_password_empty[selectedLanguage]);
 		}
 
 		if (
@@ -210,7 +212,7 @@ const Authentification = () => {
 			loginPassword.length >= 8
 		) {
 			//togle overlay
-			setLoading(true);
+			setLoadingOverlay(true);
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
 				method: 'POST',
 				headers: {
@@ -229,10 +231,42 @@ const Authentification = () => {
 				setLoginEmail('');
 				setLoginPassword('');
 			} else if (res.status === 403) {
-				setLoading(false);
+				setLoadingOverlay(false);
 				setLoginPasswordError(LANGUAGE.login_modal_password_wrong[selectedLanguage]);
 			} else if (res.status === 404) {
-				setLoading(false);
+				setLoadingOverlay(false);
+				setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
+			}
+		}
+	};
+
+	const handleForgotPassword = async () => {
+		//email format verification
+		if (loginEmail.indexOf('@') === -1 || loginEmail.lastIndexOf('.') < loginEmail.indexOf('@')) {
+			setLoginEmailError(LANGUAGE.login_modal_invalid_email_format[selectedLanguage]);
+		}
+		if (loginEmail === '') {
+			setLoginEmailError(LANGUAGE.login_modal_email_empty[selectedLanguage]);
+		}
+		if (loginEmail !== '' && loginEmail.indexOf('@') !== -1 && loginEmail.lastIndexOf('.') > loginEmail.indexOf('@')) {
+			//togle overlay
+			setLoadingOverlay(true);
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/restore-password-email`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify({
+					email: loginEmail,
+				}),
+			});
+			if (res.status === 200) {
+				//!mantine notification
+				alert('Email sent');
+				setLoginEmail('');
+				setLoadingOverlay(false);
+			} else if (res.status === 404) {
+				setLoadingOverlay(false);
 				setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
 			}
 		}
@@ -252,7 +286,7 @@ const Authentification = () => {
 				}}
 				title={LANGUAGE.login_modal_title[selectedLanguage]}>
 				<div style={{ width: '100%', position: 'relative' }}>
-					<LoadingOverlay visible={loading} />
+					<LoadingOverlay visible={loadingOverlay} />
 					<TextInput
 						className='auth-input'
 						icon={<MdAlternateEmail />}
@@ -279,14 +313,18 @@ const Authentification = () => {
 						}}
 						error={loginPasswordError}
 					/>
+					<Button variant='subtle' radius='lg' size='xs' compact onClick={handleForgotPassword}>
+						{LANGUAGE.login_modal_forgot_password[selectedLanguage]}
+					</Button>
 					<div className='auth-footer'>
 						<div>
 							<p>{LANGUAGE.login_modal_no_account[selectedLanguage]}</p>
 							<Button
 								size='xs'
 								variant='subtle'
+								compact
 								color='#3378F7'
-								radius='md'
+								radius='lg'
 								onClick={() => {
 									dispatch(changeModalState('register', true));
 									dispatch(changeModalState('login', false));
@@ -329,7 +367,7 @@ const Authentification = () => {
 				}}
 				title={LANGUAGE.register_modal_title[selectedLanguage]}>
 				<div style={{ width: '100%', position: 'relative' }}>
-					<LoadingOverlay visible={loading} />
+					<LoadingOverlay visible={loadingOverlay} />
 					<div className='register-field-row'>
 						<TextInput
 							className='auth-input'
@@ -442,7 +480,8 @@ const Authentification = () => {
 								size='xs'
 								variant='subtle'
 								color='#3378F7'
-								radius='md'
+								radius='lg'
+								compact
 								onClick={() => {
 									dispatch(changeModalState('login', true));
 									dispatch(changeModalState('register', false));

@@ -13,11 +13,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLoggedUser, setLanguage } from './redux/actions';
 import CreatePostModal from './components/CreatePostModal/CreatePostModal';
 import MobileSidebar from './components/MobileSidebar/MobileSidebar';
+import RestorePassword from './pages/RestorePassword/RestorePassword';
 
 function App() {
-	const toggleMobileMenu = () => {
-		setmobileSidebarOpen(!mobileSidebarOpen);
-	};
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const dispatch = useDispatch();
@@ -53,9 +51,12 @@ function App() {
 				<Authentification />
 				<CreatePostModal />
 				<Sidebar />
-				<MobileSidebar mobileSidebarOpen={mobileSidebarOpen} toggleMobileMenu={toggleMobileMenu} />
+				<MobileSidebar
+					mobileSidebarOpen={mobileSidebarOpen}
+					toggleMobileMenu={() => setmobileSidebarOpen(!mobileSidebarOpen)}
+				/>
 				<div className='main'>
-					<Navbar toggleMobileMenu={toggleMobileMenu} />
+					<Navbar toggleMobileMenu={() => setmobileSidebarOpen(!mobileSidebarOpen)} />
 
 					<Routes>
 						<Route path='/' element={<Explore />} />
@@ -63,6 +64,7 @@ function App() {
 						<Route path='/dashboard' element={<Dashboard />} />
 						<Route path='/users' element={<Users />} />
 						<Route path='/settings' element={<UserSettings />} />
+						<Route path='/recover-password/:token' element={<RestorePassword />} />
 					</Routes>
 				</div>
 			</Router>
