@@ -8,8 +8,10 @@ import { changeModalState, setLanguage } from '../../redux/actions';
 import UrlFetchImg from '../UrlFetchImage/UrlFetchImg';
 import LANGUAGE from '../../utils/languages.json';
 import UserMenu from '../UserMenu/UserMenu';
+import CityQLogo from '../../images/CityQ.svg';
+import MobileHamburger from '../../images/mobile-hamburger.svg';
 
-const Navbar = () => {
+const Navbar = ({ toggleMobileMenu }) => {
 	const dispatch = useDispatch();
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const selectedLanguage = useSelector((state) => state.language);
@@ -70,6 +72,11 @@ const Navbar = () => {
 				</div>
 
 				{loggedUser ? userLoggedIcons : userNotLoggedIcons}
+			</div>
+
+			<div className='mobile-navigation'>
+				<img src={MobileHamburger} onClick={toggleMobileMenu} className='mobile-hamburger' alt='Mobile Hamburger' />
+				<img src={CityQLogo} className='cityq-logo' alt='CityQLogo' />
 			</div>
 		</div>
 	);

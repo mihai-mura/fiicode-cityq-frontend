@@ -8,11 +8,17 @@ import Sidebar from './components/Sidebar/Sidebar';
 import Navbar from './components/Navbar/Navbar';
 import Authentification from './components/Authentification/Authentification';
 import { useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoggedUser, setLanguage } from './redux/actions';
 import CreatePostModal from './components/CreatePostModal/CreatePostModal';
+import MobileSidebar from './components/MobileSidebar/MobileSidebar';
 
 function App() {
+	const toggleMobileMenu = () => {
+		setmobileSidebarOpen(!mobileSidebarOpen);
+	};
+	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const dispatch = useDispatch();
 	//*inits
@@ -47,8 +53,9 @@ function App() {
 				<Authentification />
 				<CreatePostModal />
 				<Sidebar />
+				<MobileSidebar mobileSidebarOpen={mobileSidebarOpen} toggleMobileMenu={toggleMobileMenu} />
 				<div className='main'>
-					<Navbar />
+					<Navbar toggleMobileMenu={toggleMobileMenu} />
 
 					<Routes>
 						<Route path='/' element={<Explore />} />

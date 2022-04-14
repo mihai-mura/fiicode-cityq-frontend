@@ -9,8 +9,10 @@ const Posts = (props) => {
 					<div className='post-user'>{props.user}</div>
 					<div className='post-city'>{props.city}</div>
 				</div>
-				<div className='post-display'>
-					<img src={props.image} alt='post' />
+				<div className='postcarousel-container'>
+					<div className='post-display'>
+						<img src={props.image} alt='post' />
+					</div>
 				</div>
 				<div className='post-title'>{props.title}</div>
 				<div className='post-description'>{props.description}</div>

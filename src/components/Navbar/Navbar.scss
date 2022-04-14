@@ -3,16 +3,16 @@
 	background-color: #fdfdfd;
 	width: 100%;
 	display: flex;
-	justify-content: flex-end; //* change for sliding content
+	justify-content: center;
 	align-items: center;
 	gap: 20px;
-	padding-right: 3rem;
-
-	@media screen and (max-width: 1100px) {
-		padding-right: 1rem;
-	}
-	@media screen and (max-width: 800px) {
+	border-radius: 0 0 10px 10px;
+	@media screen and (max-width: 1000px) {
 		height: 80px;
+	}
+
+	@media screen and (min-width: 1000px) {
+		justify-content: flex-end;
 	}
 }
 
@@ -51,11 +51,16 @@
 }
 
 .fixed-content {
+	margin-right: 3rem;
 	z-index: 10;
-	display: flex;
 	justify-content: space-between;
 	align-items: center;
 	gap: 20px;
+	display: none;
+
+	@media only screen and (min-width: 1000px) {
+		display: flex;
+	}
 
 	.language-switch {
 		width: fit-content;
@@ -122,5 +127,29 @@
 		border-radius: 50%;
 		width: 40px;
 		height: 40px;
+	}
+}
+
+.mobile-navigation {
+	height: 100%;
+	width: 100%;
+	max-width: 600px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	@media screen and (min-width: 1000px) {
+		display: none;
+	}
+	.mobile-hamburger {
+		cursor: pointer;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		left: 1.5rem;
+		margin-top: 1px;
+	}
+	.cityq-logo {
+		margin-top: 6px;
 	}
 }
