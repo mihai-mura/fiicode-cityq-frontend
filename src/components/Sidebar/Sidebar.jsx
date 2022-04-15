@@ -6,7 +6,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { FiSettings } from 'react-icons/fi';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
-import AtlasLogo from '../../images/logo-atlas.svg';
+import CityQLogo from '../../images/logo-cityq.svg';
 import { useState } from 'react';
 import LANGUAGE from '../../utils/languages.json';
 import { useSelector } from 'react-redux';
@@ -80,9 +80,9 @@ const Sidebar = () => {
 		<motion.div animate={{ width: isOpen ? '210px' : '90px' }} className='sidebar'>
 			<div className='top-section'>
 				<NavLink to='/'>
-					<img src={AtlasLogo} alt='logo' to='/' />
+					<img src={CityQLogo} alt='logo' to='/' />
 				</NavLink>
-				{isOpen && <h3 className='logo-name'>atlas</h3>}
+				{isOpen && <h3 className='logo-name'>cityq</h3>}
 
 				{isOpen ? (
 					<div className='arrow'>
