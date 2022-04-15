@@ -242,5 +242,9 @@
 	"create_post_modal_add_pic_drag_image_here": {
 		"en": "Drag image here or click to select file",
 		"ro": "Trage imaginea aici sau apasa pentru a selecta fisierul"
+	},
+	"restore_password_title": {
+		"en": "Set a new password",
+		"ro": "Seteaza o noua parola"
 	}
 }

@@ -90,7 +90,7 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 				alt='user'
 				className='user-icon user-profilePic'
 			/>
-			{/* <div className='user-menu-link'>{`${loggedUser.firstName} ${loggedUser.lastName}`}</div> */} //!mihai redux
+			<div className='user-menu-link'>{`${loggedUser?.firstName} ${loggedUser?.lastName}`}</div>
 		</div>
 	);
 	return (

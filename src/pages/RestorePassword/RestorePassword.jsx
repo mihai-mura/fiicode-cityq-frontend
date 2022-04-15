@@ -6,13 +6,15 @@ import { CgPassword } from 'react-icons/cg';
 import LANGUAGE from '../../utils/languages.json';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification, infoNotification } from '../../components/Notifications/Notifications';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setLanguage } from '../../redux/actions';
 
 //! invalid link page
 //! add language button
 const RestorePassword = () => {
 	const params = useParams();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const selectedLanguage = useSelector((state) => state.language);
 	const [linkExpired, setLinkExpired] = useState(false);
 	const [password, setPassword] = useState('');
@@ -94,13 +96,30 @@ const RestorePassword = () => {
 	const RestorePasswordPage = (
 		<Paper className='paper' shadow='md' radius='lg' p='xl' withBorder>
 			<LoadingOverlay visible={loadingOverlay} />
-			<p className='title'>Set a new password</p>
+			<div className='header'>
+				<p>{LANGUAGE.restore_password_title[selectedLanguage]}</p>
+				<div
+					className='language-switch'
+					onClick={() => {
+						if (selectedLanguage === 'en') {
+							dispatch(setLanguage('ro'));
+							localStorage.setItem('language', 'ro');
+						} else {
+							dispatch(setLanguage('en'));
+							localStorage.setItem('language', 'en');
+						}
+					}}>
+					<span style={{ color: selectedLanguage === 'en' ? '#000' : '#afb0b3' }}>En</span>
+					<span>/</span>
+					<span style={{ color: selectedLanguage === 'ro' ? '#000' : '#afb0b3' }}>Ro</span>
+				</div>
+			</div>
 			<PasswordInput
 				className='auth-input'
 				icon={<CgPassword />}
 				variant='filled'
-				placeholder={LANGUAGE.register_modal_password.en}
-				description={LANGUAGE.register_modal_password_description.en}
+				placeholder={LANGUAGE.register_modal_password[selectedLanguage]}
+				description={LANGUAGE.register_modal_password_description[selectedLanguage]}
 				radius='md'
 				value={password}
 				onChange={(e) => {
@@ -114,7 +133,7 @@ const RestorePassword = () => {
 				className='auth-input'
 				icon={<CgPassword />}
 				variant='filled'
-				placeholder={LANGUAGE.register_modal_confirm_password.en}
+				placeholder={LANGUAGE.register_modal_confirm_password[selectedLanguage]}
 				radius='md'
 				value={confirmPassword}
 				onChange={(e) => {
