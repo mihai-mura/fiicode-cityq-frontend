@@ -11,7 +11,9 @@ import imageCompression from 'browser-image-compression';
 import FileDropzone from '../FileDropzone/FileDropzone';
 import cities from '../../utils/cities';
 import LANGUAGE from '../../utils/languages.json';
+import { showNotification } from '@mantine/notifications';
 import PasswordStrength from './PasswordStrength';
+import { errorNotification, infoNotification } from '../Notifications/Notifications';
 
 const Authentification = () => {
 	const dispatch = useDispatch();
@@ -138,52 +140,63 @@ const Authentification = () => {
 		) {
 			//togle overlay
 			setLoadingOverlay(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: registerEmail,
-					city: city,
-					firstName: firstName,
-					lastName: lastName,
-					address: address,
-					password: registerPassword,
-				}),
-			});
-			if (res.status === 201) {
-				const response = await res.json();
-				localStorage.setItem('api-token', response.token);
-				//* send id picture to backend compressed
-				const options = {
-					maxSizeMB: 1,
-				};
-				const compressedFile = await imageCompression(inputFile, options);
-				const idPicture = new FormData();
-				idPicture.append('idPic', compressedFile);
-				const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
+			try {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
 					method: 'POST',
 					headers: {
-						Authorization: `Bearer ${response.token}`,
+						'Content-Type': 'application/json',
 					},
-					body: idPicture,
+					body: JSON.stringify({
+						email: registerEmail,
+						city: city,
+						firstName: firstName,
+						lastName: lastName,
+						address: address,
+						password: registerPassword,
+					}),
 				});
-				if (res2.status === 200) {
-					dispatch(changeModalState('register', false));
-					dispatch(setLoggedUser(response.user));
-					setFirstName('');
-					setLastName('');
-					setRegisterEmail('');
-					setRegisterPassword('');
-					setConfirmPassword('');
-					setAddress('');
-					setCity('');
-					setInputFile(null);
+				if (res?.status === 201) {
+					const response = await res.json();
+					localStorage.setItem('api-token', response.token);
+					//* send id picture to backend compressed
+					const options = {
+						maxSizeMB: 1,
+					};
+					const compressedFile = await imageCompression(inputFile, options);
+					const idPicture = new FormData();
+					idPicture.append('idPic', compressedFile);
+					const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
+						method: 'POST',
+						headers: {
+							Authorization: `Bearer ${response.token}`,
+						},
+						body: idPicture,
+					});
+					if (res2.status === 200) {
+						dispatch(changeModalState('register', false));
+						dispatch(setLoggedUser(response.user));
+						setFirstName('');
+						setLastName('');
+						setRegisterEmail('');
+						setRegisterPassword('');
+						setConfirmPassword('');
+						setAddress('');
+						setCity('');
+						setInputFile(null);
+					}
+				} else if (res.status === 409) {
+					setLoadingOverlay(false);
+					setRegisterEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
 				}
-			} else if (res.status === 409) {
+			} catch (error) {
+				console.error(error);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_error_title[selectedLanguage],
+						LANGUAGE.notification_error_message[selectedLanguage]
+					)
+				);
 				setLoadingOverlay(false);
-				setRegisterEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
 			}
 		}
 	};
@@ -213,29 +226,40 @@ const Authentification = () => {
 		) {
 			//togle overlay
 			setLoadingOverlay(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: loginEmail,
-					password: loginPassword,
-				}),
-			});
-			if (res.status === 200) {
-				const response = await res.json();
-				localStorage.setItem('api-token', response.token);
-				dispatch(changeModalState('login', false));
-				dispatch(setLoggedUser(response.user));
-				setLoginEmail('');
-				setLoginPassword('');
-			} else if (res.status === 403) {
+			try {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: loginEmail,
+						password: loginPassword,
+					}),
+				});
+				if (res.status === 200) {
+					const response = await res.json();
+					localStorage.setItem('api-token', response.token);
+					dispatch(changeModalState('login', false));
+					dispatch(setLoggedUser(response.user));
+					setLoginEmail('');
+					setLoginPassword('');
+				} else if (res.status === 403) {
+					setLoadingOverlay(false);
+					setLoginPasswordError(LANGUAGE.login_modal_password_wrong[selectedLanguage]);
+				} else if (res.status === 404) {
+					setLoadingOverlay(false);
+					setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
+				}
+			} catch (error) {
+				console.error(error);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_error_title[selectedLanguage],
+						LANGUAGE.notification_error_message[selectedLanguage]
+					)
+				);
 				setLoadingOverlay(false);
-				setLoginPasswordError(LANGUAGE.login_modal_password_wrong[selectedLanguage]);
-			} else if (res.status === 404) {
-				setLoadingOverlay(false);
-				setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
 			}
 		}
 	};
@@ -251,23 +275,39 @@ const Authentification = () => {
 		if (loginEmail !== '' && loginEmail.indexOf('@') !== -1 && loginEmail.lastIndexOf('.') > loginEmail.indexOf('@')) {
 			//togle overlay
 			setLoadingOverlay(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/restore-password-email`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: loginEmail,
-				}),
-			});
-			if (res.status === 200) {
-				//!mantine notification
-				alert('Email sent');
-				setLoginEmail('');
+			try {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/restore-password-email`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: loginEmail,
+					}),
+				});
+				if (res.status === 200) {
+					showNotification(
+						infoNotification(
+							LANGUAGE.notification_recovery_email_sent_title[selectedLanguage],
+							LANGUAGE.notification_recovery_email_sent_message[selectedLanguage],
+							'green'
+						)
+					);
+					setLoginEmail('');
+					setLoadingOverlay(false);
+				} else if (res.status === 404) {
+					setLoadingOverlay(false);
+					setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
+				}
+			} catch (error) {
+				console.error(error);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_error_title[selectedLanguage],
+						LANGUAGE.notification_error_message[selectedLanguage]
+					)
+				);
 				setLoadingOverlay(false);
-			} else if (res.status === 404) {
-				setLoadingOverlay(false);
-				setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
 			}
 		}
 	};
