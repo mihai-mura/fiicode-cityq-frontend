@@ -11,7 +11,9 @@ import imageCompression from 'browser-image-compression';
 import FileDropzone from '../FileDropzone/FileDropzone';
 import cities from '../../utils/cities';
 import LANGUAGE from '../../utils/languages.json';
+import { showNotification } from '@mantine/notifications';
 import PasswordStrength from './PasswordStrength';
+import { errorNotification, infoNotification } from '../Notifications/Notifications';
 
 const Authentification = () => {
 	const dispatch = useDispatch();
@@ -41,14 +43,14 @@ const Authentification = () => {
 	const [noFileError, setNoFileError] = useState(false);
 
 	//overlay
-	const [loading, setLoading] = useState(false);
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 
 	const [inputFile, setInputFile] = useState(null);
 
 	//stop overlay
 	useEffect(() => {
 		if (!modals.login && !modals.register) {
-			setLoading(false);
+			setLoadingOverlay(false);
 		}
 	}, [modals]);
 
@@ -85,6 +87,21 @@ const Authentification = () => {
 	]);
 
 	const handleRegister = async () => {
+		//email format verification
+		if (registerEmail.indexOf('@') === -1 || registerEmail.lastIndexOf('.') < registerEmail.indexOf('@')) {
+			setRegisterEmailError(LANGUAGE.register_modal_invaid_email_format[selectedLanguage]);
+		}
+		//password format verification
+		if (registerPassword.length < 8 && registerPassword.length > 0) {
+			setRegisterPasswordError(LANGUAGE.register_modal_invalid_password_format[selectedLanguage]);
+		}
+		if (registerPassword !== confirmPassword) {
+			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error[selectedLanguage]);
+		}
+		//empty fields verification
+		if (inputFile === null) {
+			setNoFileError(true);
+		}
 		if (firstName === '') {
 			setFirstNameError(LANGUAGE.register_modal_first_name_error[selectedLanguage]);
 		}
@@ -106,20 +123,6 @@ const Authentification = () => {
 		if (city === '' || city === 'Select city') {
 			setCityError(LANGUAGE.register_modal_city_error[selectedLanguage]);
 		}
-		//email format verification
-		if (registerEmail.indexOf('@') === -1 || registerEmail.lastIndexOf('.') < registerEmail.indexOf('@')) {
-			setRegisterEmailError(LANGUAGE.register_modal_invaid_email_format[selectedLanguage]);
-		}
-		//password format verification
-		if (registerPassword.length < 8 && registerPassword.length > 0) {
-			setRegisterPasswordError(LANGUAGE.register_modal_invalid_password_format[selectedLanguage]);
-		}
-		if (registerPassword !== confirmPassword) {
-			setConfirmPasswordError(LANGUAGE.register_modal_confirm_password_error[selectedLanguage]);
-		}
-		if (inputFile === null) {
-			setNoFileError(true);
-		}
 
 		if (
 			firstName !== '' &&
@@ -136,70 +139,82 @@ const Authentification = () => {
 			inputFile !== null
 		) {
 			//togle overlay
-			setLoading(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: registerEmail,
-					city: city,
-					firstName: firstName,
-					lastName: lastName,
-					address: address,
-					password: registerPassword,
-				}),
-			});
-			if (res.status === 201) {
-				const response = await res.json();
-				localStorage.setItem('api-token', response.token);
-				//* send id picture to backend compressed
-				const options = {
-					maxSizeMB: 1,
-				};
-				const compressedFile = await imageCompression(inputFile, options);
-				const idPicture = new FormData();
-				idPicture.append('idPic', compressedFile);
-				const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
+			setLoadingOverlay(true);
+			try {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/register`, {
 					method: 'POST',
 					headers: {
-						Authorization: `Bearer ${response.token}`,
+						'Content-Type': 'application/json',
 					},
-					body: idPicture,
+					body: JSON.stringify({
+						email: registerEmail,
+						city: city,
+						firstName: firstName,
+						lastName: lastName,
+						address: address,
+						password: registerPassword,
+					}),
 				});
-				if (res2.status === 200) {
-					dispatch(changeModalState('register', false));
-					dispatch(setLoggedUser(response.user));
-					setFirstName('');
-					setLastName('');
-					setRegisterEmail('');
-					setRegisterPassword('');
-					setConfirmPassword('');
-					setAddress('');
-					setCity('');
-					setInputFile(null);
+				if (res?.status === 201) {
+					const response = await res.json();
+					localStorage.setItem('api-token', response.token);
+					//* send id picture to backend compressed
+					const options = {
+						maxSizeMB: 1,
+					};
+					const compressedFile = await imageCompression(inputFile, options);
+					const idPicture = new FormData();
+					idPicture.append('idPic', compressedFile);
+					const res2 = await fetch(`${process.env.REACT_APP_API_URL}/users/register/id`, {
+						method: 'POST',
+						headers: {
+							Authorization: `Bearer ${response.token}`,
+						},
+						body: idPicture,
+					});
+					if (res2.status === 200) {
+						dispatch(changeModalState('register', false));
+						dispatch(setLoggedUser(response.user));
+						setFirstName('');
+						setLastName('');
+						setRegisterEmail('');
+						setRegisterPassword('');
+						setConfirmPassword('');
+						setAddress('');
+						setCity('');
+						setInputFile(null);
+					}
+				} else if (res.status === 409) {
+					setLoadingOverlay(false);
+					setRegisterEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
 				}
-			} else if (res.status === 409) {
-				setLoading(false);
-				setRegisterEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
+			} catch (error) {
+				console.error(error);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_error_title[selectedLanguage],
+						LANGUAGE.notification_error_message[selectedLanguage]
+					)
+				);
+				setLoadingOverlay(false);
 			}
 		}
 	};
 	const handleLogin = async () => {
-		if (loginEmail === '') {
-			setLoginEmailError('Email is required');
-		}
 		//password format verification
 		if (loginPassword.length < 8 && loginPassword.length > 0) {
 			setLoginPasswordError(LANGUAGE.login_modal_password_too_short[selectedLanguage]);
 		}
-		if (loginPassword === '') {
-			setLoginPasswordError(LANGUAGE.login_modal_password_empty[selectedLanguage]);
-		}
 		//email format verification
 		if (loginEmail.indexOf('@') === -1 || loginEmail.lastIndexOf('.') < loginEmail.indexOf('@')) {
 			setLoginEmailError(LANGUAGE.login_modal_invalid_email_format[selectedLanguage]);
+		}
+		//empty fields verification
+		if (loginEmail === '') {
+			setLoginEmailError('Email is required');
+		}
+		if (loginPassword === '') {
+			setLoginPasswordError(LANGUAGE.login_modal_password_empty[selectedLanguage]);
 		}
 
 		if (
@@ -210,30 +225,89 @@ const Authentification = () => {
 			loginPassword.length >= 8
 		) {
 			//togle overlay
-			setLoading(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					email: loginEmail,
-					password: loginPassword,
-				}),
-			});
-			if (res.status === 200) {
-				const response = await res.json();
-				localStorage.setItem('api-token', response.token);
-				dispatch(changeModalState('login', false));
-				dispatch(setLoggedUser(response.user));
-				setLoginEmail('');
-				setLoginPassword('');
-			} else if (res.status === 403) {
-				setLoading(false);
-				setLoginPasswordError(LANGUAGE.login_modal_password_wrong[selectedLanguage]);
-			} else if (res.status === 404) {
-				setLoading(false);
-				setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
+			setLoadingOverlay(true);
+			try {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/login`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: loginEmail,
+						password: loginPassword,
+					}),
+				});
+				if (res.status === 200) {
+					const response = await res.json();
+					localStorage.setItem('api-token', response.token);
+					dispatch(changeModalState('login', false));
+					dispatch(setLoggedUser(response.user));
+					setLoginEmail('');
+					setLoginPassword('');
+				} else if (res.status === 403) {
+					setLoadingOverlay(false);
+					setLoginPasswordError(LANGUAGE.login_modal_password_wrong[selectedLanguage]);
+				} else if (res.status === 404) {
+					setLoadingOverlay(false);
+					setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
+				}
+			} catch (error) {
+				console.error(error);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_error_title[selectedLanguage],
+						LANGUAGE.notification_error_message[selectedLanguage]
+					)
+				);
+				setLoadingOverlay(false);
+			}
+		}
+	};
+
+	const handleForgotPassword = async () => {
+		//email format verification
+		if (loginEmail.indexOf('@') === -1 || loginEmail.lastIndexOf('.') < loginEmail.indexOf('@')) {
+			setLoginEmailError(LANGUAGE.login_modal_invalid_email_format[selectedLanguage]);
+		}
+		if (loginEmail === '') {
+			setLoginEmailError(LANGUAGE.login_modal_email_empty[selectedLanguage]);
+		}
+		if (loginEmail !== '' && loginEmail.indexOf('@') !== -1 && loginEmail.lastIndexOf('.') > loginEmail.indexOf('@')) {
+			//togle overlay
+			setLoadingOverlay(true);
+			try {
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/restore-password-email`, {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					body: JSON.stringify({
+						email: loginEmail,
+					}),
+				});
+				if (res.status === 200) {
+					showNotification(
+						infoNotification(
+							LANGUAGE.notification_recovery_email_sent_title[selectedLanguage],
+							LANGUAGE.notification_recovery_email_sent_message[selectedLanguage],
+							'green'
+						)
+					);
+					setLoginEmail('');
+					setLoadingOverlay(false);
+				} else if (res.status === 404) {
+					setLoadingOverlay(false);
+					setLoginEmailError(LANGUAGE.login_modal_email_not_found[selectedLanguage]);
+				}
+			} catch (error) {
+				console.error(error);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_error_title[selectedLanguage],
+						LANGUAGE.notification_error_message[selectedLanguage]
+					)
+				);
+				setLoadingOverlay(false);
 			}
 		}
 	};
@@ -252,7 +326,7 @@ const Authentification = () => {
 				}}
 				title={LANGUAGE.login_modal_title[selectedLanguage]}>
 				<div style={{ width: '100%', position: 'relative' }}>
-					<LoadingOverlay visible={loading} />
+					<LoadingOverlay visible={loadingOverlay} />
 					<TextInput
 						className='auth-input'
 						icon={<MdAlternateEmail />}
@@ -279,14 +353,18 @@ const Authentification = () => {
 						}}
 						error={loginPasswordError}
 					/>
+					<Button variant='subtle' radius='lg' size='xs' compact onClick={handleForgotPassword}>
+						{LANGUAGE.login_modal_forgot_password[selectedLanguage]}
+					</Button>
 					<div className='auth-footer'>
 						<div>
 							<p>{LANGUAGE.login_modal_no_account[selectedLanguage]}</p>
 							<Button
 								size='xs'
 								variant='subtle'
+								compact
 								color='#3378F7'
-								radius='md'
+								radius='lg'
 								onClick={() => {
 									dispatch(changeModalState('register', true));
 									dispatch(changeModalState('login', false));
@@ -329,7 +407,7 @@ const Authentification = () => {
 				}}
 				title={LANGUAGE.register_modal_title[selectedLanguage]}>
 				<div style={{ width: '100%', position: 'relative' }}>
-					<LoadingOverlay visible={loading} />
+					<LoadingOverlay visible={loadingOverlay} />
 					<div className='register-field-row'>
 						<TextInput
 							className='auth-input'
@@ -442,7 +520,8 @@ const Authentification = () => {
 								size='xs'
 								variant='subtle'
 								color='#3378F7'
-								radius='md'
+								radius='lg'
+								compact
 								onClick={() => {
 									dispatch(changeModalState('login', true));
 									dispatch(changeModalState('register', false));

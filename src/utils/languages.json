@@ -1,4 +1,28 @@
 {
+	"notification_error_title": {
+		"en": "Something went wrong",
+		"ro": "Am intampinat niste probleme"
+	},
+	"notification_error_message": {
+		"en": "Please try again later",
+		"ro": "Te rugam sa incerci mai tarziu"
+	},
+	"notification_recovery_email_sent_title": {
+		"en": "Email sent",
+		"ro": "Email trimis"
+	},
+	"notification_password_reset_title": {
+		"en": "Password reset successful",
+		"ro": "Resetare parola reusita"
+	},
+	"notification_password_reset_message": {
+		"en": "You can now login with your new password",
+		"ro": "Acum poti sa te loghezi cu parola noua"
+	},
+	"notification_recovery_email_sent_message": {
+		"en": "Please check your email to reset your password",
+		"ro": "Te rugam sa verifici emailul pentru a reseta parola"
+	},
 	"login_modal_title": {
 		"en": "Login",
 		"ro": "Autentificare"
@@ -46,6 +70,10 @@
 	"login_modal_password_wrong": {
 		"en": "Wrong password",
 		"ro": "Parola este gresita"
+	},
+	"login_modal_forgot_password": {
+		"en": "Forgot password?",
+		"ro": "Ai uitat parola?"
 	},
 	"register_modal_title": {
 		"en": "Register",
