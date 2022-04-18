@@ -231,13 +231,25 @@
 		"en": "Title must have a maximum of 30 characters",
 		"ro": "Titlul trebuie sa aiba maxim 30 caractere"
 	},
+	"create_post_modal_title_required_error": {
+		"en": "Title is required",
+		"ro": "Titlul este obligatoriu"
+	},
 	"create_post_modal_description_error": {
 		"en": "Description must have a maximum of 200 characters",
 		"ro": "Descrierea trebuie sa aiba maxim 200 caractere"
 	},
-	"create_post_modal_pic_error": {
-		"en": "A picture is required",
-		"ro": "O poza este obligatorie"
+	"create_post_modal_description_required_error": {
+		"en": "Description is required",
+		"ro": "Descrierea este obligatorie"
+	},
+	"create_post_modal_city_required_error": {
+		"en": "City is required",
+		"ro": "Orasul este obligatoriu"
+	},
+	"create_post_modal_files_error": {
+		"en": "A picture or video is required",
+		"ro": "O poza sau un videoclip este obligatoriu"
 	},
 	"create_post_modal_add_pic_drag_image_here": {
 		"en": "Drag image here or click to select file",

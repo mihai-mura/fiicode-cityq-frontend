@@ -57,7 +57,7 @@ const dropzoneChildrenRegister = (status, files = null, noFileError, selectedLan
 								? `${
 										modal === 'register'
 											? LANGUAGE.register_modal_id_pic_error[selectedLanguage]
-											: LANGUAGE.create_post_modal_pic_error[selectedLanguage]
+											: LANGUAGE.create_post_modal_files_error[selectedLanguage]
 								  }`
 								: `${LANGUAGE.create_post_modal_add_pic_drag_image_here[selectedLanguage]}`}
 						</p>
@@ -91,9 +91,9 @@ const FileDropzone = (props) => {
 		reader.readAsDataURL(files[0]);
 	};
 	//for createPost modal
-	//! accept videos
+	//! video preview
 	const filesAdded = async (files) => {
-		props.setInputFile(files);
+		props.setInputFile((prev) => [...prev, ...files]);
 
 		const fileToDataURL = (file) => {
 			var reader = new FileReader();

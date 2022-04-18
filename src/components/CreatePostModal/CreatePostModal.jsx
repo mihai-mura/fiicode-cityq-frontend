@@ -1,7 +1,7 @@
 import './CreatePostModal.scss';
 import LANGUAGE from '../../utils/languages.json';
 import cities from '../../utils/cities.json';
-import { Modal, TextInput, Textarea, NativeSelect, Button } from '@mantine/core';
+import { Modal, TextInput, Textarea, NativeSelect, Button, LoadingOverlay } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconBuilding } from '@tabler/icons';
 import { changeModalState } from '../../redux/actions';
@@ -13,6 +13,7 @@ const CreatePostModal = () => {
 	const selectedLanguage = useSelector((state) => state.language);
 	const modalState = useSelector((state) => state.modals.createPost);
 
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [titleError, setTitleError] = useState(null);
@@ -21,6 +22,61 @@ const CreatePostModal = () => {
 	const [cityError, setCityError] = useState(null);
 	const [files, setFiles] = useState([]);
 	const [noFilesError, setNoFilesError] = useState(null);
+
+	const handleCreatePost = async () => {
+		if (title.length === 0) {
+			setTitleError(LANGUAGE.create_post_modal_title_required_error[selectedLanguage]);
+		}
+		if (description.length === 0) {
+			setDescriptionError(LANGUAGE.create_post_modal_description_required_error[selectedLanguage]);
+		}
+		if (city === '') {
+			setCityError(LANGUAGE.create_post_modal_city_required_error[selectedLanguage]);
+		}
+		if (files.length === 0) {
+			setNoFilesError(true);
+		}
+		if (title.length > 0 && description.length > 0 && city.length > 0 && files.length > 0) {
+			setLoadingOverlay(true);
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/create`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+				},
+				body: JSON.stringify({
+					title,
+					description,
+					city,
+				}),
+			});
+			if (res.status === 201) {
+				console.log(res);
+				const resJson = await res.json();
+				const postId = resJson.postId;
+				console.log(postId);
+				const formData = new FormData();
+				files.forEach((file, index) => {
+					formData.append(index, file);
+				});
+				const res2 = await fetch(`${process.env.REACT_APP_API_URL}/posts/create/files/${postId}`, {
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+					},
+					body: formData,
+				});
+				if (res2.status === 200) {
+					setTitle('');
+					setDescription('');
+					setCity('');
+					setFiles([]);
+					setLoadingOverlay(false);
+					dispatch(changeModalState('createPost', false));
+				}
+			}
+		}
+	};
 
 	return (
 		<Modal
@@ -36,7 +92,10 @@ const CreatePostModal = () => {
 				setDescriptionError(null);
 				setCityError(null);
 				setFiles([]);
+				setNoFilesError(null);
+				setLoadingOverlay(false);
 			}}>
+			<LoadingOverlay visible={loadingOverlay} />
 			<TextInput
 				radius='md'
 				size='md'
@@ -86,8 +145,7 @@ const CreatePostModal = () => {
 			/>
 			<FileDropzone modal='createPost' setInputFile={setFiles} noFileError={noFilesError} />
 			<div className='create-post-modal-footer'>
-				<Button size='md' variant='filled' radius='md'>
-					{/* //! onclick */}
+				<Button size='md' variant='filled' radius='md' onClick={handleCreatePost}>
 					Submit
 				</Button>
 			</div>
