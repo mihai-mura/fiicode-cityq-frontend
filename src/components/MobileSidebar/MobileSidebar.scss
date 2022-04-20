@@ -90,3 +90,25 @@
 		}
 	}
 }
+
+.buttons-container {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+
+	.log-in-button {
+		border-radius: 15px;
+	}
+}
+
+.content-mobilesidebar {
+	height: 90%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	.log-out-button {
+		margin-top: 10px;
+		cursor: pointer;
+		color: #8a8a8a;
+	}
+}

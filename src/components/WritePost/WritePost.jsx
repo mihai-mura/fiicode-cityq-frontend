@@ -4,6 +4,7 @@ import UrlFetchImg from '../UrlFetchImage/UrlFetchImg';
 import LANGUAGE from '../../utils/languages.json';
 import { useSelector } from 'react-redux';
 import CreatePostUtils from '../../images/postutils.png';
+import BasicUser from '../../images/basic-user.png';
 
 const WritePost = () => {
 	const selectedLanguage = useSelector((state) => state.language);
@@ -11,11 +12,15 @@ const WritePost = () => {
 	return (
 		<div className='createpost-container'>
 			<div className='createpost-top-section'>
-				<UrlFetchImg
-					imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
-					alt='user'
-					className='createpost-image'
-				/>
+				{loggedUser ? (
+					<UrlFetchImg
+						imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
+						alt='user'
+						className='createpost-image'
+					/>
+				) : (
+					<img className='createpost-image' src={BasicUser} alt='basic-user' />
+				)}
 				<div className='createpost-text'>{LANGUAGE.create_post_modal_modaltitle[selectedLanguage]}</div>
 			</div>
 			<div className='createpost-bottom-section'>

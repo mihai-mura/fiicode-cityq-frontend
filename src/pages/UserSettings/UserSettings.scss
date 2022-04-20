@@ -1,0 +1,54 @@
+.settings-page {
+	width: 100%;
+	overflow: hidden;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	overflow-y: overlay;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2rem 1.5rem;
+	gap: 20px;
+	height: 100%;
+
+	.settings-top-container {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		.settings-top {
+			width: 600px;
+			.settings-head {
+				font-weight: 500;
+			}
+
+			.settings-top-text {
+				margin-top: 10px;
+				font-size: 0.95rem;
+				color: #64748b;
+			}
+		}
+	}
+	.settings-main-container {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.settings-main {
+		width: 600px;
+	}
+	.settings-text-input {
+		margin-top: 10px;
+		@media only screen and (min-width: 1000px) {
+			width: 48%;
+		}
+	}
+	.settings-main-down,
+	.settings-main-top {
+		@media only screen and (min-width: 1000px) {
+			display: flex;
+			justify-content: space-between;
+		}
+	}
+}

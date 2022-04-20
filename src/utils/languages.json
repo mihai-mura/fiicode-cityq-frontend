@@ -258,5 +258,21 @@
 	"restore_password_title": {
 		"en": "Set a new password",
 		"ro": "Seteaza o noua parola"
+	},
+	"settings_header": {
+		"en": "Settings",
+		"ro": "Setari"
+	},
+	"settings_top_text": {
+		"en": "This information will be displayed publicly so be careful what you share.",
+		"ro": "Aceste informații vor fi afișate public, așa că aveți grijă la ceea ce distribuiți."
+	},
+	"settings_password_input": {
+		"en": "Password",
+		"ro": "Parola"
+	},
+	"settings_adress_input": {
+		"en": "Adress",
+		"ro": "Adresa"
 	}
 }
