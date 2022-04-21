@@ -8,11 +8,37 @@ import { changeModalState } from '../../redux/actions';
 import LANGUAGE from '../../utils/languages.json';
 import { useSelector } from 'react-redux';
 import WritePost from '../../components/WritePost/WritePost';
+import { useEffect, useState } from 'react';
 
 const Explore = () => {
 	const dispatch = useDispatch();
 	const selectedLanguage = useSelector((state) => state.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
+	const [currentPosts, setCurrentPosts] = useState([]);
+
+	useEffect(() => {
+		(async () => {
+			await setPosts();
+		})();
+	}, []);
+
+	const setPosts = async () => {
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/all`);
+		const rawPosts = await res.json();
+		//set name and city
+		const posts = await Promise.all(
+			rawPosts.map(async (post) => {
+				const rawName = await fetch(`${process.env.REACT_APP_API_URL}/users/${post.user}/full-name`);
+				const name = await rawName.json();
+				return {
+					...post,
+					user: `${name.firstName} ${name.lastName}`,
+					city: `@${post.city.toLowerCase()}`,
+				};
+			})
+		);
+		setCurrentPosts(posts);
+	};
 
 	return (
 		<div className='page page-explore'>
@@ -26,17 +52,17 @@ const Explore = () => {
 					<WritePost></WritePost>
 				</div>
 			</div>
-			{PostsData.map((item, index) => (
+			{currentPosts.map((post, index) => (
 				<Post
+					title={post.title}
 					key={index}
-					image={item.image}
-					user={item.user}
-					city={item.city}
-					title={item.title}
-					description={item.description}
-					status={item.status}
-					upvotes={item.upvotes}
-					downvotes={item.downvotes}
+					fileUrls={post.file_urls}
+					user={post.user}
+					city={post.city}
+					description={post.description}
+					status={post.status}
+					upvotes={post.upvotes}
+					downvotes={post.downvotes}
 				/>
 			))}
 		</div>

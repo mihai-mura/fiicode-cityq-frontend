@@ -1,7 +1,8 @@
 import './Post.scss';
 import { IconArrowBigDownLine, IconArrowBigUpLine } from '@tabler/icons';
 
-const Posts = (props) => {
+const Post = (props) => {
+	//! carousel
 	return (
 		<div className='post-page-container'>
 			<div className='post-container'>
@@ -10,9 +11,7 @@ const Posts = (props) => {
 					<div className='post-city'>{props.city}</div>
 				</div>
 				<div className='postcarousel-container'>
-					<div className='post-display'>
-						<img src={props.image} alt='post' />
-					</div>
+					<img src={props.fileUrls[0]} alt='post' />
 				</div>
 				<div className='post-title'>{props.title}</div>
 				<div className='post-description'>{props.description}</div>
@@ -30,4 +29,4 @@ const Posts = (props) => {
 	);
 };
 
-export default Posts;
+export default Post;

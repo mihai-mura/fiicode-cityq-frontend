@@ -5,21 +5,21 @@ const UrlFetchImg = (props) => {
 	const [url, setUrl] = useState('');
 	useEffect(() => {
 		(async () => {
-			const res = await fetch(props.imageurl);
+			const res = await fetch(props.url);
 			if (res.status === 200) {
 				const res2 = await res.text();
 				setUrl(res2);
 			}
 		})();
-	}, [props.imageurl]);
+	}, [props.url]);
 	return url ? (
 		// eslint-disable-next-line jsx-a11y/alt-text
 		<img
 			src={url}
-			onError={({ currentTarget }) => {
-				currentTarget.onerror = null; // prevents looping
-				currentTarget.src = url;
-			}}
+			// onError={(e) => {
+			// 	e.currentTarget.onerror = null; // prevents looping
+			// 	e.currentTarget.src = url; //! network looping
+			// }}
 			{...props}
 		/>
 	) : (

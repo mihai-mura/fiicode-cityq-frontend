@@ -14,7 +14,7 @@ const WritePost = () => {
 			<div className='createpost-top-section'>
 				{loggedUser ? (
 					<UrlFetchImg
-						imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
+						url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 						alt='user'
 						className='createpost-image'
 					/>
