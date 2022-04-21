@@ -1,5 +1,18 @@
 .dropzone-images-container {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 10px;
+	line-height: 0;
+	column-count: 5;
+	column-gap: 3px;
+	row-gap: 3px;
+	overflow: hidden;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.dropzone-file-preview {
+	width: 100%;
+	height: auto;
+	margin-bottom: 3px;
 }

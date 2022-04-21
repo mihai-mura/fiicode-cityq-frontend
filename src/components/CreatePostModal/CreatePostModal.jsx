@@ -5,8 +5,10 @@ import { Modal, TextInput, Textarea, NativeSelect, Button, LoadingOverlay } from
 import { useDispatch, useSelector } from 'react-redux';
 import { IconBuilding } from '@tabler/icons';
 import { changeModalState } from '../../redux/actions';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FileDropzone from '../FileDropzone/FileDropzone';
+import { showNotification } from '@mantine/notifications';
+import { errorNotification, infoNotification } from '../Notifications/Notifications';
 
 const CreatePostModal = () => {
 	const dispatch = useDispatch();
@@ -21,7 +23,21 @@ const CreatePostModal = () => {
 	const [city, setCity] = useState('');
 	const [cityError, setCityError] = useState(null);
 	const [files, setFiles] = useState([]);
-	const [noFilesError, setNoFilesError] = useState(null);
+	const [noFilesError, setNoFilesError] = useState(false);
+	const [tooManyFilesError, setTooManyFilesError] = useState(false);
+
+	//set no file error false when files added
+	useEffect(() => {
+		if (files.length > 0) {
+			setNoFilesError(false);
+		}
+	}, [files]);
+
+	const deleteFiles = () => {
+		setFiles([]);
+		setNoFilesError(false);
+		setTooManyFilesError(false);
+	};
 
 	const handleCreatePost = async () => {
 		if (title.length === 0) {
@@ -36,7 +52,11 @@ const CreatePostModal = () => {
 		if (files.length === 0) {
 			setNoFilesError(true);
 		}
-		if (title.length > 0 && description.length > 0 && city.length > 0 && files.length > 0) {
+		if (files.length > 4) {
+			setTooManyFilesError(true);
+			showNotification(errorNotification(LANGUAGE.notification_create_post_too_many_files[selectedLanguage]));
+		}
+		if (title.length > 0 && description.length > 0 && city.length > 0 && files.length > 0 && files.length <= 4) {
 			setLoadingOverlay(true);
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/create`, {
 				method: 'POST',
@@ -67,12 +87,18 @@ const CreatePostModal = () => {
 					body: formData,
 				});
 				if (res2.status === 200) {
+					dispatch(changeModalState('createPost', false));
 					setTitle('');
 					setDescription('');
 					setCity('');
+					setTitleError(null);
+					setDescriptionError(null);
+					setCityError(null);
 					setFiles([]);
+					setNoFilesError(false);
+					setTooManyFilesError(false);
 					setLoadingOverlay(false);
-					dispatch(changeModalState('createPost', false));
+					showNotification(infoNotification('Success', LANGUAGE.notification_post_created[selectedLanguage], 'green'));
 				}
 			}
 		}
@@ -92,7 +118,8 @@ const CreatePostModal = () => {
 				setDescriptionError(null);
 				setCityError(null);
 				setFiles([]);
-				setNoFilesError(null);
+				setNoFilesError(false);
+				setTooManyFilesError(false);
 				setLoadingOverlay(false);
 			}}>
 			<LoadingOverlay visible={loadingOverlay} />
@@ -143,8 +170,17 @@ const CreatePostModal = () => {
 				}}
 				error={cityError}
 			/>
-			<FileDropzone modal='createPost' setInputFile={setFiles} noFileError={noFilesError} />
+			<FileDropzone
+				modal='createPost'
+				setInputFile={setFiles}
+				noFileError={noFilesError}
+				tooManyFilesError={tooManyFilesError}
+				files={files}
+			/>
 			<div className='create-post-modal-footer'>
+				<Button variant='subtle' radius='xl' compact onClick={deleteFiles}>
+					Delete Files
+				</Button>
 				<Button size='md' variant='filled' radius='md' onClick={handleCreatePost}>
 					Submit
 				</Button>

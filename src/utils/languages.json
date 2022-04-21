@@ -271,8 +271,20 @@
 		"en": "Password",
 		"ro": "Parola"
 	},
-	"settings_adress_input": {
-		"en": "Adress",
+	"settings_address_input": {
+		"en": "Address",
 		"ro": "Adresa"
+	},
+	"notification_create_post_file_too_large": {
+		"en": "File is too large",
+		"ro": "Fisierul este prea mare"
+	},
+	"notification_create_post_too_many_files": {
+		"en": "You can upload maximum 4 files",
+		"ro": "Se pot incarca maxim 4 fisiere"
+	},
+	"notification_post_created": {
+		"en": "Post created",
+		"ro": "Postare creata"
 	}
 }
