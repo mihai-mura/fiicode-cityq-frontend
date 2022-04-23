@@ -271,9 +271,17 @@
 		"en": "Password",
 		"ro": "Parola"
 	},
+	"settings_password_confirm_input": {
+		"en": "Confirm password",
+		"ro": "Confirma parola"
+	},
 	"settings_address_input": {
 		"en": "Address",
 		"ro": "Adresa"
+	},
+	"settings_page_save": {
+		"en": "Save",
+		"ro": "Salveaza"
 	},
 	"notification_create_post_file_too_large": {
 		"en": "File is too large",
@@ -286,5 +294,21 @@
 	"notification_post_created": {
 		"en": "Post created",
 		"ro": "Postare creata"
+	},
+	"notification_settings_saved": {
+		"en": "Settings saved",
+		"ro": "Setarile au fost salvate"
+	},
+	"notification_settings_error": {
+		"en": "Something went wrong",
+		"ro": "Ceva nu a mers bine"
+	},
+	"notification_profile_pic_saved": {
+		"en": "Profile picture saved",
+		"ro": "Imaginea de profil a fost salvata"
+	},
+	"notification_profile_pic_save_error": {
+		"en": "Something went wrong",
+		"ro": "Ceva nu a mers bine"
 	}
 }

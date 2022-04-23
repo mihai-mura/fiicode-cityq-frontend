@@ -20,7 +20,7 @@ export const errorNotification = (title, message) => ({
 	}),
 });
 
-export const infoNotification = (title, message, color) => ({
+export const infoNotification = (title, message = '', color = 'green') => ({
 	title: title,
 	message: message,
 	disallowClose: true,

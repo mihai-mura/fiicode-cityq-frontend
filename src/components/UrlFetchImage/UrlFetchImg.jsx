@@ -15,6 +15,7 @@ const UrlFetchImg = (props) => {
 	return url ? (
 		// eslint-disable-next-line jsx-a11y/alt-text
 		<img
+			style={{ objectFit: 'cover' }}
 			src={url}
 			// onError={(e) => {
 			// 	e.currentTarget.onerror = null; // prevents looping

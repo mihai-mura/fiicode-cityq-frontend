@@ -93,7 +93,7 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const userLoggedIcons = (
 		<div className='userLogged-top'>
 			<UrlFetchImg
-				imageurl={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser && loggedUser._id}`}
+				url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 				alt='user'
 				className='user-icon user-profilePic'
 			/>

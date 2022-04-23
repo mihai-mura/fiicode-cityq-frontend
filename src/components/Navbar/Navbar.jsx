@@ -33,7 +33,7 @@ const Navbar = ({ toggleMobileMenu }) => {
 			<BiCommentDetail className='user-icon comments' />
 			<FiBell className='user-icon notifications' />
 			<UrlFetchImg
-				url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser && loggedUser._id}`}
+				url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 				alt='user'
 				className='user-icon user-profilePic'
 				onClick={() => {
