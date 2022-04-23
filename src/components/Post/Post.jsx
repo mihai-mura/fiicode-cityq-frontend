@@ -11,6 +11,7 @@ import {
 	addLoggedUserDownvotes,
 	removeLoggedUserUpotes,
 	removeLoggedUserDownvotes,
+	changeModalState,
 } from '../../redux/actions';
 
 const Post = (props) => {
@@ -29,64 +30,67 @@ const Post = (props) => {
 	}, [props.upvotes, props.downvotes]);
 
 	const handleUpvote = async () => {
-		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/upvote/${props.id}`, {
-			method: 'PUT',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
-			},
-		});
-		const response = await res.text();
-		if (res.status === 200) {
-			if (response === 'added upvote') {
-				//add upvote
-				setUpvotes((prev) => prev + 1);
-				dispatch(addLoggedUserUpotes(props.id));
-			} else if (response === 'removed upvote') {
-				// remove upvote
-				setUpvotes((prev) => prev - 1);
-				dispatch(removeLoggedUserUpotes(props.id));
-			} else if (response === 'added upvote and removed downvote') {
-				//add upvote and remove downvote
-				setUpvotes((prev) => prev + 1);
-				setDownvotes((prev) => prev - 1);
-				dispatch(addLoggedUserUpotes(props.id));
-				dispatch(removeLoggedUserDownvotes(props.id));
+		if (loggedUser) {
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/upvote/${props.id}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+				},
+			});
+			const response = await res.text();
+			if (res.status === 200) {
+				if (response === 'added upvote') {
+					//add upvote
+					setUpvotes((prev) => prev + 1);
+					dispatch(addLoggedUserUpotes(props.id));
+				} else if (response === 'removed upvote') {
+					// remove upvote
+					setUpvotes((prev) => prev - 1);
+					dispatch(removeLoggedUserUpotes(props.id));
+				} else if (response === 'added upvote and removed downvote') {
+					//add upvote and remove downvote
+					setUpvotes((prev) => prev + 1);
+					setDownvotes((prev) => prev - 1);
+					dispatch(addLoggedUserUpotes(props.id));
+					dispatch(removeLoggedUserDownvotes(props.id));
+				}
+			} else {
+				showNotification(errorNotification());
 			}
-		} else {
-			showNotification(errorNotification());
-		}
+		} else dispatch(changeModalState('login', true));
 	};
 	const handleDownvote = async () => {
-		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/downvote/${props.id}`, {
-			method: 'PUT',
-			headers: {
-				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
-			},
-		});
-		const response = await res.text();
-		if (res.status === 200) {
-			if (response === 'added downvote') {
-				//add downvote
-				setDownvotes((prev) => prev + 1);
-				dispatch(addLoggedUserDownvotes(props.id));
-			} else if (response === 'removed downvote') {
-				//remove downvote
-				setDownvotes((prev) => prev - 1);
-				dispatch(removeLoggedUserDownvotes(props.id));
-			} else if (response === 'added downvote and removed upvote') {
-				//add downvote and remove upvote
-				setUpvotes((prev) => prev - 1);
-				setDownvotes((prev) => prev + 1);
-				dispatch(addLoggedUserDownvotes(props.id));
-				dispatch(removeLoggedUserUpotes(props.id));
+		if (loggedUser) {
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/downvote/${props.id}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+				},
+			});
+			const response = await res.text();
+			if (res.status === 200) {
+				if (response === 'added downvote') {
+					//add downvote
+					setDownvotes((prev) => prev + 1);
+					dispatch(addLoggedUserDownvotes(props.id));
+				} else if (response === 'removed downvote') {
+					//remove downvote
+					setDownvotes((prev) => prev - 1);
+					dispatch(removeLoggedUserDownvotes(props.id));
+				} else if (response === 'added downvote and removed upvote') {
+					//add downvote and remove upvote
+					setUpvotes((prev) => prev - 1);
+					setDownvotes((prev) => prev + 1);
+					dispatch(addLoggedUserDownvotes(props.id));
+					dispatch(removeLoggedUserUpotes(props.id));
+				}
+			} else {
+				showNotification(errorNotification());
 			}
-		} else {
-			showNotification(errorNotification());
-		}
+		} else dispatch(changeModalState('login', true));
 	};
 
 	//! carousel
-	//! vote post icon color
 	return (
 		<div className='post-container'>
 			<div className='post-header'>
@@ -108,13 +112,13 @@ const Post = (props) => {
 				<div className='votes'>
 					<IconArrowBigUpLine
 						className='upvote-icon'
-						style={{ color: loggedUser?.upvotedPosts.includes(props.id) ? '#00a8ff' : '#bdbac0' }}
+						style={{ color: loggedUser?.upvotedPosts?.includes(props.id) ? '#00a8ff' : '#bdbac0' }}
 						onClick={handleUpvote}
 					/>
 					<p>{upvotes}</p>
 					<IconArrowBigDownLine
 						className='downvote-icon'
-						style={{ color: loggedUser?.downvotedPosts.includes(props.id) ? '#f5342e' : '#bdbac0' }}
+						style={{ color: loggedUser?.downvotedPosts?.includes(props.id) ? '#f5342e' : '#bdbac0' }}
 						onClick={handleDownvote}
 					/>
 					<p>{downvotes}</p>
