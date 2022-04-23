@@ -5,8 +5,17 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification } from '../Notifications/Notifications';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+	addLoggedUserUpotes,
+	addLoggedUserDownvotes,
+	removeLoggedUserUpotes,
+	removeLoggedUserDownvotes,
+} from '../../redux/actions';
 
 const Post = (props) => {
+	const dispatch = useDispatch();
+	const loggedUser = useSelector((state) => state.loggedUser);
 	const [upvotes, setUpvotes] = useState(0);
 	const [downvotes, setDownvotes] = useState(0);
 
@@ -26,11 +35,23 @@ const Post = (props) => {
 				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
 			},
 		});
+		const response = await res.text();
 		if (res.status === 200) {
-			setUpvotes((prev) => prev + 1);
-		} else if (res.status === 204) {
-			// removed upvote
-			setUpvotes((prev) => prev - 1);
+			if (response === 'added upvote') {
+				//add upvote
+				setUpvotes((prev) => prev + 1);
+				dispatch(addLoggedUserUpotes(props.id));
+			} else if (response === 'removed upvote') {
+				// remove upvote
+				setUpvotes((prev) => prev - 1);
+				dispatch(removeLoggedUserUpotes(props.id));
+			} else if (response === 'added upvote and removed downvote') {
+				//add upvote and remove downvote
+				setUpvotes((prev) => prev + 1);
+				setDownvotes((prev) => prev - 1);
+				dispatch(addLoggedUserUpotes(props.id));
+				dispatch(removeLoggedUserDownvotes(props.id));
+			}
 		} else {
 			showNotification(errorNotification());
 		}
@@ -42,11 +63,23 @@ const Post = (props) => {
 				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
 			},
 		});
+		const response = await res.text();
 		if (res.status === 200) {
-			setDownvotes((prev) => prev + 1);
-		} else if (res.status === 204) {
-			// removed downvote
-			setDownvotes((prev) => prev - 1);
+			if (response === 'added downvote') {
+				//add downvote
+				setDownvotes((prev) => prev + 1);
+				dispatch(addLoggedUserDownvotes(props.id));
+			} else if (response === 'removed downvote') {
+				//remove downvote
+				setDownvotes((prev) => prev - 1);
+				dispatch(removeLoggedUserDownvotes(props.id));
+			} else if (response === 'added downvote and removed upvote') {
+				//add downvote and remove upvote
+				setUpvotes((prev) => prev - 1);
+				setDownvotes((prev) => prev + 1);
+				dispatch(addLoggedUserDownvotes(props.id));
+				dispatch(removeLoggedUserUpotes(props.id));
+			}
 		} else {
 			showNotification(errorNotification());
 		}
@@ -73,9 +106,17 @@ const Post = (props) => {
 			<div className='post-description'>{props.description}</div>
 			<div className='post-footer'>
 				<div className='votes'>
-					<IconArrowBigUpLine className='upvote-icon' style={{ color: '#00a8ff' }} onClick={handleUpvote} />
+					<IconArrowBigUpLine
+						className='upvote-icon'
+						style={{ color: loggedUser?.upvotedPosts.includes(props.id) ? '#00a8ff' : '#bdbac0' }}
+						onClick={handleUpvote}
+					/>
 					<p>{upvotes}</p>
-					<IconArrowBigDownLine className='downvote-icon' style={{ color: '#f5342e' }} onClick={handleDownvote} />
+					<IconArrowBigDownLine
+						className='downvote-icon'
+						style={{ color: loggedUser?.downvotedPosts.includes(props.id) ? '#f5342e' : '#bdbac0' }}
+						onClick={handleDownvote}
+					/>
 					<p>{downvotes}</p>
 				</div>
 				<div className='post-status'>{props.status}</div>

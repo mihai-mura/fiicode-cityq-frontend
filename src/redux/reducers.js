@@ -17,7 +17,14 @@ const loggedUser = (state = null, action) => {
 	switch (action.type) {
 		case 'setLoggedUser':
 			return action.payload;
-
+		case 'addUpvotes':
+			return { ...state, upvotedPosts: [...state.upvotedPosts, action.payload] };
+		case 'removeUpvotes':
+			return { ...state, upvotedPosts: state.upvotedPosts.filter((post) => post !== action.payload) };
+		case 'addDownvotes':
+			return { ...state, downvotedPosts: [...state.downvotedPosts, action.payload] };
+		case 'removeDownvotes':
+			return { ...state, downvotedPosts: state.downvotedPosts.filter((post) => post !== action.payload) };
 		default:
 			return state;
 	}
