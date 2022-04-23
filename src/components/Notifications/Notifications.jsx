@@ -1,4 +1,4 @@
-export const errorNotification = (title, message) => ({
+export const errorNotification = (title = 'Something went wrong', message = '') => ({
 	title: title,
 	message: message,
 	disallowClose: true,

@@ -90,7 +90,7 @@ const FileDropzone = (props) => {
 
 	//delete files button
 	useEffect(() => {
-		if (props.files.length === 0) {
+		if (props.files?.length === 0) {
 			setFiles(null);
 		}
 	}, [props.files]);
@@ -102,19 +102,13 @@ const FileDropzone = (props) => {
 		reader.addEventListener(
 			'load',
 			() => {
-				setFiles((prev) => {
-					if (prev === null) {
-						return [reader.result];
-					}
-					return [...prev, reader.result];
-				});
+				setFiles([reader.result]);
 			},
 			false
 		);
 		reader.readAsDataURL(files[0]);
 	};
 	//for createPost modal
-	//! video preview
 	const filesAdded = async (files) => {
 		props.setInputFile((prev) => [...prev, ...files]);
 

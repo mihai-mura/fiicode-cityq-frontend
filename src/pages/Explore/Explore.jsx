@@ -54,6 +54,7 @@ const Explore = () => {
 			</div>
 			{currentPosts.map((post, index) => (
 				<Post
+					id={post._id}
 					title={post.title}
 					key={index}
 					fileUrls={post.file_urls}
@@ -61,8 +62,8 @@ const Explore = () => {
 					city={post.city}
 					description={post.description}
 					status={post.status}
-					upvotes={post.upvotes}
-					downvotes={post.downvotes}
+					upvotes={post.upvotes.length}
+					downvotes={post.downvotes.length}
 				/>
 			))}
 		</div>

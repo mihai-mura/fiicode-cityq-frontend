@@ -22,7 +22,7 @@ const UserMenu = (props) => {
 		<div className='user-menu' ref={userMenuRef}>
 			<div className='user-menu-top-part'>
 				<div className='user-menu-link'>{`${loggedUser.firstName} ${loggedUser.lastName}`}</div>
-				<NavLink className='user-menu-link' to='/settings'>
+				<NavLink className='user-menu-link' to='/settings' onClick={() => props.closeUserMenu()}>
 					{LANGUAGE.navbar_user_menu_profile_settings[selectedLanguage]}
 				</NavLink>
 			</div>
