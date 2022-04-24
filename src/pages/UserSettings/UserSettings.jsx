@@ -7,8 +7,11 @@ import { useEffect, useRef, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
 import { infoNotification, errorNotification } from '../../components/Notifications/Notifications';
 import imageCompression from 'browser-image-compression';
+import { useNavigate } from 'react-router-dom';
+import ROLE from '../../utils/roles';
 
 const Settings = () => {
+	const navigate = useNavigate();
 	const selectedLanguage = useSelector((state) => state.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 
@@ -27,6 +30,13 @@ const Settings = () => {
 	const [passwordError, setPasswordError] = useState(null);
 	const [confirmPasswordError, setConfirmPasswordError] = useState(null);
 	const [addressError, setAddressError] = useState(null);
+
+	//redirect general admin
+	useEffect(() => {
+		if (loggedUser?.role === ROLE.GENERAL_ADMIN) {
+			navigate('/general-admin/settings');
+		}
+	}, [loggedUser]);
 
 	//set users settings in fields
 	useEffect(() => {

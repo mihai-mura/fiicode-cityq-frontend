@@ -14,8 +14,11 @@ import LANGUAGE from '../../utils/languages.json';
 import { showNotification } from '@mantine/notifications';
 import PasswordStrength from './PasswordStrength';
 import { errorNotification, infoNotification } from '../Notifications/Notifications';
+import ROLE from '../../utils/roles';
+import { useNavigate } from 'react-router-dom';
 
 const Authentification = () => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const modals = useSelector((state) => state.modals);
 	const selectedLanguage = useSelector((state) => state.language);
@@ -244,6 +247,9 @@ const Authentification = () => {
 					dispatch(setLoggedUser(response.user));
 					setLoginEmail('');
 					setLoginPassword('');
+					if (response.user.role === ROLE.GENERAL_ADMIN) {
+						navigate('/general-admin');
+					}
 				} else if (res.status === 403) {
 					setLoadingOverlay(false);
 					setLoginPasswordError(LANGUAGE.login_modal_password_wrong[selectedLanguage]);

@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
-import Users from './pages/Users';
 import UserSettings from './pages/UserSettings/UserSettings';
 import Explore from './pages/Explore/Explore';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -14,6 +12,8 @@ import { setLoggedUser, setLanguage } from './redux/actions';
 import CreatePostModal from './components/CreatePostModal/CreatePostModal';
 import MobileSidebar from './components/MobileSidebar/MobileSidebar';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
+import GeneralAdminPanel from './pages/GeneralAdminPanel/GeneralAdminPanel';
+import GeneralAdminSettings from './pages/GeneralAdminSettings/GeneralAdminSettings';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -61,10 +61,11 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Explore />} />
 						<Route path='/profile' element={<Profile />} />
-						<Route path='/dashboard' element={<Dashboard />} />
-						<Route path='/users' element={<Users />} />
 						<Route path='/settings' element={<UserSettings />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
+						{/* general admin routes */}
+						<Route path='/general-admin' element={<GeneralAdminPanel />} />
+						<Route path='/general-admin/settings' element={<GeneralAdminSettings />} />
 					</Routes>
 				</div>
 			</Router>

@@ -9,12 +9,22 @@ import LANGUAGE from '../../utils/languages.json';
 import { useSelector } from 'react-redux';
 import WritePost from '../../components/WritePost/WritePost';
 import { useEffect, useState } from 'react';
+import ROLE from '../../utils/roles';
+import { useNavigate } from 'react-router-dom';
 
 const Explore = () => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const selectedLanguage = useSelector((state) => state.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const [currentPosts, setCurrentPosts] = useState([]);
+
+	//redirect general admin
+	useEffect(() => {
+		if (loggedUser?.role === ROLE.GENERAL_ADMIN) {
+			navigate('/general-admin');
+		}
+	}, [loggedUser]);
 
 	useEffect(() => {
 		(async () => {
@@ -49,7 +59,7 @@ const Explore = () => {
 						if (!loggedUser) dispatch(changeModalState('login', true));
 						else dispatch(changeModalState('createPost', true));
 					}}>
-					<WritePost></WritePost>
+					<WritePost />
 				</div>
 			</div>
 			{currentPosts.map((post, index) => (
