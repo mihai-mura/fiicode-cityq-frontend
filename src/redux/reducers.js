@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-const modals = (state = { login: false, register: false, createPost: false }, action) => {
+const modals = (state = { login: false, register: false, createPost: false, createAdmin: false }, action) => {
 	switch (action.type) {
 		case 'login':
 			return { ...state, login: action.payload };
@@ -8,6 +8,8 @@ const modals = (state = { login: false, register: false, createPost: false }, ac
 			return { ...state, register: action.payload };
 		case 'createPost':
 			return { ...state, createPost: action.payload };
+		case 'createAdmin':
+			return { ...state, createAdmin: action.payload };
 		default:
 			return state;
 	}

@@ -1,0 +1,25 @@
+.page-general-admin {
+	display: flex;
+	flex-direction: column;
+}
+
+.page-general-admin-header {
+	width: 100%;
+	height: fit-content;
+	padding: 2rem;
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+//! edi baga un responsive grid:))
+.page-general-admin-body {
+	width: 100%;
+	height: 100%;
+	padding: 1rem;
+	overflow: hidden;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+}

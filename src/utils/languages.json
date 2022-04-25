@@ -172,8 +172,8 @@
 		"ro": "Parolele nu se potrivesc"
 	},
 	"register_modal_email_already_exists": {
-		"en": "Email already exists",
-		"ro": "Email-ul exista deja"
+		"en": "Email already in use",
+		"ro": "Email-ul este folosit deja"
 	},
 	"navbar_button_login": {
 		"en": "Log in",
@@ -310,5 +310,29 @@
 	"notification_profile_pic_save_error": {
 		"en": "Something went wrong",
 		"ro": "Ceva nu a mers bine"
+	},
+	"create_admin_modal_title": {
+		"en": "Create admin",
+		"ro": "Creaza admin"
+	},
+	"create_admin_modal_email": {
+		"en": "Email",
+		"ro": "Email"
+	},
+	"create_admin_modal_password": {
+		"en": "Password",
+		"ro": "Parola"
+	},
+	"create_admin_modal_city_in_use": {
+		"en": "There is already an admin for this city",
+		"ro": "Exista deja un admin pentru acest oras"
+	},
+	"create_admin_modal_success": {
+		"en": "Admin created",
+		"ro": "Admin creat"
+	},
+	"admin_card_city": {
+		"en": "City",
+		"ro": "Oras"
 	}
 }

@@ -14,6 +14,7 @@ import MobileSidebar from './components/MobileSidebar/MobileSidebar';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
 import GeneralAdminPanel from './pages/GeneralAdminPanel/GeneralAdminPanel';
 import GeneralAdminSettings from './pages/GeneralAdminSettings/GeneralAdminSettings';
+import CreateAdminModal from './components/CreateAdminModal/CreateAdminModal';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -50,6 +51,7 @@ function App() {
 			<Router>
 				<Authentification />
 				<CreatePostModal />
+				<CreateAdminModal />
 				<Sidebar />
 				<MobileSidebar
 					mobileSidebarOpen={mobileSidebarOpen}
