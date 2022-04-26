@@ -263,9 +263,13 @@
 		"en": "Settings",
 		"ro": "Setari"
 	},
-	"settings_top_text": {
+	"settings_top_text_user": {
 		"en": "This information will be displayed publicly so be careful what you share.",
 		"ro": "Aceste informații vor fi afișate public, așa că aveți grijă la ceea ce distribuiți."
+	},
+	"settings_top_text_general_admin": {
+		"en": "These settings  are for the general administrator only.",
+		"ro": "Aceste setari sunt doar pentru administratorul general."
 	},
 	"settings_password_input": {
 		"en": "Password",
@@ -295,13 +299,21 @@
 		"en": "Post created",
 		"ro": "Postare creata"
 	},
-	"notification_settings_saved": {
-		"en": "Settings saved",
-		"ro": "Setarile au fost salvate"
+	"notification_settings_first_name": {
+		"en": "First name saved",
+		"ro": "Prenume salvat"
 	},
-	"notification_settings_error": {
-		"en": "Something went wrong",
-		"ro": "Ceva nu a mers bine"
+	"notification_settings_last_name": {
+		"en": "Last name saved",
+		"ro": "Nume salvat"
+	},
+	"notification_settings_password": {
+		"en": "Password saved",
+		"ro": "Parola salvata"
+	},
+	"notification_settings_address": {
+		"en": "Address saved",
+		"ro": "Adresa salvata"
 	},
 	"notification_profile_pic_saved": {
 		"en": "Profile picture saved",
@@ -334,5 +346,30 @@
 	"admin_card_city": {
 		"en": "City",
 		"ro": "Oras"
+	},
+	"create_admin_button": {
+		"en": "Create admin",
+		"ro": "Creaza admin"
+	},
+
+	"delete_admin_modal_title": {
+		"en": "Delete admin",
+		"ro": "Sterge admin"
+	},
+	"delete_admin_modal_text": {
+		"en": "Are you sure you want to delete this admin?",
+		"ro": "Esti sigur ca vrei sa stergi acest admin?"
+	},
+	"delete_admin_modal_cancel": {
+		"en": "Cancel",
+		"ro": "Anuleaza"
+	},
+	"delete_admin_modal_confirm": {
+		"en": "Delete Admin",
+		"ro": "Sterge Admin"
+	},
+	"notification_admin_deleted": {
+		"en": "Admin deleted",
+		"ro": "Admin sters"
 	}
 }

@@ -10,7 +10,7 @@ import imageCompression from 'browser-image-compression';
 import { useNavigate } from 'react-router-dom';
 import ROLE from '../../utils/roles';
 
-const Settings = () => {
+const UserSettings = (props) => {
 	const navigate = useNavigate();
 	const selectedLanguage = useSelector((state) => state.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
@@ -31,10 +31,13 @@ const Settings = () => {
 	const [confirmPasswordError, setConfirmPasswordError] = useState(null);
 	const [addressError, setAddressError] = useState(null);
 
-	//redirect general admin
+	//redirect users based on role
 	useEffect(() => {
 		if (loggedUser?.role === ROLE.GENERAL_ADMIN) {
 			navigate('/general-admin/settings');
+		}
+		if (loggedUser?.role === ROLE.USER) {
+			navigate('/settings');
 		}
 	}, [loggedUser]);
 
@@ -46,9 +49,6 @@ const Settings = () => {
 	}, [loggedUser]);
 
 	const handleSave = async () => {
-		//verifies if all the data was updated successfully
-		let success = true;
-
 		//firstName
 		if (firstName !== loggedUser?.firstName) {
 			if (firstName === '') {
@@ -64,8 +64,9 @@ const Settings = () => {
 				});
 				if (res.status === 200) {
 					setFirstName(firstName.charAt(0).toUpperCase() + firstName.slice(1));
+					showNotification(infoNotification(LANGUAGE.notification_settings_first_name[selectedLanguage]));
 				} else {
-					success = false;
+					showNotification(errorNotification());
 				}
 			}
 		}
@@ -84,8 +85,9 @@ const Settings = () => {
 				});
 				if (res.status === 200) {
 					setLastName(lastName.charAt(0).toUpperCase() + lastName.slice(1));
+					showNotification(infoNotification(LANGUAGE.notification_settings_last_name[selectedLanguage]));
 				} else {
-					success = false;
+					showNotification(errorNotification());
 				}
 			}
 		}
@@ -106,36 +108,35 @@ const Settings = () => {
 					},
 					body: JSON.stringify({ value: password }),
 				});
-				if (res.status !== 200) {
-					success = false;
+				if (res.status === 200) {
+					setPassword('');
+					setConfirmPassword('');
+					showNotification(infoNotification(LANGUAGE.notification_settings_password[selectedLanguage]));
+				} else {
+					showNotification(errorNotification());
 				}
 			}
 		}
 		//address
-		if (address !== loggedUser?.address) {
-			if (address === '') {
-				setAddressError(LANGUAGE.register_modal_address_error[selectedLanguage]);
-			} else {
-				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/address`, {
-					method: 'PUT',
-					headers: {
-						'Content-Type': 'application/json',
-						Authorization: `Bearer ${localStorage.getItem('api-token')}`,
-					},
-					body: JSON.stringify({ value: address }),
-				});
-				if (res.status !== 200) {
-					success = false;
+		if (props.target === ROLE.USER) {
+			if (address !== loggedUser?.address) {
+				if (address === '') {
+					setAddressError(LANGUAGE.register_modal_address_error[selectedLanguage]);
+				} else {
+					const res = await fetch(`${process.env.REACT_APP_API_URL}/users/address`, {
+						method: 'PUT',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+						},
+						body: JSON.stringify({ value: address }),
+					});
+					if (res.status === 200) {
+						showNotification(infoNotification(LANGUAGE.notification_settings_address[selectedLanguage]));
+					} else {
+						showNotification(errorNotification());
+					}
 				}
-			}
-		}
-		if (firstName !== '' && lastName !== '' && address !== '') {
-			if (success) {
-				showNotification(infoNotification(LANGUAGE.notification_settings_saved[selectedLanguage]));
-				setPassword('');
-				setConfirmPassword('');
-			} else {
-				showNotification(errorNotification(LANGUAGE.notification_settings_error[selectedLanguage]));
 			}
 		}
 	};
@@ -169,6 +170,7 @@ const Settings = () => {
 			});
 			if (res.status === 200) {
 				showNotification(infoNotification(LANGUAGE.notification_profile_pic_saved[selectedLanguage]));
+				setTimeout(() => window.location.reload(false), 1000);
 			} else {
 				showNotification(errorNotification(LANGUAGE.notification_profile_pic_save_error[selectedLanguage]));
 			}
@@ -180,7 +182,12 @@ const Settings = () => {
 			<div className='settings-top-container'>
 				<div className='settings-top'>
 					<h3 className='settings-head'>{LANGUAGE.settings_header[selectedLanguage]}</h3>
-					<p className='settings-top-text'>{LANGUAGE.settings_top_text[selectedLanguage]}</p>
+					{/* //! top text for other roles */}
+
+					<p className='settings-top-text'>
+						{props.target === ROLE.USER && LANGUAGE.settings_top_text_user[selectedLanguage]}
+						{props.target === ROLE.GENERAL_ADMIN && LANGUAGE.settings_top_text_general_admin[selectedLanguage]}
+					</p>
 				</div>
 			</div>
 			<div className='settings-main-container'>
@@ -246,18 +253,20 @@ const Settings = () => {
 						/>
 					</div>
 					<div className='settings-main-down'>
-						<TextInput
-							className='settings-text-input'
-							radius='md'
-							label={LANGUAGE.settings_address_input[selectedLanguage]}
-							placeholder={LANGUAGE.settings_address_input[selectedLanguage]}
-							value={address}
-							error={addressError}
-							onChange={(e) => {
-								setAddress(e.target.value);
-								setAddressError(null);
-							}}
-						/>
+						{props.target === ROLE.USER && (
+							<TextInput
+								className='settings-text-input'
+								radius='md'
+								label={LANGUAGE.settings_address_input[selectedLanguage]}
+								placeholder={LANGUAGE.settings_address_input[selectedLanguage]}
+								value={address}
+								error={addressError}
+								onChange={(e) => {
+									setAddress(e.target.value);
+									setAddressError(null);
+								}}
+							/>
+						)}
 					</div>
 					<div className='footer'>
 						<Button radius='xl' onClick={handleSave}>
@@ -270,4 +279,4 @@ const Settings = () => {
 	);
 };
 
-export default Settings;
+export default UserSettings;

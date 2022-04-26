@@ -82,7 +82,7 @@ const CreateAdminModal = () => {
 		) {
 			//togle overlay
 			setLoadingOverlay(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/local-admins/create`, {
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/local-admins`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -112,6 +112,7 @@ const CreateAdminModal = () => {
 				setFirstNameError(false);
 				setLastNameError(false);
 				showNotification(infoNotification(LANGUAGE.create_admin_modal_success[selectedLanguage]));
+				setTimeout(() => window.location.reload(false), 1000);
 			} else if (res.status === 409) {
 				const error = await res.text();
 				if (error === 'Email already in use') {

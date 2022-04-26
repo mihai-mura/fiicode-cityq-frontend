@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { NotificationsProvider } from '@mantine/notifications';
+import { ModalsProvider } from '@mantine/modals';
 
 //redux stuff
 import Masterducer from './redux/reducers';
@@ -19,7 +20,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<Provider store={store}>
 			<NotificationsProvider>
-				<App />
+				<ModalsProvider>
+					<App />
+				</ModalsProvider>
 			</NotificationsProvider>
 		</Provider>
 	</React.StrictMode>,

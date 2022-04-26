@@ -13,8 +13,8 @@ import CreatePostModal from './components/CreatePostModal/CreatePostModal';
 import MobileSidebar from './components/MobileSidebar/MobileSidebar';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
 import GeneralAdminPanel from './pages/GeneralAdminPanel/GeneralAdminPanel';
-import GeneralAdminSettings from './pages/GeneralAdminSettings/GeneralAdminSettings';
 import CreateAdminModal from './components/CreateAdminModal/CreateAdminModal';
+import ROLE from './utils/roles';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -49,9 +49,11 @@ function App() {
 	return (
 		<div className='App'>
 			<Router>
+				{/* modals */}
 				<Authentification />
 				<CreatePostModal />
 				<CreateAdminModal />
+
 				<Sidebar />
 				<MobileSidebar
 					mobileSidebarOpen={mobileSidebarOpen}
@@ -63,11 +65,11 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Explore />} />
 						<Route path='/profile' element={<Profile />} />
-						<Route path='/settings' element={<UserSettings />} />
+						<Route path='/settings' element={<UserSettings target={ROLE.USER} />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						{/* general admin routes */}
 						<Route path='/general-admin' element={<GeneralAdminPanel />} />
-						<Route path='/general-admin/settings' element={<GeneralAdminSettings />} />
+						<Route path='/general-admin/settings' element={<UserSettings target={ROLE.GENERAL_ADMIN} />} />
 					</Routes>
 				</div>
 			</Router>
