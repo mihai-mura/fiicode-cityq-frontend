@@ -2,7 +2,7 @@ export const errorNotification = (title = 'Something went wrong', message = '') 
 	title: title,
 	message: message,
 	disallowClose: true,
-	autoClose: 5000,
+	autoClose: 3000,
 	color: 'red',
 	loading: false,
 	styles: (theme) => ({
@@ -24,7 +24,7 @@ export const infoNotification = (title, message = '', color = 'green') => ({
 	title: title,
 	message: message,
 	disallowClose: true,
-	autoClose: 5000,
+	autoClose: 3000,
 	color: color,
 	loading: false,
 	styles: (theme) => ({

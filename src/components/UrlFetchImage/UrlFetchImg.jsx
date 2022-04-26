@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Loader } from '@mantine/core';
+import defaulPic from '../../images/basic-user.png';
 
 const UrlFetchImg = (props) => {
 	const [url, setUrl] = useState('');
@@ -17,10 +18,10 @@ const UrlFetchImg = (props) => {
 		<img
 			style={{ objectFit: 'cover' }}
 			src={url}
-			// onError={(e) => {
-			// 	e.currentTarget.onerror = null; // prevents looping
-			// 	e.currentTarget.src = url; //! network looping
-			// }}
+			onError={(e) => {
+				e.currentTarget.onerror = null;
+				e.currentTarget.src = defaulPic;
+			}}
 			{...props}
 		/>
 	) : (

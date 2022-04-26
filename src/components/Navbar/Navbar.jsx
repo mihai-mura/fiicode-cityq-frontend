@@ -10,6 +10,7 @@ import LANGUAGE from '../../utils/languages.json';
 import UserMenu from '../UserMenu/UserMenu';
 import CityQLogo from '../../images/CityQ.svg';
 import MobileHamburger from '../../images/mobile-hamburger.svg';
+import { Button } from '@mantine/core';
 
 const Navbar = ({ toggleMobileMenu }) => {
 	const dispatch = useDispatch();
@@ -19,12 +20,12 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 	const userNotLoggedIcons = (
 		<>
-			<div className='log-in-button' onClick={() => dispatch(changeModalState('login', true))}>
+			<Button className='log-in-button' onClick={() => dispatch(changeModalState('login', true))}>
 				{LANGUAGE.navbar_button_login[selectedLanguage]}
-			</div>
-			<div className='sign-up-button' onClick={() => dispatch(changeModalState('register', true))}>
+			</Button>
+			<Button className='sign-up-button' onClick={() => dispatch(changeModalState('register', true))}>
 				{LANGUAGE.navbar_button_register[selectedLanguage]}
-			</div>
+			</Button>
 		</>
 	);
 

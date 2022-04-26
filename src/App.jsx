@@ -15,16 +15,21 @@ import RestorePassword from './pages/RestorePassword/RestorePassword';
 import GeneralAdminPanel from './pages/GeneralAdminPanel/GeneralAdminPanel';
 import CreateAdminModal from './components/CreateAdminModal/CreateAdminModal';
 import ROLE from './utils/roles';
+import { LoadingOverlay } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import { errorNotification } from './components/Notifications/Notifications';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const dispatch = useDispatch();
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 	//*inits
 	//setLoggedUser
 	useEffect(() => {
 		(async () => {
 			if (localStorage.getItem('api-token') && !loggedUser) {
+				setLoadingOverlay(true);
 				const res = await fetch(`${process.env.REACT_APP_API_URL}/users`, {
 					method: 'GET',
 					headers: {
@@ -34,9 +39,9 @@ function App() {
 				const user = await res.json();
 				if (res.status === 200) {
 					dispatch(setLoggedUser(user));
-					if (user.success) {
-						return user.data;
-					}
+					setLoadingOverlay(false);
+				} else {
+					showNotification(errorNotification());
 				}
 			}
 		})();
@@ -48,6 +53,7 @@ function App() {
 
 	return (
 		<div className='App'>
+			<LoadingOverlay visible={loadingOverlay} loaderProps={{ size: 'xl' }} />
 			<Router>
 				{/* modals */}
 				<Authentification />

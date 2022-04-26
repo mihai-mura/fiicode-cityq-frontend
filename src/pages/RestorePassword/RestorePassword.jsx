@@ -10,7 +10,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLanguage } from '../../redux/actions';
 
 //! invalid link page
-//! add language button
 const RestorePassword = () => {
 	const params = useParams();
 	const navigate = useNavigate();

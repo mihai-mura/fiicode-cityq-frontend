@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeModalState, setLanguage } from '../../redux/actions';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import UrlFetchImg from '../UrlFetchImage/UrlFetchImg';
+import { Button } from '@mantine/core';
 
 const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const dispatch = useDispatch();
@@ -81,12 +82,12 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const userNotLoggedIcons = (
 		<>
 			<div className='buttons-container'>
-				<div className='log-in-button' onClick={() => dispatch(changeModalState('login', true))}>
+				<Button className='log-in-button' onClick={() => dispatch(changeModalState('login', true))}>
 					{LANGUAGE.navbar_button_login[selectedLanguage]}
-				</div>
-				<div className='sign-up-button' onClick={() => dispatch(changeModalState('register', true))}>
+				</Button>
+				<Button className='sign-up-button' onClick={() => dispatch(changeModalState('register', true))}>
 					{LANGUAGE.navbar_button_register[selectedLanguage]}
-				</div>
+				</Button>
 			</div>
 		</>
 	);

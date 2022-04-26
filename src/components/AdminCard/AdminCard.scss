@@ -1,6 +1,5 @@
 .admin-card {
 	height: fit-content;
-	max-width: 300px;
 	min-width: 300px;
 	padding: 20px;
 	display: flex;
@@ -23,13 +22,13 @@
 		.name {
 			font-size: 1.2rem;
 		}
+		p {
+			cursor: default;
+		}
 	}
 
 	p {
 		cursor: pointer;
-	}
-	span {
-		color: #949699;
 	}
 
 	.footer {
@@ -37,9 +36,6 @@
 		height: fit-content;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
-		span {
-			color: white;
-		}
+		justify-content: flex-end;
 	}
 }
