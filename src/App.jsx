@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Profile from './pages/Profile';
 import UserSettings from './pages/UserSettings/UserSettings';
 import Explore from './pages/Explore/Explore';
 import Sidebar from './components/Sidebar/Sidebar';
@@ -19,6 +18,7 @@ import { LoadingOverlay } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification } from './components/Notifications/Notifications';
 import CreateModeratorModal from './components/CreateModeratorModal/CreateModeratorModal';
+import AddressVerification from './pages/AddressVerification/AddressVerification';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -72,13 +72,13 @@ function App() {
 
 					<Routes>
 						<Route path='/' element={<Explore />} />
-						<Route path='/profile' element={<Profile />} />
 						<Route path='/settings' element={<UserSettings target={ROLE.USER} />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						{/* general admin routes */}
 						<Route path='/general-admin' element={<ManageUsers target={ROLE.LOCAL_ADMIN} />} />
 						<Route path='/general-admin/settings' element={<UserSettings role={ROLE.GENERAL_ADMIN} />} />
 						{/* local admin routes */}
+						<Route path='/local-admin/address-verification' element={<AddressVerification />} />
 						<Route path='/local-admin/moderators' element={<ManageUsers target={ROLE.MODERATOR} />} />
 						<Route path='/local-admin/settings' element={<UserSettings role={ROLE.LOCAL_ADMIN} />} />
 					</Routes>

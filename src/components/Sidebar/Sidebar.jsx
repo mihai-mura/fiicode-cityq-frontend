@@ -1,8 +1,7 @@
 import './Sidebar.scss';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
-import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons';
 import CityQLogo from '../../images/logo-cityq.svg';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -25,7 +24,7 @@ const Sidebar = () => {
 
 	return (
 		<motion.div animate={{ width: isOpen ? '210px' : '90px' }} className='sidebar'>
-			<div className='top-section'>
+			<div className='sidebar-top-section'>
 				<NavLink to='/'>
 					<img src={CityQLogo} alt='logo' to='/' />
 				</NavLink>
@@ -33,11 +32,11 @@ const Sidebar = () => {
 
 				{isOpen ? (
 					<div className='arrow'>
-						<MdOutlineKeyboardArrowLeft onClick={toggle} />
+						<IconChevronLeft onClick={toggle} />
 					</div>
 				) : (
 					<div className='arrow'>
-						<MdOutlineKeyboardArrowRight onClick={toggle} />
+						<IconChevronRight onClick={toggle} />
 					</div>
 				)}
 			</div>
@@ -47,9 +46,9 @@ const Sidebar = () => {
 						to={loggedUser ? route.path : '/'}
 						onClick={loggedUser ? null : route.path === '/' ? null : () => dispatch(changeModalState('login', true))}
 						key={route.name}
-						className='link'>
-						<div className='icon'>{route.icon}</div>
-						{isOpen && <div className='link_text'>{route.name}</div>}
+						className='sidebar-link'>
+						<div className='sidebar-icon'>{route.icon}</div>
+						{isOpen && <div className='sidebar-link-text'>{route.name}</div>}
 					</NavLink>
 				))}
 			</section>

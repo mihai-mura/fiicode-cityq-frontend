@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { IconCheck, IconX } from '@tabler/icons';
 import { CgPassword } from 'react-icons/cg';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
+import LANGUAGE from '../../utils/languages.json';
+import { useSelector } from 'react-redux';
 
 function PasswordRequirement({ meets, label }) {
 	return (
@@ -32,6 +34,8 @@ function getStrength(password) {
 }
 
 const PasswordStrength = (props) => {
+	const selectedLanguage = useSelector((store) => store.language);
+
 	const [popoverOpened, setPopoverOpened] = useState(false);
 	const [value, setValue] = useState('');
 	const checks = requirements.map((requirement, index) => (
@@ -43,6 +47,7 @@ const PasswordStrength = (props) => {
 
 	return (
 		<Popover
+			className='auth-input'
 			opened={popoverOpened}
 			position='bottom'
 			placement='start'
@@ -54,11 +59,10 @@ const PasswordStrength = (props) => {
 			onBlurCapture={() => setPopoverOpened(false)}
 			target={
 				<PasswordInput
-					className='auth-input'
 					icon={<CgPassword />}
 					variant='filled'
-					placeholder='Password'
-					description='Password must be at least 8 characters long and contain at least one number, one lowercase letter, one uppercase letter and one special character.'
+					placeholder={LANGUAGE.register_modal_password[selectedLanguage]}
+					description={LANGUAGE.register_modal_password_description[selectedLanguage]}
 					radius='md'
 					value={props.value}
 					onChange={(e) => {

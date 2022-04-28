@@ -1,16 +1,12 @@
 import { useState, useEffect } from 'react';
 import './MobileSidebar.scss';
-import ROLE from '../../utils/roles';
-import { MdOutlineExplore, MdOutlineDashboardCustomize } from 'react-icons/md';
-import { AiOutlineUser } from 'react-icons/ai';
-import { FiSettings } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import { NavLink } from 'react-router-dom';
 import { setLoggedUser } from '../../redux/actions';
 import LANGUAGE from '../../utils/languages.json';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeModalState, setLanguage } from '../../redux/actions';
-import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
+import { IconChevronLeft } from '@tabler/icons';
 import UrlFetchImg from '../UrlFetchImage/UrlFetchImg';
 import { Button } from '@mantine/core';
 import getRoutes from '../../utils/sidebarRoutes';
@@ -85,9 +81,9 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 		<div className='content-mobilesidebar'>
 			<section className='routes'>
 				{sidebarRoutes?.map((route) => (
-					<NavLink to={route.path} key={route.name} className='link' onClick={toggleMobileMenu}>
-						<div className='icon'>{route.icon}</div>
-						{mobileSidebarOpen && <div className='link_text'>{route.name}</div>}
+					<NavLink to={route.path} key={route.name} className='sidebar-link' onClick={toggleMobileMenu}>
+						<div className='sidebar-icon'>{route.icon}</div>
+						{mobileSidebarOpen && <div className='sidebar-link-text'>{route.name}</div>}
 					</NavLink>
 				))}
 			</section>
@@ -117,10 +113,10 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 		<div
 			style={{ opacity: mobileSidebarOpen ? '100%' : '0', left: mobileSidebarOpen ? '0' : '-100%' }}
 			className='mobilesidebar-container'>
-			<div className='top-section'>
+			<div className='sidebar-top-section'>
 				<div className='mobilesidebar-logo'>{loggedUser ? userLoggedIcons : userNotLoggedIcons}</div>
 				<div className='mobile-arrow'>
-					<MdOutlineKeyboardArrowLeft onClick={toggleMobileMenu} />
+					<IconChevronLeft onClick={toggleMobileMenu} />
 				</div>
 			</div>
 			{loggedUser ? userLoggedContent : userNotLoggedContent}

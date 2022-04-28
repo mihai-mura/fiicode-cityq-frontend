@@ -12,9 +12,8 @@
 		display: block !important;
 	}
 }
-
 // LOGO AND ARROW DESIGN
-.top-section {
+.sidebar-top-section {
 	margin-left: 2px;
 	display: flex;
 	align-items: center;
@@ -37,7 +36,7 @@
 	}
 	.arrow {
 		cursor: pointer;
-		font-size: 1.4rem;
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -57,7 +56,8 @@
 	}
 }
 
-.link {
+.sidebar-link {
+	height: 55px;
 	display: flex;
 	align-items: center;
 	gap: 10px;
@@ -66,20 +66,18 @@
 	padding: 7px 10px;
 	border-radius: 10px;
 }
-.icon {
+.sidebar-icon {
+	width: 25px;
+	height: 25px;
 	font-size: 1.5rem;
-	margin-top: 3px;
+	margin-bottom: 7px;
 }
 
-.link_text {
+.sidebar-link-text {
 	margin-top: -3px;
 }
 
-a {
-	text-decoration: none;
-}
-
-.link:hover {
+.sidebar-link:hover {
 	background-color: #efefef;
 	color: #2a3033;
 	transition: all 0.2s;

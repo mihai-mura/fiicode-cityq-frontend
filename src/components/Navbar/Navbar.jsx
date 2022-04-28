@@ -1,7 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import './Navbar.scss';
-import { FiBell } from 'react-icons/fi';
-import { BiCommentDetail } from 'react-icons/bi';
+import { IconBell, IconMessageDots } from '@tabler/icons';
 // import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeModalState, setLanguage } from '../../redux/actions';
@@ -31,8 +30,8 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 	const userLoggedIcons = (
 		<>
-			<BiCommentDetail className='user-icon comments' />
-			<FiBell className='user-icon notifications' />
+			<IconMessageDots className='user-icon comments' />
+			<IconBell className='user-icon notifications' />
 			<UrlFetchImg
 				url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 				alt='user'

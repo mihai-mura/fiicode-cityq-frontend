@@ -1,8 +1,6 @@
 import LANGUAGE from './languages.json';
-import { MdOutlineExplore, MdOutlineDashboardCustomize } from 'react-icons/md';
-import { AiOutlineUser } from 'react-icons/ai';
-import { FiSettings } from 'react-icons/fi';
 import ROLE from './roles';
+import { IconBrandSafari, IconChecklist, IconSettings, IconUser } from '@tabler/icons';
 
 //!  language based route name
 const getRoutes = (role, selectedLanguage) => {
@@ -12,17 +10,17 @@ const getRoutes = (role, selectedLanguage) => {
 				{
 					path: '/',
 					name: LANGUAGE.sidebar_explore[selectedLanguage],
-					icon: <MdOutlineExplore />,
+					icon: <IconBrandSafari />,
 				},
 				{
 					path: '/profile',
 					name: LANGUAGE.sidebar_profile[selectedLanguage],
-					icon: <AiOutlineUser />,
+					icon: <IconUser />,
 				},
 				{
 					path: '/settings',
 					name: LANGUAGE.sidebar_settings[selectedLanguage],
-					icon: <FiSettings />,
+					icon: <IconSettings />,
 				},
 			];
 		case ROLE.MODERATOR:
@@ -30,17 +28,12 @@ const getRoutes = (role, selectedLanguage) => {
 				{
 					path: '/',
 					name: 'Posts',
-					icon: <MdOutlineExplore />,
-				},
-				{
-					path: '/dashboard',
-					name: 'Requests',
-					icon: <MdOutlineDashboardCustomize />,
+					icon: <IconBrandSafari />,
 				},
 				{
 					path: '/settings',
 					name: 'Settings',
-					icon: <FiSettings />,
+					icon: <IconSettings />,
 				},
 			];
 		case ROLE.LOCAL_ADMIN:
@@ -48,22 +41,22 @@ const getRoutes = (role, selectedLanguage) => {
 				{
 					path: '/',
 					name: 'Explore',
-					icon: <MdOutlineExplore />,
+					icon: <IconBrandSafari />,
 				},
 				{
-					path: '/dashboard',
-					name: 'Dashboard',
-					icon: <MdOutlineDashboardCustomize />,
+					path: '/local-admin/address-verification',
+					name: 'Address Verification',
+					icon: <IconChecklist />,
 				},
 				{
 					path: '/local-admin/moderators',
 					name: 'Moderators',
-					icon: <AiOutlineUser />,
+					icon: <IconUser />,
 				},
 				{
 					path: '/local-admin/settings',
 					name: 'Settings',
-					icon: <FiSettings />,
+					icon: <IconSettings />,
 				},
 			];
 		case ROLE.GENERAL_ADMIN:
@@ -71,12 +64,12 @@ const getRoutes = (role, selectedLanguage) => {
 				{
 					path: '/general-admin',
 					name: 'Local Admins',
-					icon: <AiOutlineUser />,
+					icon: <IconUser />,
 				},
 				{
 					path: '/general-admin/settings',
 					name: 'Settings',
-					icon: <FiSettings />,
+					icon: <IconSettings />,
 				},
 			];
 		default:
@@ -84,17 +77,17 @@ const getRoutes = (role, selectedLanguage) => {
 				{
 					path: '/',
 					name: LANGUAGE.sidebar_explore[selectedLanguage],
-					icon: <MdOutlineExplore />,
+					icon: <IconBrandSafari />,
 				},
 				{
 					path: '/profile',
 					name: LANGUAGE.sidebar_profile[selectedLanguage],
-					icon: <AiOutlineUser />,
+					icon: <IconUser />,
 				},
 				{
 					path: '/settings',
 					name: LANGUAGE.sidebar_settings[selectedLanguage],
-					icon: <FiSettings />,
+					icon: <IconSettings />,
 				},
 			];
 	}
