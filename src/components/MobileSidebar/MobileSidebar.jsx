@@ -1,5 +1,6 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import './MobileSidebar.scss';
+import ROLE from '../../utils/roles';
 import { MdOutlineExplore, MdOutlineDashboardCustomize } from 'react-icons/md';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiSettings } from 'react-icons/fi';
@@ -12,80 +13,42 @@ import { changeModalState, setLanguage } from '../../redux/actions';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import UrlFetchImg from '../UrlFetchImage/UrlFetchImg';
 import { Button } from '@mantine/core';
+import getRoutes from '../../utils/sidebarRoutes';
 
 const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const dispatch = useDispatch();
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const selectedLanguage = useSelector((state) => state.language);
+	const [sidebarRoutes, setSidebarRoutes] = useState([]);
+
+	//setSidebarRoutes according to loggedUser
+	useEffect(() => {
+		setSidebarRoutes(getRoutes(loggedUser?.role, selectedLanguage));
+	}, [loggedUser, selectedLanguage]);
+
 	const handleLoggout = () => {
 		dispatch(setLoggedUser(null));
 		localStorage.removeItem('api-token');
+		toggleMobileMenu();
 	};
-	const UserRoutes = [
-		{
-			path: '/',
-			name: LANGUAGE.sidebar_explore[selectedLanguage],
-			icon: <MdOutlineExplore />,
-		},
-		{
-			path: '/profile',
-			name: LANGUAGE.sidebar_profile[selectedLanguage],
-			icon: <AiOutlineUser />,
-		},
-		{
-			path: '/settings',
-			name: LANGUAGE.sidebar_settings[selectedLanguage],
-			icon: <FiSettings />,
-		},
-	];
 
-	const ModeratorRoutes = [
-		{
-			path: '/',
-			name: 'Posts',
-			icon: <MdOutlineExplore />,
-		},
-		{
-			path: '/dashboard',
-			name: 'Requests',
-			icon: <MdOutlineDashboardCustomize />,
-		},
-		{
-			path: '/settings',
-			name: 'Settings',
-			icon: <FiSettings />,
-		},
-	];
-
-	const AdminRoutes = [
-		{
-			path: '/',
-			name: 'Explore',
-			icon: <MdOutlineExplore />,
-		},
-		{
-			path: '/dashboard',
-			name: 'Dashboard',
-			icon: <MdOutlineDashboardCustomize />,
-		},
-		{
-			path: '/users',
-			name: 'Users',
-			icon: <AiOutlineUser />,
-		},
-		{
-			path: '/settings',
-			name: 'Settings',
-			icon: <FiSettings />,
-		},
-	];
 	const userNotLoggedIcons = (
 		<>
 			<div className='buttons-container'>
-				<Button className='log-in-button' onClick={() => dispatch(changeModalState('login', true))}>
+				<Button
+					className='log-in-button'
+					onClick={() => {
+						dispatch(changeModalState('login', true));
+						toggleMobileMenu();
+					}}>
 					{LANGUAGE.navbar_button_login[selectedLanguage]}
 				</Button>
-				<Button className='sign-up-button' onClick={() => dispatch(changeModalState('register', true))}>
+				<Button
+					className='sign-up-button'
+					onClick={() => {
+						dispatch(changeModalState('register', true));
+						toggleMobileMenu();
+					}}>
 					{LANGUAGE.navbar_button_register[selectedLanguage]}
 				</Button>
 			</div>
@@ -121,7 +84,7 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const userLoggedContent = (
 		<div className='content-mobilesidebar'>
 			<section className='routes'>
-				{UserRoutes.map((route) => (
+				{sidebarRoutes?.map((route) => (
 					<NavLink to={route.path} key={route.name} className='link' onClick={toggleMobileMenu}>
 						<div className='icon'>{route.icon}</div>
 						{mobileSidebarOpen && <div className='link_text'>{route.name}</div>}

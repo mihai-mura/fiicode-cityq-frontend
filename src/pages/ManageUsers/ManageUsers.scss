@@ -1,9 +1,16 @@
-.page-general-admin {
+.page-manage-users {
 	display: flex;
 	flex-direction: column;
 }
 
-.page-general-admin-header {
+.add-user-button-mobile {
+	width: 10px;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.page-manage-users-header {
 	width: 100%;
 	height: fit-content;
 	padding: 2rem;
@@ -13,7 +20,7 @@
 }
 
 //! edi baga un responsive grid:))
-.page-general-admin-body {
+.page-manage-users-body {
 	width: 100%;
 	height: 100%;
 	padding: 1rem;
@@ -24,4 +31,13 @@
 	grid-template-columns: repeat(4, 1fr);
 	justify-items: center;
 	gap: 10px;
+}
+
+@media only screen and (max-width: 400px) {
+	.add-user-button {
+		display: none;
+	}
+	.add-user-button-mobile {
+		display: flex;
+	}
 }

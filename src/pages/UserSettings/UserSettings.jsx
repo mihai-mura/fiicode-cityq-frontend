@@ -33,11 +33,14 @@ const UserSettings = (props) => {
 
 	//redirect users based on role
 	useEffect(() => {
-		if (loggedUser?.role === ROLE.GENERAL_ADMIN) {
-			navigate('/general-admin/settings');
-		}
 		if (loggedUser?.role === ROLE.USER) {
 			navigate('/settings');
+		}
+		if (loggedUser?.role === ROLE.LOCAL_ADMIN) {
+			navigate('/local-admin/settings');
+		}
+		if (loggedUser?.role === ROLE.GENERAL_ADMIN) {
+			navigate('/general-admin/settings');
 		}
 	}, [loggedUser]);
 
@@ -118,7 +121,7 @@ const UserSettings = (props) => {
 			}
 		}
 		//address
-		if (props.target === ROLE.USER) {
+		if (props.role === ROLE.USER) {
 			if (address !== loggedUser?.address) {
 				if (address === '') {
 					setAddressError(LANGUAGE.register_modal_address_error[selectedLanguage]);
@@ -182,11 +185,11 @@ const UserSettings = (props) => {
 			<div className='settings-top-container'>
 				<div className='settings-top'>
 					<h3 className='settings-head'>{LANGUAGE.settings_header[selectedLanguage]}</h3>
-					{/* //! top text for other roles */}
 
 					<p className='settings-top-text'>
-						{props.target === ROLE.USER && LANGUAGE.settings_top_text_user[selectedLanguage]}
-						{props.target === ROLE.GENERAL_ADMIN && LANGUAGE.settings_top_text_general_admin[selectedLanguage]}
+						{props.role === ROLE.USER && LANGUAGE.settings_top_text_user[selectedLanguage]}
+						{props.role === ROLE.LOCAL_ADMIN && LANGUAGE.settings_top_text_local_admin[selectedLanguage]}
+						{props.role === ROLE.GENERAL_ADMIN && LANGUAGE.settings_top_text_general_admin[selectedLanguage]}
 					</p>
 				</div>
 			</div>
@@ -253,7 +256,7 @@ const UserSettings = (props) => {
 						/>
 					</div>
 					<div className='settings-main-down'>
-						{props.target === ROLE.USER && (
+						{props.role === ROLE.USER && (
 							<TextInput
 								className='settings-text-input'
 								radius='md'

@@ -12,12 +12,13 @@ import { setLoggedUser, setLanguage } from './redux/actions';
 import CreatePostModal from './components/CreatePostModal/CreatePostModal';
 import MobileSidebar from './components/MobileSidebar/MobileSidebar';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
-import GeneralAdminPanel from './pages/GeneralAdminPanel/GeneralAdminPanel';
+import ManageUsers from './pages/ManageUsers/ManageUsers';
 import CreateAdminModal from './components/CreateAdminModal/CreateAdminModal';
 import ROLE from './utils/roles';
 import { LoadingOverlay } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification } from './components/Notifications/Notifications';
+import CreateModeratorModal from './components/CreateModeratorModal/CreateModeratorModal';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -59,6 +60,7 @@ function App() {
 				<Authentification />
 				<CreatePostModal />
 				<CreateAdminModal />
+				<CreateModeratorModal />
 
 				<Sidebar />
 				<MobileSidebar
@@ -74,8 +76,11 @@ function App() {
 						<Route path='/settings' element={<UserSettings target={ROLE.USER} />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						{/* general admin routes */}
-						<Route path='/general-admin' element={<GeneralAdminPanel />} />
-						<Route path='/general-admin/settings' element={<UserSettings target={ROLE.GENERAL_ADMIN} />} />
+						<Route path='/general-admin' element={<ManageUsers target={ROLE.LOCAL_ADMIN} />} />
+						<Route path='/general-admin/settings' element={<UserSettings role={ROLE.GENERAL_ADMIN} />} />
+						{/* local admin routes */}
+						<Route path='/local-admin/moderators' element={<ManageUsers target={ROLE.MODERATOR} />} />
+						<Route path='/local-admin/settings' element={<UserSettings role={ROLE.LOCAL_ADMIN} />} />
 					</Routes>
 				</div>
 			</Router>

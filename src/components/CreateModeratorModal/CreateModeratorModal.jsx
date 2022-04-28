@@ -1,19 +1,17 @@
-import './CreateAdminModal.scss';
-import { Button, LoadingOverlay, Modal, NativeSelect, PasswordInput, TextInput } from '@mantine/core';
+import './CreateModeratorModal.scss';
+import { Button, LoadingOverlay, Modal, PasswordInput, TextInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeModalState } from '../../redux/actions';
 import LANGUAGE from '../../utils/languages.json';
 import { CgRename, CgPassword } from 'react-icons/cg';
 import { MdAlternateEmail } from 'react-icons/md';
-import cities from '../../utils/cities.json';
-import { IconBuilding } from '@tabler/icons';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification, infoNotification } from '../Notifications/Notifications';
 
 const CreateAdminModal = () => {
 	const dispatch = useDispatch();
-	const createAdminModal = useSelector((state) => state.modals.createAdmin);
+	const createModeratorModal = useSelector((state) => state.modals.createModerator);
 	const selectedLanguage = useSelector((state) => state.language);
 
 	//inputs
@@ -22,14 +20,12 @@ const CreateAdminModal = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [confirmPassword, setConfirmPassword] = useState('');
-	const [city, setCity] = useState('');
 	//errors
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
 	const [emailError, setEmailError] = useState(false);
 	const [passwordError, setPasswordError] = useState(false);
 	const [confirmPasswordError, setConfirmPasswordError] = useState(false);
-	const [cityError, setCityError] = useState(false);
 
 	//overlay
 	const [loadingOverlay, setLoadingOverlay] = useState(false);
@@ -39,16 +35,16 @@ const CreateAdminModal = () => {
 		const listener = (event) => {
 			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
 				event.preventDefault();
-				handleCreateAdmin();
+				handleCreateModerator();
 			}
 		};
 		document.addEventListener('keydown', listener);
 		return () => {
 			document.removeEventListener('keydown', listener);
 		};
-	}, [firstName, lastName, email, password, confirmPassword, city]);
+	}, [firstName, lastName, email, password, confirmPassword]);
 
-	const handleCreateAdmin = async () => {
+	const handleCreateModerator = async () => {
 		//email format verification
 		if (email.indexOf('@') === -1 || email.lastIndexOf('.') < email.indexOf('@')) {
 			setEmailError(LANGUAGE.register_modal_invaid_email_format[selectedLanguage]);
@@ -78,10 +74,6 @@ const CreateAdminModal = () => {
 			setConfirmPasswordError(true);
 		}
 
-		if (city === '' || city === 'Select city') {
-			setCityError(LANGUAGE.register_modal_city_error[selectedLanguage]);
-		}
-
 		if (
 			firstName !== '' &&
 			lastName !== '' &&
@@ -90,13 +82,12 @@ const CreateAdminModal = () => {
 			confirmPassword !== '' &&
 			email.indexOf('@') !== -1 &&
 			email.lastIndexOf('.') > email.indexOf('@') &&
-			city !== '' &&
 			password.length >= 8 &&
 			password === confirmPassword
 		) {
 			//togle overlay
 			setLoadingOverlay(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/local-admins`, {
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/moderators`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -107,33 +98,25 @@ const CreateAdminModal = () => {
 					lastName,
 					email,
 					password,
-					city,
 				}),
 			});
 			if (res.status === 201) {
-				dispatch(changeModalState('createAdmin', false));
+				dispatch(changeModalState('createModerator', false));
 				setLoadingOverlay(false);
 				setFirstName('');
 				setLastName('');
 				setEmail('');
-				setCity('');
 				setPassword('');
 				setConfirmPassword('');
 				setEmailError(false);
-				setCityError(false);
 				setPasswordError(false);
 				setConfirmPasswordError(false);
 				setFirstNameError(false);
 				setLastNameError(false);
-				showNotification(infoNotification(LANGUAGE.create_admin_modal_success[selectedLanguage]));
+				showNotification(infoNotification(LANGUAGE.create_moderator_modal_success[selectedLanguage]));
 				setTimeout(() => window.location.reload(false), 1000);
 			} else if (res.status === 409) {
-				const error = await res.text();
-				if (error === 'Email already in use') {
-					setEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
-				} else if (error === 'This city already has an admin') {
-					setCityError(LANGUAGE.create_admin_modal_city_in_use[selectedLanguage]);
-				}
+				setEmailError(LANGUAGE.register_modal_email_already_exists[selectedLanguage]);
 				setLoadingOverlay(false);
 			} else {
 				showNotification(errorNotification());
@@ -146,24 +129,22 @@ const CreateAdminModal = () => {
 		<Modal
 			size='lg'
 			centered
-			opened={createAdminModal}
+			opened={createModeratorModal}
 			onClose={() => {
-				dispatch(changeModalState('createAdmin', false));
+				dispatch(changeModalState('createModerator', false));
 				setFirstName('');
 				setLastName('');
 				setEmail('');
-				setCity('');
 				setPassword('');
 				setConfirmPassword('');
 				setEmailError(false);
-				setCityError(false);
 				setPasswordError(false);
 				setConfirmPasswordError(false);
 				setFirstNameError(false);
 				setLastNameError(false);
 				setLoadingOverlay(false);
 			}}
-			title={LANGUAGE.create_admin_modal_title[selectedLanguage]}>
+			title={LANGUAGE.create_moderator_modal_title[selectedLanguage]}>
 			<div style={{ width: '100%', position: 'relative' }}>
 				<LoadingOverlay visible={loadingOverlay} />
 				<div className='register-field-row'>
@@ -209,18 +190,6 @@ const CreateAdminModal = () => {
 						}}
 						error={emailError}
 					/>
-					<NativeSelect
-						data={cities.cities}
-						placeholder={LANGUAGE.register_modal_city[selectedLanguage]}
-						radius='md'
-						variant='filled'
-						icon={<IconBuilding style={{ width: 20 }} />}
-						onChange={(e) => {
-							setCity(e.currentTarget.value);
-							setCityError(false);
-						}}
-						error={cityError}
-					/>
 				</div>
 				<PasswordInput
 					className='auth-input'
@@ -258,7 +227,7 @@ const CreateAdminModal = () => {
 				/>
 
 				<div className='create-admin-footer'>
-					<Button variant='filled' color='#3378F7' radius='xl' onClick={handleCreateAdmin}>
+					<Button variant='filled' color='#3378F7' radius='xl' onClick={handleCreateModerator}>
 						{LANGUAGE.create_moderator_modal_submit[selectedLanguage]}
 					</Button>
 				</div>

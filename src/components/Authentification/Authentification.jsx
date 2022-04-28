@@ -484,7 +484,7 @@ const Authentification = () => {
 						}}
 						error={registerPasswordError}
 					/>
-					{/*//* ⬇️⬇️pretty cool⬇️⬇️ */}
+					{/*//* ⬇️⬇️🐣⬇️⬇️ */}
 					{/* <PasswordStrength
 						value={registerPassword}
 						setRegisterPassword={setRegisterPassword}
