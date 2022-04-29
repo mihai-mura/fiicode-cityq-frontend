@@ -407,5 +407,41 @@
 	"delete_moderator_modal_confirm": {
 		"en": "Delete moderator",
 		"ro": "Sterge moderator"
+	},
+	"address_verification_card_address": {
+		"en": "Address",
+		"ro": "Adresa"
+	},
+	"confirm_verification_modal_title": {
+		"en": "Validate address",
+		"ro": "Valideaza adresa"
+	},
+	"confirm_verification_modal_text": {
+		"en": "Check if the inserted address is the same with the one on the id.",
+		"ro": "Verifica daca adresa introdusa este aceeasi cu cea din buletin."
+	},
+	"confirm_verification_modal_deny": {
+		"en": "Deny",
+		"ro": "Respinge"
+	},
+	"confirm_verification_modal_confirm": {
+		"en": "Validate",
+		"ro": "Valideaza"
+	},
+	"confirm_verification_modal_img_info": {
+		"en": "You can click on the image to see the original.",
+		"ro": "Poti apasa pe imagine pentru a vedea originalul."
+	},
+	"address_verified_success": {
+		"en": "Address verified",
+		"ro": "Adresa verificata"
+	},
+	"notification_user_not_verified_title": {
+		"en": "User not verified",
+		"ro": "Utilizatorul nu a fost verificat"
+	},
+	"notification_user_not_verified_message": {
+		"en": "The user has not been verified yet. Please wait for the admin to validate your address before creating a post.",
+		"ro": "Utilizatorul nu a fost verificat inca. Te rugam sa astepti pana un admin iti va verifica adresa inainte de a  creea o postare."
 	}
 }

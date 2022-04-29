@@ -100,6 +100,24 @@ const CreatePostModal = () => {
 					setLoadingOverlay(false);
 					showNotification(infoNotification('Success', LANGUAGE.notification_post_created[selectedLanguage], 'green'));
 				}
+			} else if (res.status === 401) {
+				dispatch(changeModalState('createPost', false));
+				setTitle('');
+				setDescription('');
+				setCity('');
+				setTitleError(null);
+				setDescriptionError(null);
+				setCityError(null);
+				setFiles([]);
+				setNoFilesError(false);
+				setTooManyFilesError(false);
+				setLoadingOverlay(false);
+				showNotification(
+					errorNotification(
+						LANGUAGE.notification_user_not_verified_title[selectedLanguage],
+						LANGUAGE.notification_user_not_verified_message[selectedLanguage]
+					)
+				);
 			}
 		}
 	};

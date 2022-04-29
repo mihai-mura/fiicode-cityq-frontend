@@ -163,7 +163,7 @@ const Authentification = () => {
 					localStorage.setItem('api-token', response.token);
 					//* send id picture to backend compressed
 					const options = {
-						maxSizeMB: 1,
+						maxSizeMB: 0.5,
 					};
 					const compressedFile = await imageCompression(inputFile, options);
 					const idPicture = new FormData();

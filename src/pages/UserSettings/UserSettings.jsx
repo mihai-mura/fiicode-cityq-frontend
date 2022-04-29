@@ -202,6 +202,12 @@ const UserSettings = (props) => {
 							url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 							onClick={handleProfilePicChange}
 						/>
+						{props.role === ROLE.USER &&
+							(loggedUser?.verified ? (
+								<p style={{ color: '#40c057' }}>User Verified</p>
+							) : (
+								<p style={{ color: '#fa5252' }}>User Not Verified</p>
+							))}
 					</div>
 					<div className='settings-main-top'>
 						<TextInput

@@ -72,7 +72,7 @@ function App() {
 
 					<Routes>
 						<Route path='/' element={<Explore />} />
-						<Route path='/settings' element={<UserSettings target={ROLE.USER} />} />
+						<Route path='/settings' element={<UserSettings role={ROLE.USER} />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						{/* general admin routes */}
 						<Route path='/general-admin' element={<ManageUsers target={ROLE.LOCAL_ADMIN} />} />

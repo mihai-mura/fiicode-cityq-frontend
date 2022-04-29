@@ -64,7 +64,7 @@ const UserCard = (props) => {
 							src={props.profileImg}
 							alt='profile'
 						/>
-						<div>
+						<div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
 							<p size='md'>
 								{props.firstName} {props.lastName}
 							</p>

@@ -11,6 +11,8 @@ import WritePost from '../../components/WritePost/WritePost';
 import { useEffect, useState } from 'react';
 import ROLE from '../../utils/roles';
 import { useNavigate } from 'react-router-dom';
+import { showNotification } from '@mantine/notifications';
+import { errorNotification } from '../../components/Notifications/Notifications';
 
 const Explore = () => {
 	const navigate = useNavigate();
@@ -57,7 +59,14 @@ const Explore = () => {
 					className='createpost-reactive'
 					onClick={() => {
 						if (!loggedUser) dispatch(changeModalState('login', true));
-						else dispatch(changeModalState('createPost', true));
+						else if (!loggedUser?.verified) {
+							showNotification(
+								errorNotification(
+									LANGUAGE.notification_user_not_verified_title[selectedLanguage],
+									LANGUAGE.notification_user_not_verified_message[selectedLanguage]
+								)
+							);
+						} else dispatch(changeModalState('createPost', true));
 					}}>
 					<WritePost />
 				</div>

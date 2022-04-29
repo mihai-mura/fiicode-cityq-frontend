@@ -1,4 +1,4 @@
-import { Button, TextInput } from '@mantine/core';
+import { Button, LoadingOverlay, TextInput } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { changeModalState } from '../../redux/actions';
 import UserCard from '../../components/UserCard/UserCard';
 import { IconPlus, IconSearch } from '@tabler/icons';
 import LANGUAGE from '../../utils/languages.json';
+import EmptyStatePlaceholder from '../../components/EmptyStatePlaceholder/EmptyStatePlaceholder';
 
 const GeneralAdminPanel = (props) => {
 	const navigate = useNavigate();
@@ -20,6 +21,7 @@ const GeneralAdminPanel = (props) => {
 	const [searchInput, setSearchInput] = useState('');
 	const [users, setUsers] = useState([]);
 	const [showingUsers, setShowingUsers] = useState([]);
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 
 	useEffect(() => {
 		if (props.target === ROLE.LOCAL_ADMIN) {
@@ -35,6 +37,7 @@ const GeneralAdminPanel = (props) => {
 
 	useEffect(() => {
 		(async () => {
+			setLoadingOverlay(true);
 			if (props.target === ROLE.LOCAL_ADMIN) {
 				//get all admins
 				const res = await fetch(`${process.env.REACT_APP_API_URL}/local-admins/all`, {
@@ -68,6 +71,7 @@ const GeneralAdminPanel = (props) => {
 					showNotification(errorNotification());
 				}
 			}
+			setLoadingOverlay(false);
 		})();
 	}, [props.target]);
 
@@ -127,6 +131,7 @@ const GeneralAdminPanel = (props) => {
 
 	return (
 		<div className='page page-manage-users'>
+			<LoadingOverlay visible={loadingOverlay} />
 			<div className='page-manage-users-header'>
 				<Button
 					className='add-user-button'
@@ -177,12 +182,11 @@ const GeneralAdminPanel = (props) => {
 						city={props.target === ROLE.LOCAL_ADMIN && user.city}
 					/>
 				))}
-				{/* //! some visual smth */}
-				{showingUsers.length === 0 && users.length > 0 && <p>No search result found!</p>}
+				{showingUsers.length === 0 && users.length > 0 && <EmptyStatePlaceholder search text='No search result found!' />}
 				{users.length === 0 && (
 					<p>
-						{props.target === ROLE.LOCAL_ADMIN && 'No admins created yet!'}
-						{props.target === ROLE.MODERATOR && 'No moderators created yet!'}
+						{props.target === ROLE.LOCAL_ADMIN && <EmptyStatePlaceholder text='No admins created yet!' />}
+						{props.target === ROLE.MODERATOR && <EmptyStatePlaceholder text='No moderators created yet!' />}
 					</p>
 				)}
 			</div>

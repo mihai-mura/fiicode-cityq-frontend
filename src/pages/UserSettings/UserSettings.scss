@@ -1,5 +1,4 @@
 .settings-page {
-	width: 100%;
 	overflow: hidden;
 	overflow-y: scroll;
 	scroll-behavior: smooth;
@@ -46,6 +45,7 @@
 				position: relative;
 				width: 75px;
 				height: 75px;
+				margin-bottom: 5px;
 				border-radius: 50%;
 				cursor: pointer;
 
