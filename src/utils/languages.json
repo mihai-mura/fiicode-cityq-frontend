@@ -447,5 +447,9 @@
 	"update_post_status_modal_title": {
 		"en": "Update post status",
 		"ro": "Actualizeaza statusul postarii"
+	},
+	"notification_status_change_success": {
+		"en": "Post status changed",
+		"ro": "Statusul postarii a fost schimbat"
 	}
 }

@@ -21,7 +21,7 @@ const WritePost = () => {
 				) : (
 					<img className='createpost-image' src={BasicUser} alt='basic-user' />
 				)}
-				<div className='createpost-text'>{LANGUAGE.create_post_modal_modaltitle[selectedLanguage]}</div>
+				<div className='createpost-text'>{LANGUAGE.create_post_modal_title[selectedLanguage]}</div>
 			</div>
 			<div className='createpost-bottom-section'>
 				<img src={CreatePostUtils} alt='post-utils' />
