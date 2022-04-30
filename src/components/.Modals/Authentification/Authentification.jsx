@@ -5,16 +5,16 @@ import { CgRename, CgPassword } from 'react-icons/cg';
 import { FaRegAddressCard } from 'react-icons/fa';
 import { IconBuilding } from '@tabler/icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeModalState, setLoggedUser } from '../../redux/actions';
+import { changeModalState, setLoggedUser } from '../../../redux/actions';
 import { useEffect, useState } from 'react';
 import imageCompression from 'browser-image-compression';
-import FileDropzone from '../FileDropzone/FileDropzone';
-import cities from '../../utils/cities';
-import LANGUAGE from '../../utils/languages.json';
+import FileDropzone from '../../FileDropzone/FileDropzone';
+import cities from '../../../utils/cities';
+import LANGUAGE from '../../../utils/languages.json';
 import { showNotification } from '@mantine/notifications';
 import PasswordStrength from './PasswordStrength';
-import { errorNotification, infoNotification } from '../Notifications/Notifications';
-import ROLE from '../../utils/roles';
+import { errorNotification, infoNotification } from '../../Notifications/Notifications';
+import ROLE from '../../../utils/roles';
 import { useNavigate } from 'react-router-dom';
 
 const Authentification = () => {

@@ -52,6 +52,7 @@ const Explore = () => {
 		setCurrentPosts(posts);
 	};
 
+	//! add post sorting
 	return (
 		<div className='page page-explore'>
 			<div className='createpost-header'>

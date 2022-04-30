@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { IconCheck, IconX } from '@tabler/icons';
 import { CgPassword } from 'react-icons/cg';
 import { PasswordInput, Progress, Text, Popover, Box } from '@mantine/core';
-import LANGUAGE from '../../utils/languages.json';
+import LANGUAGE from '../../../utils/languages.json';
 import { useSelector } from 'react-redux';
 
 function PasswordRequirement({ meets, label }) {

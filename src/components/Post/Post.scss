@@ -7,6 +7,50 @@
 	background-color: #fdfdfd;
 	border-radius: 15px;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+	//carousel
+	.post-carousel-container {
+		width: 100%;
+		padding: 0 1rem;
+		height: 200px;
+		@media only screen and (min-width: 400px) {
+			height: 250px;
+		}
+		@media only screen and (min-width: 500px) {
+			height: 300px;
+		}
+		@media only screen and (min-width: 600px) {
+			height: 350px;
+		}
+		@media only screen and (min-width: 700px) {
+			height: 400px;
+		}
+
+		.swiper {
+			width: 100%;
+			height: 100%;
+
+			.swiper-wrapper {
+				width: 100% !important;
+				height: 100% !important;
+			}
+		}
+
+		.carousel-slide {
+			width: 100% !important;
+			height: 100% !important;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			img,
+			video {
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+		}
+	}
 }
 
 .post-header {
@@ -67,50 +111,6 @@
 	.post-status {
 		cursor: default;
 		font-size: 0.8rem;
-	}
-}
-
-//carousel
-.post-carousel-container {
-	width: 100%;
-	padding: 0 1rem;
-	height: 200px;
-	@media only screen and (min-width: 400px) {
-		height: 250px;
-	}
-	@media only screen and (min-width: 500px) {
-		height: 300px;
-	}
-	@media only screen and (min-width: 600px) {
-		height: 350px;
-	}
-	@media only screen and (min-width: 700px) {
-		height: 400px;
-	}
-
-	.swiper {
-		width: 100%;
-		height: 100%;
-
-		.swiper-wrapper {
-			width: 100% !important;
-			height: 100% !important;
-		}
-	}
-
-	.carousel-slide {
-		width: 100% !important;
-		height: 100% !important;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		img,
-		video {
-			width: 100%;
-			height: 100%;
-			object-fit: contain;
-		}
 	}
 }
 

@@ -1,7 +1,14 @@
 import { combineReducers } from 'redux';
 
 const modals = (
-	state = { login: false, register: false, createPost: false, createAdmin: false, createModerator: false },
+	state = {
+		login: false,
+		register: false,
+		createPost: false,
+		createAdmin: false,
+		createModerator: false,
+		updatePostStatus: false,
+	},
 	action
 ) => {
 	switch (action.type) {
@@ -15,7 +22,8 @@ const modals = (
 			return { ...state, createAdmin: action.payload };
 		case 'createModerator':
 			return { ...state, createModerator: action.payload };
-
+		case 'updatePostStatus':
+			return { ...state, updatePostStatus: action.payload };
 		default:
 			return state;
 	}

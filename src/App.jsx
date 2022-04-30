@@ -3,23 +3,25 @@ import UserSettings from './pages/UserSettings/UserSettings';
 import Explore from './pages/Explore/Explore';
 import Sidebar from './components/Sidebar/Sidebar';
 import Navbar from './components/Navbar/Navbar';
-import Authentification from './components/Authentification/Authentification';
+import Authentification from './components/.Modals/Authentification/Authentification';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoggedUser, setLanguage } from './redux/actions';
-import CreatePostModal from './components/CreatePostModal/CreatePostModal';
+import CreatePostModal from './components/.Modals/CreatePostModal/CreatePostModal';
 import MobileSidebar from './components/MobileSidebar/MobileSidebar';
 import RestorePassword from './pages/RestorePassword/RestorePassword';
 import ManageUsers from './pages/ManageUsers/ManageUsers';
-import CreateAdminModal from './components/CreateAdminModal/CreateAdminModal';
+import CreateAdminModal from './components/.Modals/CreateAdminModal/CreateAdminModal';
 import ROLE from './utils/roles';
 import { LoadingOverlay } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification } from './components/Notifications/Notifications';
-import CreateModeratorModal from './components/CreateModeratorModal/CreateModeratorModal';
+import CreateModeratorModal from './components/.Modals/CreateModeratorModal/CreateModeratorModal';
 import AddressVerification from './pages/AddressVerification/AddressVerification';
 import PostRequests from './pages/PostRequests/PostRequests';
+import PostPage from './pages/PostPage/PostPage';
+import UpdatePostStatusModal from './components/.Modals/UpdatePostStatusModal/UpdatePostStatusModal';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -62,6 +64,7 @@ function App() {
 				<CreatePostModal />
 				<CreateAdminModal />
 				<CreateModeratorModal />
+				<UpdatePostStatusModal />
 
 				<Sidebar />
 				<MobileSidebar
@@ -74,6 +77,7 @@ function App() {
 					<Routes>
 						<Route path='/' element={<Explore />} />
 						<Route path='/settings' element={<UserSettings role={ROLE.USER} />} />
+						<Route path='/post/:id' element={<PostPage />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						{/* general admin routes */}
 						<Route path='/general-admin' element={<ManageUsers target={ROLE.LOCAL_ADMIN} />} />

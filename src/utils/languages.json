@@ -207,7 +207,7 @@
 		"en": "Create a post",
 		"ro": "Creaza o postare"
 	},
-	"create_post_modal_modaltitle": {
+	"create_post_modal_title": {
 		"en": "Create a post...",
 		"ro": "Creaza o postare..."
 	},
@@ -443,5 +443,9 @@
 	"notification_user_not_verified_message": {
 		"en": "The user has not been verified yet. Please wait for the admin to validate your address before creating a post.",
 		"ro": "Utilizatorul nu a fost verificat inca. Te rugam sa astepti pana un admin iti va verifica adresa inainte de a  creea o postare."
+	},
+	"update_post_status_modal_title": {
+		"en": "Update post status",
+		"ro": "Actualizeaza statusul postarii"
 	}
 }

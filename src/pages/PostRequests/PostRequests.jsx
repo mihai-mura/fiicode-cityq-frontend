@@ -39,10 +39,12 @@ const PostRequests = () => {
 		}
 	};
 
+	//! add post sorting
 	return (
 		<div className='page page-post-requests'>
 			<div className='header'>
 				<p>{loggedUser?.city}</p>
+				<p>{`${posts.length} requests`}</p>
 			</div>
 			<div className='body'>
 				{posts.map((post, index) => (

@@ -1,14 +1,14 @@
 import './CreatePostModal.scss';
-import LANGUAGE from '../../utils/languages.json';
-import cities from '../../utils/cities.json';
+import LANGUAGE from '../../../utils/languages.json';
+import cities from '../../../utils/cities.json';
 import { Modal, TextInput, Textarea, NativeSelect, Button, LoadingOverlay } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconBuilding } from '@tabler/icons';
-import { changeModalState } from '../../redux/actions';
+import { changeModalState } from '../../../redux/actions';
 import { useEffect, useState } from 'react';
-import FileDropzone from '../FileDropzone/FileDropzone';
+import FileDropzone from '../../FileDropzone/FileDropzone';
 import { showNotification } from '@mantine/notifications';
-import { errorNotification, infoNotification } from '../Notifications/Notifications';
+import { errorNotification, infoNotification } from '../../Notifications/Notifications';
 
 const CreatePostModal = () => {
 	const dispatch = useDispatch();
@@ -125,7 +125,7 @@ const CreatePostModal = () => {
 	return (
 		<Modal
 			centered
-			title={LANGUAGE.create_post_modal_modaltitle[selectedLanguage]}
+			title={LANGUAGE.create_post_modal_title[selectedLanguage]}
 			opened={modalState}
 			onClose={() => {
 				dispatch(changeModalState('createPost', false));
