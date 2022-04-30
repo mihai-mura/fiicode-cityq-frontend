@@ -91,11 +91,16 @@
 	.swiper {
 		width: 100%;
 		height: 100%;
+
+		.swiper-wrapper {
+			width: 100% !important;
+			height: 100% !important;
+		}
 	}
 
 	.carousel-slide {
-		width: 100%;
-		height: 100%;
+		width: 100% !important;
+		height: 100% !important;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -104,6 +109,25 @@
 		video {
 			width: 100%;
 			height: 100%;
+			object-fit: contain;
+		}
+	}
+}
+
+.post-for-admin {
+	max-width: 400px;
+	height: 450px;
+	.post-carousel-container {
+		height: 250px;
+	}
+
+	.votes {
+		.upvote-icon {
+			cursor: default;
+		}
+
+		.downvote-icon {
+			cursor: default;
 		}
 	}
 }

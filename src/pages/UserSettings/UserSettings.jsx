@@ -197,11 +197,9 @@ const UserSettings = (props) => {
 				<div className='settings-main'>
 					<div className='header'>
 						<input ref={profilePicInput} style={{ display: 'none' }} type='file' alt='profile picture' />
-						<UrlFetchImg
-							className='profile-img'
-							url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
-							onClick={handleProfilePicChange}
-						/>
+						<div className='profile-img' onClick={handleProfilePicChange}>
+							<UrlFetchImg url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`} />
+						</div>
 						{props.role === ROLE.USER &&
 							(loggedUser?.verified ? (
 								<p style={{ color: '#40c057' }}>User Verified</p>

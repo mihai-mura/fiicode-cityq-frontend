@@ -31,7 +31,7 @@ const getRoutes = (role, selectedLanguage) => {
 					icon: <IconBrandSafari />,
 				},
 				{
-					path: '/settings',
+					path: '/moderator/settings',
 					name: 'Settings',
 					icon: <IconSettings />,
 				},
@@ -39,8 +39,8 @@ const getRoutes = (role, selectedLanguage) => {
 		case ROLE.LOCAL_ADMIN:
 			return [
 				{
-					path: '/',
-					name: 'Explore',
+					path: '/local-admin/requests',
+					name: 'Requests',
 					icon: <IconBrandSafari />,
 				},
 				{

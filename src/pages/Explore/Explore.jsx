@@ -73,6 +73,7 @@ const Explore = () => {
 			</div>
 			{currentPosts.map((post, index) => (
 				<Post
+					foruser
 					id={post._id}
 					title={post.title}
 					key={index}

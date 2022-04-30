@@ -23,7 +23,7 @@ const Sidebar = () => {
 	}, [loggedUser, selectedLanguage]);
 
 	return (
-		<motion.div animate={{ width: isOpen ? '210px' : '90px' }} className='sidebar'>
+		<motion.div animate={{ width: isOpen ? '230px' : '90px' }} className='sidebar'>
 			<div className='sidebar-top-section'>
 				<NavLink to='/'>
 					<img src={CityQLogo} alt='logo' to='/' />

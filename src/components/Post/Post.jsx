@@ -13,6 +13,10 @@ import {
 	removeLoggedUserDownvotes,
 	changeModalState,
 } from '../../redux/actions';
+import { Button } from '@mantine/core';
+
+//* to not exceed quota
+const loadFirebaseFiles = false;
 
 const Post = (props) => {
 	const dispatch = useDispatch();
@@ -90,18 +94,21 @@ const Post = (props) => {
 		} else dispatch(changeModalState('login', true));
 	};
 
-	//! carousel
 	return (
-		<div className='post-container'>
+		<div className={`post-container ${!props.foruser && 'post-for-admin'}`}>
 			<div className='post-header'>
 				<div className='post-user'>{props.user}</div>
-				<div className='post-city'>{props.city}</div>
+				{props.foruser && <div className='post-city'>{props.city}</div>}
 			</div>
 			<div className='post-carousel-container'>
 				<Swiper autoHeight slidesPerView={1}>
 					{props.fileUrls.map((file, index) => (
 						<SwiperSlide className='carousel-slide' key={index}>
-							{file.includes('.mp4?') ? <video controls src={file} /> : <img src={file} alt='post' />}
+							{file.includes('.mp4?') ? (
+								<video controls src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} />
+							) : (
+								<img src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
+							)}
 						</SwiperSlide>
 					))}
 				</Swiper>
@@ -113,17 +120,18 @@ const Post = (props) => {
 					<IconArrowBigUpLine
 						className='upvote-icon'
 						style={{ color: loggedUser?.upvotedPosts?.includes(props.id) ? '#00a8ff' : '#bdbac0' }}
-						onClick={handleUpvote}
+						onClick={props.foruser ? handleUpvote : null}
 					/>
 					<p>{upvotes}</p>
 					<IconArrowBigDownLine
 						className='downvote-icon'
 						style={{ color: loggedUser?.downvotedPosts?.includes(props.id) ? '#f5342e' : '#bdbac0' }}
-						onClick={handleDownvote}
+						onClick={props.foruser ? handleDownvote : null}
 					/>
 					<p>{downvotes}</p>
 				</div>
-				<div className='post-status'>{props.status}</div>
+				{/* //!popst page */}
+				{props.foruser ? <div className='post-status'>{props.status}</div> : <Button radius='lg'>View</Button>}
 			</div>
 		</div>
 	);

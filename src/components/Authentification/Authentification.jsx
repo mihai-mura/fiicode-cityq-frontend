@@ -249,6 +249,8 @@ const Authentification = () => {
 					setLoginPassword('');
 					if (response.user.role === ROLE.GENERAL_ADMIN) {
 						navigate('/general-admin');
+					} else if (response.user.role === ROLE.LOCAL_ADMIN) {
+						navigate('/local-admin/requests');
 					}
 				} else if (res.status === 403) {
 					setLoadingOverlay(false);

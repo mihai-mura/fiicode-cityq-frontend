@@ -19,6 +19,7 @@ import { showNotification } from '@mantine/notifications';
 import { errorNotification } from './components/Notifications/Notifications';
 import CreateModeratorModal from './components/CreateModeratorModal/CreateModeratorModal';
 import AddressVerification from './pages/AddressVerification/AddressVerification';
+import PostRequests from './pages/PostRequests/PostRequests';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -78,9 +79,12 @@ function App() {
 						<Route path='/general-admin' element={<ManageUsers target={ROLE.LOCAL_ADMIN} />} />
 						<Route path='/general-admin/settings' element={<UserSettings role={ROLE.GENERAL_ADMIN} />} />
 						{/* local admin routes */}
+						<Route path='/local-admin/requests' element={<PostRequests />} />
 						<Route path='/local-admin/address-verification' element={<AddressVerification />} />
 						<Route path='/local-admin/moderators' element={<ManageUsers target={ROLE.MODERATOR} />} />
 						<Route path='/local-admin/settings' element={<UserSettings role={ROLE.LOCAL_ADMIN} />} />
+						{/* moderator routes */}
+						<Route path='/moderator/settings' element={<UserSettings role={ROLE.MODERATOR} />} />
 					</Routes>
 				</div>
 			</Router>

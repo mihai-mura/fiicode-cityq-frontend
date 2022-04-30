@@ -49,23 +49,31 @@
 				border-radius: 50%;
 				cursor: pointer;
 
-				//! after not showing
-				&::after {
-					content: 'change';
-					text-align: center;
-					position: absolute;
-					top: 0;
-					bottom: 0;
-					left: 0;
-					right: 0;
-					height: 100%;
+				img {
 					width: 100%;
-					opacity: 0;
-					transition: opacity 0.3s ease;
-					background-color: #ffffff5b;
+					height: 100%;
+					border-radius: 50%;
 				}
 
-				&:hover &::after {
+				&::after {
+					content: 'change';
+					width: 100%;
+					height: 100%;
+					position: absolute;
+					top: 0;
+					left: 0;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					color: white;
+					text-shadow: black 0px 0px 5px;
+					border-radius: 50%;
+					opacity: 0;
+					transition: opacity 0.2s ease;
+					background-color: #ffffff3d;
+				}
+
+				&:hover::after {
 					opacity: 1;
 				}
 			}
