@@ -6,8 +6,10 @@ import './AddressVerification.scss';
 import EmptyStatePlaceholder from '../../components/EmptyStatePlaceholder/EmptyStatePlaceholder';
 import { LoadingOverlay } from '@mantine/core';
 import { useSelector } from 'react-redux';
+import LANGUAGE from '../../utils/languages.json';
 
 const AddressVerification = () => {
+	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 
 	const [users, setUsers] = useState([]);
@@ -37,9 +39,8 @@ const AddressVerification = () => {
 		<div className='page page-address-verification'>
 			<LoadingOverlay visible={loadingOverlay} />
 			<div className='page-header'>
-				{/* //! somewhere to show what city is the admin managing */}
 				<p>{loggedUser?.city}</p>
-				<h4>{`${users.length} new requests`}</h4>
+				<h4>{`${users.length} ${LANGUAGE.request_count[selectedLanguage]}`}</h4>
 			</div>
 			<div className='body'>
 				{users.map((user, index) => (
@@ -49,13 +50,16 @@ const AddressVerification = () => {
 						firstName={user.first_name}
 						lastName={user.last_name}
 						email={user.email}
+						city={user.city}
 						address={user.address.name}
 						idImg={user.address.id_url}
 						profileImg={user.profile_pic_url}
 						deleteCard={() => setUsers((prev) => prev.filter((u) => u._id !== user._id))}
 					/>
 				))}
-				{users.length === 0 && <EmptyStatePlaceholder text='No requests yet!' />}
+				{users.length === 0 && (
+					<EmptyStatePlaceholder text={LANGUAGE.address_verification_empty_state[selectedLanguage]} />
+				)}
 			</div>
 		</div>
 	);

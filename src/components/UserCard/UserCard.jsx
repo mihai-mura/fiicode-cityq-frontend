@@ -112,7 +112,7 @@ const UserCard = (props) => {
 
 			<div className='footer'>
 				<Button color='red' radius='xl' onClick={openDeleteUserModal}>
-					Delete
+					{LANGUAGE.delete_user_button[selectedLanguage]}
 				</Button>
 			</div>
 		</div>

@@ -15,6 +15,7 @@ import {
 } from '../../redux/actions';
 import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import LANGUAGE from '../../utils/languages.json';
 
 //* to not exceed quota
 const loadFirebaseFiles = false;
@@ -22,6 +23,7 @@ const loadFirebaseFiles = false;
 const Post = (props) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const [upvotes, setUpvotes] = useState(0);
 	const [downvotes, setDownvotes] = useState(0);
@@ -136,7 +138,7 @@ const Post = (props) => {
 					<div className='post-status'>{props.status}</div>
 				) : (
 					<Button onClick={() => navigate(`/post/${props.id}`)} radius='lg'>
-						View
+						{LANGUAGE.post_card_view_button[selectedLanguage]}
 					</Button>
 				)}
 			</div>

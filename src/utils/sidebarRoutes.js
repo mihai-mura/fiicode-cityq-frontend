@@ -32,7 +32,7 @@ const getRoutes = (role, selectedLanguage) => {
 				},
 				{
 					path: '/moderator/settings',
-					name: 'Settings',
+					name: LANGUAGE.sidebar_settings[selectedLanguage],
 					icon: <IconSettings />,
 				},
 			];
@@ -40,22 +40,22 @@ const getRoutes = (role, selectedLanguage) => {
 			return [
 				{
 					path: '/local-admin/requests',
-					name: 'Requests',
+					name: LANGUAGE.sidebar_admin_requests[selectedLanguage],
 					icon: <IconBrandSafari />,
 				},
 				{
 					path: '/local-admin/address-verification',
-					name: 'Address Verification',
+					name: LANGUAGE.sidebar_address_verification[selectedLanguage],
 					icon: <IconChecklist />,
 				},
 				{
 					path: '/local-admin/moderators',
-					name: 'Moderators',
+					name: LANGUAGE.sidebar_moderators[selectedLanguage],
 					icon: <IconUser />,
 				},
 				{
 					path: '/local-admin/settings',
-					name: 'Settings',
+					name: LANGUAGE.sidebar_settings[selectedLanguage],
 					icon: <IconSettings />,
 				},
 			];
@@ -63,12 +63,12 @@ const getRoutes = (role, selectedLanguage) => {
 			return [
 				{
 					path: '/general-admin',
-					name: 'Local Admins',
+					name: LANGUAGE.sidebar_local_admins[selectedLanguage],
 					icon: <IconUser />,
 				},
 				{
 					path: '/general-admin/settings',
-					name: 'Settings',
+					name: LANGUAGE.sidebar_settings[selectedLanguage],
 					icon: <IconSettings />,
 				},
 			];

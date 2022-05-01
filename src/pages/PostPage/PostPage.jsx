@@ -14,7 +14,8 @@ import {
 	removeLoggedUserDownvotes,
 	removeLoggedUserUpotes,
 } from '../../redux/actions';
-import { Button } from '@mantine/core';
+import { Button, LoadingOverlay } from '@mantine/core';
+import LANGUAGE from '../../utils/languages.json';
 
 //* to not exceed quota
 const loadFirebaseFiles = false;
@@ -22,6 +23,7 @@ const loadFirebaseFiles = false;
 const PostPage = () => {
 	const dispatch = useDispatch();
 	const id = useParams().id;
+	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const [post, setPost] = useState(null);
 	const [upvotes, setUpvotes] = useState(0);
@@ -33,12 +35,31 @@ const PostPage = () => {
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`);
 			if (res.status === 200) {
 				const data = await res.json();
+				console.log(data);
+				switch (data.status) {
+					case 'sent':
+						data.status = LANGUAGE.post_status_sent[selectedLanguage];
+						break;
+					case 'seen':
+						data.status = LANGUAGE.post_status_seen[selectedLanguage];
+						break;
+					case 'in-progress':
+						data.status = LANGUAGE.post_status_in_progress[selectedLanguage];
+						break;
+					case 'resolved':
+						data.status = LANGUAGE.post_status_resolved[selectedLanguage];
+						break;
+					default:
+						break;
+				}
 				setPost(data);
+			} else if (res.status === 404) {
+				showNotification(errorNotification(LANGUAGE.post_not_found[selectedLanguage]));
 			} else {
 				showNotification(errorNotification());
 			}
 		})();
-	}, [id]);
+	}, [id, selectedLanguage]);
 
 	useEffect(() => {
 		if (post?.upvotes) {
@@ -112,6 +133,7 @@ const PostPage = () => {
 
 	return (
 		<div className={`page page-post ${loggedUser?.role !== ROLE.USER ? 'page-for-admin' : ''}`}>
+			<LoadingOverlay visible={!post} loaderProps={{ size: 'xl', variant: 'bars' }} />
 			<div className='post-carousel-container'>
 				<Swiper autoHeight slidesPerView={1}>
 					{post?.file_urls.map((file, index) => (
@@ -145,7 +167,7 @@ const PostPage = () => {
 				<p className='status'>Status: {post?.status}</p>
 				{loggedUser?.role === ROLE.LOCAL_ADMIN && (
 					<Button color='green' radius='lg' onClick={() => dispatch(changeModalState('updatePostStatus', true))}>
-						Update Status
+						{LANGUAGE.update_status_button[selectedLanguage]}
 					</Button>
 				)}
 			</div>

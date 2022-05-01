@@ -203,6 +203,22 @@
 		"en": "Settings",
 		"ro": "Setari"
 	},
+	"sidebar_local_admins": {
+		"en": "Local admins",
+		"ro": "Admini locali"
+	},
+	"sidebar_moderators": {
+		"en": "Moderators",
+		"ro": "Moderatori"
+	},
+	"sidebar_address_verification": {
+		"en": "Address Verification",
+		"ro": "Verificare Adresa"
+	},
+	"sidebar_admin_requests": {
+		"en": "Requests",
+		"ro": "Postari"
+	},
 	"create_post_button": {
 		"en": "Create a post",
 		"ro": "Creaza o postare"
@@ -451,5 +467,69 @@
 	"notification_status_change_success": {
 		"en": "Post status changed",
 		"ro": "Statusul postarii a fost schimbat"
+	},
+	"address_denied_success": {
+		"en": "User deleted",
+		"ro": "Utilizator sters"
+	},
+	"address_verification_empty_state": {
+		"en": "No requests yet!",
+		"ro": "Nu exista cereri!"
+	},
+	"request_count": {
+		"en": "new requests",
+		"ro": "cereri noi"
+	},
+	"posts_count": {
+		"en": "posts",
+		"ro": "postari"
+	},
+	"post_card_view_button": {
+		"en": "View",
+		"ro": "Vezi"
+	},
+	"update_status_button": {
+		"en": "Update status",
+		"ro": "Actualizeaza statusul"
+	},
+	"post_status_sent": {
+		"en": "Sent",
+		"ro": "Trimis"
+	},
+	"post_status_seen": {
+		"en": "Seen",
+		"ro": "Vazut"
+	},
+	"post_status_in_progress": {
+		"en": "In progress",
+		"ro": "In progres"
+	},
+	"post_status_resolved": {
+		"en": "Resolved",
+		"ro": "Rezolvat"
+	},
+	"delete_user_button": {
+		"en": "Delete",
+		"ro": "Sterge"
+	},
+	"search_placeholder": {
+		"en": "Search",
+		"ro": "Cauta"
+	},
+	"no_search_results": {
+		"en": "No search result found",
+		"ro": "Nu a fost gasit nici un rezultat"
+	},
+	"no_admins_created": {
+		"en": "No admins created yet",
+		"ro": "Nu exista admini"
+	},
+	"no_moderators_created": {
+		"en": "No moderators created yet",
+		"ro": "Nu exista moderatori"
+	},
+	"post_not_found": {
+		"en": "Post not found",
+		"ro": "Postare negasita"
 	}
 }

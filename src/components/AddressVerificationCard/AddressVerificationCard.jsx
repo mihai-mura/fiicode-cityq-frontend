@@ -25,7 +25,18 @@ const AddressVerificationCard = (props) => {
 		}
 	};
 	const handleDenyAddress = async () => {
-		//!
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/users/deny-address/${props._id}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+			},
+		});
+		if (res.status === 200) {
+			showNotification(infoNotification(LANGUAGE.address_denied_success[selectedLanguage]));
+			props.deleteCard();
+		} else {
+			showNotification(errorNotification());
+		}
 	};
 
 	const openConfirmVerificationModal = () =>
@@ -47,6 +58,7 @@ const AddressVerificationCard = (props) => {
 							</p>
 						</div>
 					</div>
+					<p style={{ fontSize: '1.2rem' }}>-{props.city}-</p>
 					<p style={{ fontSize: '1.2rem' }}>{props.address}</p>
 					<img
 						style={{ width: '100%', cursor: 'pointer' }}

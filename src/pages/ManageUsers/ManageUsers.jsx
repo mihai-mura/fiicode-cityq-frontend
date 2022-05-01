@@ -157,7 +157,7 @@ const GeneralAdminPanel = (props) => {
 				</Button>
 				<TextInput
 					icon={<IconSearch />}
-					placeholder='Search'
+					placeholder={LANGUAGE.search_placeholder[selectedLanguage]}
 					radius='xl'
 					size='lg'
 					value={searchInput}
@@ -182,11 +182,17 @@ const GeneralAdminPanel = (props) => {
 						city={props.target === ROLE.LOCAL_ADMIN && user.city}
 					/>
 				))}
-				{showingUsers.length === 0 && users.length > 0 && <EmptyStatePlaceholder search text='No search result found!' />}
+				{showingUsers.length === 0 && users.length > 0 && (
+					<EmptyStatePlaceholder search text={LANGUAGE.no_search_results[selectedLanguage]} />
+				)}
 				{users.length === 0 && (
 					<p>
-						{props.target === ROLE.LOCAL_ADMIN && <EmptyStatePlaceholder text='No admins created yet!' />}
-						{props.target === ROLE.MODERATOR && <EmptyStatePlaceholder text='No moderators created yet!' />}
+						{props.target === ROLE.LOCAL_ADMIN && (
+							<EmptyStatePlaceholder text={LANGUAGE.no_admins_created[selectedLanguage]} />
+						)}
+						{props.target === ROLE.MODERATOR && (
+							<EmptyStatePlaceholder text={LANGUAGE.no_moderators_created[selectedLanguage]} />
+						)}
 					</p>
 				)}
 			</div>

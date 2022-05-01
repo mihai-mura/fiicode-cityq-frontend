@@ -4,8 +4,10 @@ import './PostRequests.scss';
 import Post from '../../components/Post/Post';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification } from '../../components/Notifications/Notifications';
+import LANGUAGE from '../../utils/languages.json';
 
 const PostRequests = () => {
+	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((store) => store.loggedUser);
 
 	const [posts, setPosts] = useState([]);
@@ -44,7 +46,7 @@ const PostRequests = () => {
 		<div className='page page-post-requests'>
 			<div className='header'>
 				<p>{loggedUser?.city}</p>
-				<p>{`${posts.length} requests`}</p>
+				<p>{`${posts.length} ${LANGUAGE.posts_count[selectedLanguage]}`}</p>
 			</div>
 			<div className='body'>
 				{posts.map((post, index) => (
