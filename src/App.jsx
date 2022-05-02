@@ -22,6 +22,7 @@ import AddressVerification from './pages/AddressVerification/AddressVerification
 import PostRequests from './pages/PostRequests/PostRequests';
 import PostPage from './pages/PostPage/PostPage';
 import UpdatePostStatusModal from './components/_Modals/UpdatePostStatusModal/UpdatePostStatusModal';
+import RouteHandler from './pages/_RouteHandler/RouteHandler';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -76,19 +77,75 @@ function App() {
 
 					<Routes>
 						<Route path='/' element={<Explore />} />
-						<Route path='/settings' element={<UserSettings role={ROLE.USER} />} />
 						<Route path='/post/:id' element={<PostPage />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
-						{/* general admin routes */}
-						<Route path='/general-admin' element={<ManageUsers target={ROLE.LOCAL_ADMIN} />} />
-						<Route path='/general-admin/settings' element={<UserSettings role={ROLE.GENERAL_ADMIN} />} />
-						{/* local admin routes */}
-						<Route path='/local-admin/requests' element={<PostRequests />} />
-						<Route path='/local-admin/address-verification' element={<AddressVerification />} />
-						<Route path='/local-admin/moderators' element={<ManageUsers target={ROLE.MODERATOR} />} />
-						<Route path='/local-admin/settings' element={<UserSettings role={ROLE.LOCAL_ADMIN} />} />
+						<Route
+							path='/settings'
+							element={
+								<RouteHandler logged>
+									<UserSettings role={ROLE.USER} />
+								</RouteHandler>
+							}
+						/>
 						{/* moderator routes */}
-						<Route path='/moderator/settings' element={<UserSettings role={ROLE.MODERATOR} />} />
+						<Route
+							path='/moderator/settings'
+							element={
+								<RouteHandler logged>
+									<UserSettings role={ROLE.MODERATOR} />
+								</RouteHandler>
+							}
+						/>
+						{/* local admin routes */}
+						<Route
+							path='/local-admin/requests'
+							element={
+								<RouteHandler allow={ROLE.LOCAL_ADMIN} logged>
+									<PostRequests />
+								</RouteHandler>
+							}
+						/>
+						<Route
+							path='/local-admin/address-verification'
+							element={
+								<RouteHandler allow={ROLE.LOCAL_ADMIN} logged>
+									<AddressVerification />
+								</RouteHandler>
+							}
+						/>
+						<Route
+							path='/local-admin/moderators'
+							element={
+								<RouteHandler allow={ROLE.LOCAL_ADMIN} logged>
+									<ManageUsers target={ROLE.MODERATOR} />
+								</RouteHandler>
+							}
+						/>
+						<Route
+							path='/local-admin/settings'
+							element={
+								<RouteHandler logged>
+									<UserSettings role={ROLE.LOCAL_ADMIN} />
+								</RouteHandler>
+							}
+						/>
+						{/* general admin routes */}
+						<Route
+							path='/general-admin'
+							element={
+								<RouteHandler allow={ROLE.GENERAL_ADMIN} logged>
+									<ManageUsers target={ROLE.LOCAL_ADMIN} />
+								</RouteHandler>
+							}
+						/>
+						<Route
+							path='/general-admin/settings'
+							element={
+								<RouteHandler logged>
+									<UserSettings role={ROLE.GENERAL_ADMIN} />
+								</RouteHandler>
+							}
+						/>
 					</Routes>
 				</div>
 			</Router>

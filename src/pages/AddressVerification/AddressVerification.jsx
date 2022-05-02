@@ -18,22 +18,24 @@ const AddressVerification = () => {
 	//set unverified users
 	useEffect(() => {
 		(async () => {
-			setLoadingOverlay(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/users/unverified`, {
-				method: 'GET',
-				headers: {
-					Authorization: `Bearer ${localStorage.getItem('api-token')}`,
-				},
-			});
-			if (res.status === 200) {
-				const users = await res.json();
-				setUsers(users);
-			} else {
-				showNotification(errorNotification());
+			if (loggedUser) {
+				setLoadingOverlay(true);
+				const res = await fetch(`${process.env.REACT_APP_API_URL}/users/unverified`, {
+					method: 'GET',
+					headers: {
+						Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+					},
+				});
+				if (res.status === 200) {
+					const users = await res.json();
+					setUsers(users);
+				} else {
+					showNotification(errorNotification());
+				}
+				setLoadingOverlay(false);
 			}
-			setLoadingOverlay(false);
 		})();
-	}, []);
+	}, [loggedUser]);
 
 	return (
 		<div className='page page-address-verification'>

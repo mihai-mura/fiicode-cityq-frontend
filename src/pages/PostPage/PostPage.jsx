@@ -14,7 +14,7 @@ import {
 	removeLoggedUserDownvotes,
 	removeLoggedUserUpotes,
 } from '../../redux/actions';
-import { Button, LoadingOverlay } from '@mantine/core';
+import { Button } from '@mantine/core';
 import LANGUAGE from '../../utils/languages.json';
 
 //* to not exceed quota
@@ -25,6 +25,7 @@ const PostPage = () => {
 	const id = useParams().id;
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
+	const [notFound, setNotFound] = useState(false);
 	const [post, setPost] = useState(null);
 	const [upvotes, setUpvotes] = useState(0);
 	const [downvotes, setDownvotes] = useState(0);
@@ -54,7 +55,7 @@ const PostPage = () => {
 				}
 				setPost(data);
 			} else if (res.status === 404) {
-				showNotification(errorNotification(LANGUAGE.post_not_found[selectedLanguage]));
+				setNotFound(true);
 			} else {
 				showNotification(errorNotification());
 			}
@@ -133,44 +134,52 @@ const PostPage = () => {
 
 	return (
 		<div className={`page page-post ${loggedUser?.role !== ROLE.USER ? 'page-for-admin' : ''}`}>
-			<LoadingOverlay visible={!post} loaderProps={{ size: 'xl', variant: 'bars' }} />
-			<div className='post-carousel-container'>
-				<Swiper autoHeight slidesPerView={1}>
-					{post?.file_urls.map((file, index) => (
-						<SwiperSlide className='carousel-slide' key={index}>
-							{file.includes('.mp4?') ? (
-								<video controls src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} />
-							) : (
-								<img src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
-							)}
-						</SwiperSlide>
-					))}
-				</Swiper>
-			</div>
-			<div className='body'>
-				<p className='title'>{post?.title}</p>
-				<p className='description'>{post?.description}</p>
-				<div className='votes'>
-					<IconArrowBigUpLine
-						className='upvote-icon'
-						style={{ color: loggedUser?.upvotedPosts?.includes(post?._id) ? '#00a8ff' : '#bdbac0' }}
-						onClick={loggedUser?.role === ROLE.USER ? handleUpvote : null}
-					/>
-					<p>{upvotes}</p>
-					<IconArrowBigDownLine
-						className='downvote-icon'
-						style={{ color: loggedUser?.downvotedPosts?.includes(post?._id) ? '#f5342e' : '#bdbac0' }}
-						onClick={loggedUser?.role === ROLE.USER ? handleDownvote : null}
-					/>
-					<p>{downvotes}</p>
-				</div>
-				<p className='status'>Status: {post?.status}</p>
-				{loggedUser?.role === ROLE.LOCAL_ADMIN && (
-					<Button color='green' radius='lg' onClick={() => dispatch(changeModalState('updatePostStatus', true))}>
-						{LANGUAGE.update_status_button[selectedLanguage]}
-					</Button>
-				)}
-			</div>
+			{!notFound ? (
+				<>
+					<div className='post-carousel-container'>
+						<Swiper autoHeight slidesPerView={1}>
+							{post?.file_urls.map((file, index) => (
+								<SwiperSlide className='carousel-slide' key={index}>
+									{file.includes('.mp4?') ? (
+										<video controls src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} />
+									) : (
+										<img src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
+									)}
+								</SwiperSlide>
+							))}
+						</Swiper>
+					</div>
+					<div className='body'>
+						<p className='title'>{post?.title}</p>
+						<p className='description'>{post?.description}</p>
+						<div className='votes'>
+							<IconArrowBigUpLine
+								className='upvote-icon'
+								style={{ color: loggedUser?.upvotedPosts?.includes(post?._id) ? '#00a8ff' : '#bdbac0' }}
+								onClick={loggedUser?.role === ROLE.USER ? handleUpvote : null}
+							/>
+							<p>{upvotes}</p>
+							<IconArrowBigDownLine
+								className='downvote-icon'
+								style={{ color: loggedUser?.downvotedPosts?.includes(post?._id) ? '#f5342e' : '#bdbac0' }}
+								onClick={loggedUser?.role === ROLE.USER ? handleDownvote : null}
+							/>
+							<p>{downvotes}</p>
+						</div>
+						<p className='status'>Status: {post?.status}</p>
+						{loggedUser?.role === ROLE.LOCAL_ADMIN && (
+							<Button
+								color='green'
+								radius='lg'
+								onClick={() => dispatch(changeModalState('updatePostStatus', true))}>
+								{LANGUAGE.update_status_button[selectedLanguage]}
+							</Button>
+						)}
+					</div>
+				</>
+			) : (
+				<div style={{ marginTop: '50px', fontSize: '1.5rem' }}>{LANGUAGE.post_not_found[selectedLanguage]}</div>
+			)}
 		</div>
 	);
 };

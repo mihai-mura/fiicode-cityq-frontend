@@ -531,5 +531,13 @@
 	"post_not_found": {
 		"en": "Post not found",
 		"ro": "Postare negasita"
+	},
+	"access_denied_page": {
+		"en": "You are not authorized to view this page!",
+		"ro": "Nu ai access la aceasta pagina!"
+	},
+	"post_not_found": {
+		"en": "Post not found",
+		"ro": "Postare negasita"
 	}
 }

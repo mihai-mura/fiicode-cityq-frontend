@@ -24,56 +24,46 @@ const GeneralAdminPanel = (props) => {
 	const [loadingOverlay, setLoadingOverlay] = useState(false);
 
 	useEffect(() => {
-		if (props.target === ROLE.LOCAL_ADMIN) {
-			if (loggedUser?.role !== ROLE.GENERAL_ADMIN) {
-				showNotification(errorNotification('You are not authorized to view this page'));
-			}
-		} else if (props.target === ROLE.MODERATOR) {
-			if (loggedUser?.role !== ROLE.LOCAL_ADMIN) {
-				showNotification(errorNotification('You are not authorized to view this page'));
-			}
-		}
-	}, [loggedUser]);
-
-	useEffect(() => {
 		(async () => {
-			setLoadingOverlay(true);
-			if (props.target === ROLE.LOCAL_ADMIN) {
-				//get all admins
-				const res = await fetch(`${process.env.REACT_APP_API_URL}/local-admins/all`, {
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem('api-token')}`,
-					},
-				});
-				if (res.status === 200) {
-					const response = await res.json();
-					response.reverse();
-					setUsers(response);
-					setShowingUsers(response);
-				} else {
-					showNotification(errorNotification());
+			if (loggedUser) {
+				setLoadingOverlay(true);
+				if (props.target === ROLE.LOCAL_ADMIN) {
+					//get all admins
+					const res = await fetch(`${process.env.REACT_APP_API_URL}/local-admins/all`, {
+						method: 'GET',
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+						},
+					});
+					if (res.status === 200) {
+						const response = await res.json();
+						response.reverse();
+						setUsers(response);
+						setShowingUsers(response);
+					} else {
+						showNotification(errorNotification());
+					}
+				} else if (props.target === ROLE.MODERATOR) {
+					//get all moderators
+					const res = await fetch(`${process.env.REACT_APP_API_URL}/moderators/all`, {
+						method: 'GET',
+						headers: {
+							Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+						},
+					});
+					if (res.status === 200) {
+						const response = await res.json();
+						response.reverse();
+						setUsers(response);
+						setShowingUsers(response);
+					} else {
+						showNotification(errorNotification());
+					}
 				}
-			} else if (props.target === ROLE.MODERATOR) {
-				//get all moderators
-				const res = await fetch(`${process.env.REACT_APP_API_URL}/moderators/all`, {
-					method: 'GET',
-					headers: {
-						Authorization: `Bearer ${localStorage.getItem('api-token')}`,
-					},
-				});
-				if (res.status === 200) {
-					const response = await res.json();
-					response.reverse();
-					setUsers(response);
-					setShowingUsers(response);
-				} else {
-					showNotification(errorNotification());
-				}
+				setLoadingOverlay(false);
 			}
-			setLoadingOverlay(false);
 		})();
-	}, [props.target]);
+	}, [loggedUser, props.target]);
 
 	const sortUsers = (input, userList) => {
 		if (input.length >= 3) {

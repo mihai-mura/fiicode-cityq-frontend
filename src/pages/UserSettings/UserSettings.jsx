@@ -36,6 +36,9 @@ const UserSettings = (props) => {
 		if (loggedUser?.role === ROLE.USER) {
 			navigate('/settings');
 		}
+		if (loggedUser?.role === ROLE.MODERATOR) {
+			navigate('/moderator/settings');
+		}
 		if (loggedUser?.role === ROLE.LOCAL_ADMIN) {
 			navigate('/local-admin/settings');
 		}
