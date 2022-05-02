@@ -16,6 +16,7 @@ import {
 import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import LANGUAGE from '../../utils/languages.json';
+import ROLE from '../../utils/roles.js';
 
 //* to not exceed quota
 const loadFirebaseFiles = false;
@@ -38,7 +39,7 @@ const Post = (props) => {
 	}, [props.upvotes, props.downvotes]);
 
 	const handleUpvote = async () => {
-		if (loggedUser) {
+		if (loggedUser && loggedUser.role === ROLE.USER) {
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/upvote/${props.id}`, {
 				method: 'PUT',
 				headers: {
@@ -68,7 +69,7 @@ const Post = (props) => {
 		} else dispatch(changeModalState('login', true));
 	};
 	const handleDownvote = async () => {
-		if (loggedUser) {
+		if (loggedUser && loggedUser.role === ROLE.USER) {
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/downvote/${props.id}`, {
 				method: 'PUT',
 				headers: {
