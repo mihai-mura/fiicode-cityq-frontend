@@ -186,6 +186,7 @@ const Authentification = () => {
 						setAddress('');
 						setCity('');
 						setInputFile(null);
+						navigate('/');
 					}
 				} else if (res.status === 409) {
 					setLoadingOverlay(false);
@@ -247,7 +248,9 @@ const Authentification = () => {
 					dispatch(setLoggedUser(response.user));
 					setLoginEmail('');
 					setLoginPassword('');
-					if (response.user.role === ROLE.GENERAL_ADMIN) {
+					if (response.user.role === ROLE.USER) {
+						navigate('/');
+					} else if (response.user.role === ROLE.GENERAL_ADMIN) {
 						navigate('/general-admin');
 					} else if (response.user.role === ROLE.LOCAL_ADMIN) {
 						navigate('/local-admin/requests');

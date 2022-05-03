@@ -100,7 +100,7 @@ const Post = (props) => {
 	};
 
 	return (
-		<div className={`post-container ${!props.foruser && 'post-for-admin'}`}>
+		<div className={`post-container ${props.foradmin ? 'post-for-admin' : ''} ${props.forme ? 'post-for-me' : ''}`}>
 			<div className='post-header'>
 				<div className='post-user'>{props.user}</div>
 				{props.foruser && <div className='post-city'>{props.city}</div>}
@@ -125,21 +125,25 @@ const Post = (props) => {
 					<IconArrowBigUpLine
 						className='upvote-icon'
 						style={{ color: loggedUser?.upvotedPosts?.includes(props.id) ? '#00a8ff' : '#bdbac0' }}
-						onClick={props.foruser ? handleUpvote : null}
+						onClick={props.foruser || props.forme ? handleUpvote : null}
 					/>
 					<p>{upvotes}</p>
 					<IconArrowBigDownLine
 						className='downvote-icon'
 						style={{ color: loggedUser?.downvotedPosts?.includes(props.id) ? '#f5342e' : '#bdbac0' }}
-						onClick={props.foruser ? handleDownvote : null}
+						onClick={props.foruser || props.forme ? handleDownvote : null}
 					/>
 					<p>{downvotes}</p>
 				</div>
-				{props.foruser ? (
-					<div className='post-status'>{props.status}</div>
-				) : (
+				{props.foruser && <div className='post-status'>{props.status}</div>}
+				{props.foradmin && (
 					<Button onClick={() => navigate(`/post/${props.id}`)} radius='lg'>
 						{LANGUAGE.post_card_view_button[selectedLanguage]}
+					</Button>
+				)}
+				{props.forme && (
+					<Button onClick={() => navigate(`/post/${props.id}`)} radius='lg'>
+						{LANGUAGE.post_card_edit_button[selectedLanguage]}
 					</Button>
 				)}
 			</div>

@@ -1,5 +1,5 @@
 export const changeModalState = (type, payload) => ({
-	type, //* type: login, register, createPost, createAdmin, createModerator, updatePostStatus
+	type, //* type: login, register, createPost, createAdmin, createModerator, updatePostStatus, editPost
 	payload,
 });
 

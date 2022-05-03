@@ -23,6 +23,8 @@ import PostRequests from './pages/PostRequests/PostRequests';
 import PostPage from './pages/PostPage/PostPage';
 import UpdatePostStatusModal from './components/_Modals/UpdatePostStatusModal/UpdatePostStatusModal';
 import RouteHandler from './pages/_RouteHandler/RouteHandler';
+import MyPosts from './pages/MyPosts/MyPosts';
+import EditPostModal from './components/_Modals/EditPostModal/EditPostModal';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -66,6 +68,7 @@ function App() {
 				<CreateAdminModal />
 				<CreateModeratorModal />
 				<UpdatePostStatusModal />
+				<EditPostModal />
 
 				<Sidebar />
 				<MobileSidebar
@@ -77,6 +80,14 @@ function App() {
 
 					<Routes>
 						<Route path='/' element={<Explore />} />
+						<Route
+							path='/my-posts'
+							element={
+								<RouteHandler logged>
+									<MyPosts />
+								</RouteHandler>
+							}
+						/>
 						<Route path='/post/:id' element={<PostPage />} />
 						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						<Route

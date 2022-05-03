@@ -13,8 +13,8 @@ const getRoutes = (role, selectedLanguage) => {
 					icon: <IconBrandSafari />,
 				},
 				{
-					path: '/profile',
-					name: LANGUAGE.sidebar_profile[selectedLanguage],
+					path: '/my-posts',
+					name: LANGUAGE.sidebar_my_posts[selectedLanguage],
 					icon: <IconUser />,
 				},
 				{
@@ -80,8 +80,8 @@ const getRoutes = (role, selectedLanguage) => {
 					icon: <IconBrandSafari />,
 				},
 				{
-					path: '/profile',
-					name: LANGUAGE.sidebar_profile[selectedLanguage],
+					path: '/my-posts',
+					name: LANGUAGE.sidebar_my_posts[selectedLanguage],
 					icon: <IconUser />,
 				},
 				{

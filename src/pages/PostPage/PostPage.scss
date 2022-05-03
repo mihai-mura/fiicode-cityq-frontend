@@ -42,6 +42,10 @@
 		height: 50%;
 		padding: 2rem 3rem;
 
+		@media only screen and (max-width: 400px) {
+			padding: 1.5rem;
+		}
+
 		.title {
 			font-size: 2rem;
 			font-weight: bold;
@@ -70,6 +74,11 @@
 		.status {
 			font-size: 1.1rem;
 			margin-bottom: 1rem;
+		}
+
+		.buttons {
+			display: flex;
+			gap: 10px;
 		}
 	}
 }

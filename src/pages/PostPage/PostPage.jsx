@@ -2,7 +2,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconArrowBigUpLine, IconArrowBigDownLine } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { errorNotification } from '../../components/Notifications/Notifications';
 import ROLE from '../../utils/roles';
@@ -16,12 +16,15 @@ import {
 } from '../../redux/actions';
 import { Button } from '@mantine/core';
 import LANGUAGE from '../../utils/languages.json';
+import { useModals } from '@mantine/modals';
 
 //* to not exceed quota
 const loadFirebaseFiles = false;
 
 const PostPage = () => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const modals = useModals();
 	const id = useParams().id;
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
@@ -70,6 +73,33 @@ const PostPage = () => {
 			setDownvotes(post.downvotes.length);
 		}
 	}, [post]);
+
+	const handleDeletepost = async () => {
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`, {
+			method: 'DELETE',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+			},
+		});
+		if (res.status === 200) {
+			navigate('/my-posts');
+		} else {
+			showNotification(errorNotification());
+		}
+	};
+
+	const openDeletePostModal = () =>
+		modals.openConfirmModal({
+			title: LANGUAGE.delete_post_modal_title[selectedLanguage],
+
+			children: <h4 size='sm'>{LANGUAGE.delete_post_modal_text[selectedLanguage]}</h4>,
+			labels: {
+				confirm: LANGUAGE.delete_post_modal_confirm[selectedLanguage],
+				cancel: LANGUAGE.delete_post_modal_cancel[selectedLanguage],
+			},
+			confirmProps: { color: 'red' },
+			onConfirm: handleDeletepost,
+		});
 
 	const handleUpvote = async () => {
 		if (loggedUser) {
@@ -168,12 +198,27 @@ const PostPage = () => {
 						</div>
 						<p className='status'>Status: {post?.status}</p>
 						{loggedUser?.role === ROLE.LOCAL_ADMIN && (
-							<Button
-								color='green'
-								radius='lg'
-								onClick={() => dispatch(changeModalState('updatePostStatus', true))}>
-								{LANGUAGE.update_status_button[selectedLanguage]}
-							</Button>
+							<div className='buttons'>
+								<Button
+									color='green'
+									radius='lg'
+									onClick={() => dispatch(changeModalState('updatePostStatus', true))}>
+									{LANGUAGE.update_status_button[selectedLanguage]}
+								</Button>
+								<Button color='red' radius='lg' onClick={null}>
+									{LANGUAGE.delete_post_button[selectedLanguage]}
+								</Button>
+							</div>
+						)}
+						{loggedUser?.role === ROLE.USER && (
+							<div className='buttons'>
+								<Button color='red' radius='lg' onClick={() => openDeletePostModal()}>
+									{LANGUAGE.delete_post_button[selectedLanguage]}
+								</Button>
+								<Button color='green' radius='lg' onClick={() => dispatch(changeModalState('editPost', true))}>
+									{LANGUAGE.edit_post_button[selectedLanguage]}
+								</Button>
+							</div>
 						)}
 					</div>
 				</>

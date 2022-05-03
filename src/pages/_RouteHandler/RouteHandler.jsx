@@ -18,7 +18,7 @@ const RouteHandler = ({ children, allow, logged }) => {
 
 	useEffect(() => {
 		if (logged && !localStorage.getItem('api-token') && !loggedUser) {
-			setContent(null);
+			setContent(AccessDenied);
 			dispatch(changeModalState('login', true));
 		} else {
 			dispatch(changeModalState('login', false));

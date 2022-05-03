@@ -8,6 +8,7 @@ const modals = (
 		createAdmin: false,
 		createModerator: false,
 		updatePostStatus: false,
+		editPost: false,
 	},
 	action
 ) => {
@@ -24,6 +25,8 @@ const modals = (
 			return { ...state, createModerator: action.payload };
 		case 'updatePostStatus':
 			return { ...state, updatePostStatus: action.payload };
+		case 'editPost':
+			return { ...state, editPost: action.payload };
 		default:
 			return state;
 	}

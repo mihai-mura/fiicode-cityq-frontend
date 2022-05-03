@@ -195,9 +195,9 @@
 		"en": "Explore",
 		"ro": "Descopera"
 	},
-	"sidebar_profile": {
-		"en": "Profile",
-		"ro": "Profil"
+	"sidebar_my_posts": {
+		"en": "My Posts",
+		"ro": "Postarile mele"
 	},
 	"sidebar_settings": {
 		"en": "Settings",
@@ -528,10 +528,6 @@
 		"en": "No moderators created yet",
 		"ro": "Nu exista moderatori"
 	},
-	"post_not_found": {
-		"en": "Post not found",
-		"ro": "Postare negasita"
-	},
 	"access_denied_page": {
 		"en": "You are not authorized to view this page!",
 		"ro": "Nu ai access la aceasta pagina!"
@@ -539,5 +535,41 @@
 	"post_not_found": {
 		"en": "Post not found",
 		"ro": "Postare negasita"
+	},
+	"post_card_edit_button": {
+		"en": "Edit",
+		"ro": "Editeaza"
+	},
+	"edit_post_button": {
+		"en": "Edit post",
+		"ro": "Editeaza postarea"
+	},
+	"delete_post_button": {
+		"en": "Delete post",
+		"ro": "Sterge postarea"
+	},
+	"delete_post_modal_title": {
+		"en": "Delete post",
+		"ro": "Sterge postarea"
+	},
+	"delete_post_modal_text": {
+		"en": "Are you sure you want to delete this post?",
+		"ro": "Esti sigur ca vrei sa stergi aceasta postare?"
+	},
+	"delete_post_modal_confirm": {
+		"en": "Confirm",
+		"ro": "Confirma"
+	},
+	"delete_post_modal_cancel": {
+		"en": "Cancel",
+		"ro": "Anuleaza"
+	},
+	"edit_post_modal_title": {
+		"en": "Edit post",
+		"ro": "Editeaza postarea"
+	},
+	"edit_post_modal_success": {
+		"en": "Post edited",
+		"ro": "Postarea a fost editata"
 	}
 }

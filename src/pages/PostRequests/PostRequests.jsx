@@ -24,7 +24,7 @@ const PostRequests = () => {
 		if (res.status === 200) {
 			const rawPosts = await res.json();
 			//set name and city
-			const posts = await Promise.all(
+			const readyPosts = await Promise.all(
 				rawPosts.map(async (post) => {
 					const rawName = await fetch(`${process.env.REACT_APP_API_URL}/users/${post.user}/full-name`);
 					const name = await rawName.json();
@@ -35,7 +35,7 @@ const PostRequests = () => {
 					};
 				})
 			);
-			setPosts(posts);
+			setPosts(readyPosts);
 		} else {
 			showNotification(errorNotification());
 		}
@@ -51,6 +51,7 @@ const PostRequests = () => {
 			<div className='body'>
 				{posts.map((post, index) => (
 					<Post
+						foradmin
 						id={post._id}
 						title={post.title}
 						key={index}
