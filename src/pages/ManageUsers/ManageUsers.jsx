@@ -156,7 +156,6 @@ const GeneralAdminPanel = (props) => {
 						sortUsers(e.currentTarget.value, users);
 					}}
 				/>
-				{/* //! somewhere to show what city is the admin managing */}
 				{props.target === ROLE.MODERATOR && <p>{loggedUser?.city}</p>}
 			</div>
 			<div className='page-manage-users-body'>

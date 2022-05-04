@@ -4,7 +4,7 @@ import 'swiper/scss';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { useEffect, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
-import { errorNotification } from '../Notifications/Notifications';
+import { errorNotification, infoNotification } from '../Notifications/Notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import {
 	addLoggedUserUpotes,
@@ -99,8 +99,39 @@ const Post = (props) => {
 		} else dispatch(changeModalState('login', true));
 	};
 
+	const handleDenyPostRequest = async () => {
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/deny/${props.id}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+			},
+		});
+		if (res.status === 200) {
+			showNotification(infoNotification(LANGUAGE.post_request_denied[selectedLanguage], 'red'));
+			props.deleteCard();
+		} else {
+			showNotification(errorNotification());
+		}
+	};
+	const handleApprovePostRequest = async () => {
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/approve/${props.id}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+			},
+		});
+		if (res.status === 200) {
+			props.deleteCard();
+		} else {
+			showNotification(errorNotification());
+		}
+	};
+
 	return (
-		<div className={`post-container ${props.foradmin ? 'post-for-admin' : ''} ${props.forme ? 'post-for-me' : ''}`}>
+		<div
+			className={`post-container ${props.foradmin ? 'post-for-admin' : ''} ${props.forme ? 'post-for-me' : ''} ${
+				props.formoderator ? 'post-for-moderator' : ''
+			}`}>
 			<div className='post-header'>
 				<div className='post-user'>{props.user}</div>
 				{props.foruser && <div className='post-city'>{props.city}</div>}
@@ -145,6 +176,19 @@ const Post = (props) => {
 					<Button onClick={() => navigate(`/post/${props.id}`)} radius='lg'>
 						{LANGUAGE.post_card_edit_button[selectedLanguage]}
 					</Button>
+				)}
+				{props.formoderator && (
+					<>
+						<Button color='blue' radius='xl' onClick={() => navigate(`/post/${props.id}`)}>
+							{LANGUAGE.post_card_view_button[selectedLanguage]}
+						</Button>
+						<Button color='red' radius='xl' onClick={handleDenyPostRequest}>
+							{LANGUAGE.deny_post_request_button[selectedLanguage]}
+						</Button>
+						<Button color='green' radius='xl' onClick={handleApprovePostRequest}>
+							{LANGUAGE.approve_post_request_button[selectedLanguage]}
+						</Button>
+					</>
 				)}
 			</div>
 		</div>

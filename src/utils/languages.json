@@ -520,6 +520,10 @@
 		"en": "No search result found",
 		"ro": "Nu a fost gasit nici un rezultat"
 	},
+	"no_my_posts": {
+		"en": "No posts yet",
+		"ro": "Nu exista postari"
+	},
 	"no_admins_created": {
 		"en": "No admins created yet",
 		"ro": "Nu exista admini"
@@ -571,5 +575,33 @@
 	"edit_post_modal_success": {
 		"en": "Post edited",
 		"ro": "Postarea a fost editata"
+	},
+	"deny_post_request_button": {
+		"en": "Deny",
+		"ro": "Respinge"
+	},
+	"approve_post_request_button": {
+		"en": "Approve",
+		"ro": "Aproba"
+	},
+	"post_not_verified": {
+		"en": "This post has not been verified yet!",
+		"ro": "Aceasta postare nu a fost verificata inca!"
+	},
+	"notification_post_approved": {
+		"en": "Post approved",
+		"ro": "Postarea a fost aprobata"
+	},
+	"post_approved": {
+		"en": "Post verified",
+		"ro": "Postare verificata"
+	},
+	"post_not_approved": {
+		"en": "Post not verified yet!",
+		"ro": "Postarea nu a fost verificata inca!"
+	},
+	"post_request_denied": {
+		"en": "Post denied",
+		"ro": "Postarea a fost respinsa"
 	}
 }

@@ -20,7 +20,7 @@ export const errorNotification = (title = 'Something went wrong', message = '') 
 	}),
 });
 
-export const infoNotification = (title, message = '', color = 'green') => ({
+export const infoNotification = (title, color = 'green', message = '') => ({
 	title: title,
 	message: message,
 	disallowClose: true,

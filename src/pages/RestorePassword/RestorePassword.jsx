@@ -68,8 +68,8 @@ const RestorePassword = () => {
 					showNotification(
 						infoNotification(
 							LANGUAGE.notification_password_reset_title[selectedLanguage],
-							LANGUAGE.notification_password_reset_message[selectedLanguage],
-							'green'
+							'green',
+							LANGUAGE.notification_password_reset_message[selectedLanguage]
 						)
 					);
 					navigate('/');

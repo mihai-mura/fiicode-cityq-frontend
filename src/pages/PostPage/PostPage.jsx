@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { errorNotification } from '../../components/Notifications/Notifications';
+import { errorNotification, infoNotification } from '../../components/Notifications/Notifications';
 import ROLE from '../../utils/roles';
 import './PostPage.scss';
 import {
@@ -39,31 +39,35 @@ const PostPage = () => {
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/${id}`);
 			if (res.status === 200) {
 				const data = await res.json();
-				console.log(data);
-				switch (data.status) {
-					case 'sent':
-						data.status = LANGUAGE.post_status_sent[selectedLanguage];
-						break;
-					case 'seen':
-						data.status = LANGUAGE.post_status_seen[selectedLanguage];
-						break;
-					case 'in-progress':
-						data.status = LANGUAGE.post_status_in_progress[selectedLanguage];
-						break;
-					case 'resolved':
-						data.status = LANGUAGE.post_status_resolved[selectedLanguage];
-						break;
-					default:
-						break;
+				if (!data.verified && (loggedUser?.role === ROLE.USER || !loggedUser) && data.user !== loggedUser?._id) {
+					setNotFound(true);
+				} else {
+					setNotFound(false);
+					switch (data.status) {
+						case 'sent':
+							data.status = LANGUAGE.post_status_sent[selectedLanguage];
+							break;
+						case 'seen':
+							data.status = LANGUAGE.post_status_seen[selectedLanguage];
+							break;
+						case 'in-progress':
+							data.status = LANGUAGE.post_status_in_progress[selectedLanguage];
+							break;
+						case 'resolved':
+							data.status = LANGUAGE.post_status_resolved[selectedLanguage];
+							break;
+						default:
+							break;
+					}
+					setPost(data);
 				}
-				setPost(data);
 			} else if (res.status === 404) {
 				setNotFound(true);
 			} else {
 				showNotification(errorNotification());
 			}
 		})();
-	}, [id, selectedLanguage]);
+	}, [id, loggedUser, selectedLanguage]);
 
 	useEffect(() => {
 		if (post?.upvotes) {
@@ -82,7 +86,9 @@ const PostPage = () => {
 			},
 		});
 		if (res.status === 200) {
-			navigate('/my-posts');
+			if (loggedUser?.role === ROLE.USER) navigate('/my-posts');
+			else if (loggedUser?.role === ROLE.LOCAL_ADMIN) navigate('/local-admin/requests');
+			else if (loggedUser?.role === ROLE.MODERATOR) navigate('/moderator');
 		} else {
 			showNotification(errorNotification());
 		}
@@ -162,6 +168,35 @@ const PostPage = () => {
 		} else dispatch(changeModalState('login', true));
 	};
 
+	const handleDenyPostRequest = async () => {
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/deny/${post?._id}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+			},
+		});
+		if (res.status === 200) {
+			showNotification(infoNotification(LANGUAGE.post_request_denied[selectedLanguage]));
+			navigate('/moderator');
+		} else {
+			showNotification(errorNotification());
+		}
+	};
+	const handleApprovePostRequest = async () => {
+		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/approve/${post?._id}`, {
+			method: 'PUT',
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+			},
+		});
+		if (res.status === 200) {
+			showNotification(infoNotification(LANGUAGE.notification_post_approved[selectedLanguage]));
+			window.location.reload(false);
+		} else {
+			showNotification(errorNotification());
+		}
+	};
+
 	return (
 		<div className={`page page-post ${loggedUser?.role !== ROLE.USER ? 'page-for-admin' : ''}`}>
 			{!notFound ? (
@@ -197,6 +232,13 @@ const PostPage = () => {
 							<p>{downvotes}</p>
 						</div>
 						<p className='status'>Status: {post?.status}</p>
+						{(loggedUser?._id === post?.user || loggedUser?.role === ROLE.LOCAL_ADMIN) && (
+							<p style={{ marginBottom: '10px', color: post?.verified ? '#40c057' : '#fa5252' }}>
+								{post?.verified
+									? LANGUAGE.post_approved[selectedLanguage]
+									: LANGUAGE.post_not_approved[selectedLanguage]}
+							</p>
+						)}
 						{loggedUser?.role === ROLE.LOCAL_ADMIN && (
 							<div className='buttons'>
 								<Button
@@ -205,7 +247,7 @@ const PostPage = () => {
 									onClick={() => dispatch(changeModalState('updatePostStatus', true))}>
 									{LANGUAGE.update_status_button[selectedLanguage]}
 								</Button>
-								<Button color='red' radius='lg' onClick={null}>
+								<Button color='red' radius='lg' onClick={() => openDeletePostModal()}>
 									{LANGUAGE.delete_post_button[selectedLanguage]}
 								</Button>
 							</div>
@@ -217,6 +259,16 @@ const PostPage = () => {
 								</Button>
 								<Button color='green' radius='lg' onClick={() => dispatch(changeModalState('editPost', true))}>
 									{LANGUAGE.edit_post_button[selectedLanguage]}
+								</Button>
+							</div>
+						)}
+						{loggedUser?.role === ROLE.MODERATOR && !post?.verified && (
+							<div className='buttons'>
+								<Button color='red' radius='xl' onClick={handleDenyPostRequest}>
+									{LANGUAGE.deny_post_request_button[selectedLanguage]}
+								</Button>
+								<Button color='green' radius='xl' onClick={handleApprovePostRequest}>
+									{LANGUAGE.approve_post_request_button[selectedLanguage]}
 								</Button>
 							</div>
 						)}

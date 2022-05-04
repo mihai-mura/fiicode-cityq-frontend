@@ -139,3 +139,19 @@
 		height: 250px;
 	}
 }
+
+.post-for-moderator {
+	max-width: 400px;
+	height: 450px;
+	.post-carousel-container {
+		height: 250px;
+	}
+
+	.post-footer {
+		justify-content: flex-end;
+		gap: 10px;
+	}
+	.votes {
+		display: none;
+	}
+}

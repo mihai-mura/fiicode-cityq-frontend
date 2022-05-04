@@ -2,9 +2,15 @@ import { showNotification } from '@mantine/notifications';
 import { useEffect, useState } from 'react';
 import { errorNotification } from '../../components/Notifications/Notifications';
 import Post from '../../components/Post/Post';
+import EmptyStatePlaceholder from '../../components/EmptyStatePlaceholder/EmptyStatePlaceholder';
+import LANGUAGE from '../../utils/languages.json';
 import './MyPosts.scss';
+import { useSelector } from 'react-redux';
+import { Button } from '@mantine/core';
 
 const MyPosts = () => {
+	const selectedLanguage = useSelector((store) => store.language);
+
 	const [posts, setPosts] = useState([]);
 
 	//get my posts
@@ -41,24 +47,22 @@ const MyPosts = () => {
 
 	return (
 		<div className='page page-my-posts'>
-			<div className='header'></div>
-			<div className='body'>
-				{posts.map((post, index) => (
-					<Post
-						forme
-						id={post._id}
-						title={post.title}
-						key={index}
-						fileUrls={post.file_urls}
-						user={post.user}
-						city={post.city}
-						description={post.description}
-						status={post.status}
-						upvotes={post.upvotes.length}
-						downvotes={post.downvotes.length}
-					/>
-				))}
-			</div>
+			{posts.map((post, index) => (
+				<Post
+					forme
+					id={post._id}
+					title={post.title}
+					key={index}
+					fileUrls={post.file_urls}
+					user={post.user}
+					city={post.city}
+					description={post.description}
+					status={post.status}
+					upvotes={post.upvotes.length}
+					downvotes={post.downvotes.length}
+				/>
+			))}
+			{posts.length === 0 && <EmptyStatePlaceholder createPostButton text={LANGUAGE.no_my_posts[selectedLanguage]} />}
 		</div>
 	);
 };

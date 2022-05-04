@@ -254,6 +254,8 @@ const Authentification = () => {
 						navigate('/general-admin');
 					} else if (response.user.role === ROLE.LOCAL_ADMIN) {
 						navigate('/local-admin/requests');
+					} else if (response.user.role === ROLE.MODERATOR) {
+						navigate('/moderator');
 					}
 				} else if (res.status === 403) {
 					setLoadingOverlay(false);
@@ -300,8 +302,8 @@ const Authentification = () => {
 					showNotification(
 						infoNotification(
 							LANGUAGE.notification_recovery_email_sent_title[selectedLanguage],
-							LANGUAGE.notification_recovery_email_sent_message[selectedLanguage],
-							'green'
+							'green',
+							LANGUAGE.notification_recovery_email_sent_message[selectedLanguage]
 						)
 					);
 					setLoginEmail('');
@@ -387,7 +389,7 @@ const Authentification = () => {
 								{LANGUAGE.login_modal_go_to_register[selectedLanguage]}
 							</Button>
 						</div>
-						<Button variant='filled' color='#3378F7' radius='md' onClick={handleLogin}>
+						<Button variant='filled' color='#3378F7' radius='xl' onClick={handleLogin}>
 							{LANGUAGE.login_modal_submit[selectedLanguage]}
 						</Button>
 					</div>
@@ -556,7 +558,7 @@ const Authentification = () => {
 								{LANGUAGE.register_modal_go_to_login[selectedLanguage]}
 							</Button>
 						</div>
-						<Button variant='filled' color='#3378F7' radius='md' onClick={handleRegister}>
+						<Button variant='filled' color='#3378F7' radius='xl' onClick={handleRegister}>
 							{LANGUAGE.register_modal_submit[selectedLanguage]}
 						</Button>
 					</div>

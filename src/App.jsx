@@ -25,6 +25,7 @@ import UpdatePostStatusModal from './components/_Modals/UpdatePostStatusModal/Up
 import RouteHandler from './pages/_RouteHandler/RouteHandler';
 import MyPosts from './pages/MyPosts/MyPosts';
 import EditPostModal from './components/_Modals/EditPostModal/EditPostModal';
+import PostVerification from './pages/PostVerification/PostVerification';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -99,6 +100,14 @@ function App() {
 							}
 						/>
 						{/* moderator routes */}
+						<Route
+							path='/moderator'
+							element={
+								<RouteHandler logged>
+									<PostVerification />
+								</RouteHandler>
+							}
+						/>
 						<Route
 							path='/moderator/settings'
 							element={

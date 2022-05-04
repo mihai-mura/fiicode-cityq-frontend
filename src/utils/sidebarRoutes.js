@@ -26,7 +26,7 @@ const getRoutes = (role, selectedLanguage) => {
 		case ROLE.MODERATOR:
 			return [
 				{
-					path: '/',
+					path: '/moderator',
 					name: 'Posts',
 					icon: <IconBrandSafari />,
 				},

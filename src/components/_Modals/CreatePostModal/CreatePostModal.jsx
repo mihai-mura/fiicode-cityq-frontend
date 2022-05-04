@@ -98,7 +98,7 @@ const CreatePostModal = () => {
 					setNoFilesError(false);
 					setTooManyFilesError(false);
 					setLoadingOverlay(false);
-					showNotification(infoNotification('Success', LANGUAGE.notification_post_created[selectedLanguage], 'green'));
+					showNotification(infoNotification('Success', 'green', LANGUAGE.notification_post_created[selectedLanguage]));
 				}
 			} else if (res.status === 401) {
 				dispatch(changeModalState('createPost', false));
@@ -199,7 +199,7 @@ const CreatePostModal = () => {
 				<Button variant='subtle' radius='xl' compact onClick={deleteFiles}>
 					Delete Files
 				</Button>
-				<Button size='md' variant='filled' radius='md' onClick={handleCreatePost}>
+				<Button size='md' variant='filled' radius='xl' onClick={handleCreatePost}>
 					Submit
 				</Button>
 			</div>

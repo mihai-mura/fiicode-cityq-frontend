@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './MobileSidebar.scss';
 import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { setLoggedUser } from '../../redux/actions';
 import LANGUAGE from '../../utils/languages.json';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import getRoutes from '../../utils/sidebarRoutes';
 
 const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const selectedLanguage = useSelector((state) => state.language);
 	const [sidebarRoutes, setSidebarRoutes] = useState([]);
@@ -25,6 +26,7 @@ const MobileSidebar = ({ mobileSidebarOpen, toggleMobileMenu }) => {
 	const handleLoggout = () => {
 		dispatch(setLoggedUser(null));
 		localStorage.removeItem('api-token');
+		navigate('/');
 		toggleMobileMenu();
 	};
 
