@@ -8,49 +8,40 @@ import { changeModalState } from '../../redux/actions';
 import LANGUAGE from '../../utils/languages.json';
 import { useSelector } from 'react-redux';
 import WritePost from '../../components/WritePost/WritePost';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ROLE from '../../utils/roles';
 import { useNavigate } from 'react-router-dom';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification } from '../../components/Notifications/Notifications';
+import SkeletonPost from '../../components/SkeletonPost/SkeletonPost';
+import useInfiniteScroll from '../../hooks/useInfiniteScroll';
+import useOnScreen from '../../hooks/useOnScreen';
 
 const Explore = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const selectedLanguage = useSelector((state) => state.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
-	const [currentPosts, setCurrentPosts] = useState([]);
 
-	//redirect general admin
+	const lastElementRef = useRef();
+	const [pageNumber, setPageNumber] = useState(1);
+
+	const { posts, loading, hasMore } = useInfiniteScroll(pageNumber, 10);
+
+	const lastElementVisible = useOnScreen(lastElementRef);
+
+	//redirect users based on their role
 	useEffect(() => {
-		if (loggedUser?.role === ROLE.GENERAL_ADMIN) {
-			navigate('/general-admin');
-		}
+		if (loggedUser?.role === ROLE.GENERAL_ADMIN) navigate('/general-admin');
+		else if (loggedUser?.role === ROLE.LOCAL_ADMIN) navigate('/local-admin/requests');
+		else if (loggedUser?.role === ROLE.MODERATOR) navigate('/moderator');
 	}, [loggedUser]);
 
 	useEffect(() => {
-		(async () => {
-			await setPosts();
-		})();
-	}, []);
-
-	const setPosts = async () => {
-		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/all`);
-		const rawPosts = await res.json();
-		//set name and city
-		const posts = await Promise.all(
-			rawPosts.map(async (post) => {
-				const rawName = await fetch(`${process.env.REACT_APP_API_URL}/users/${post.user}/full-name`);
-				const name = await rawName.json();
-				return {
-					...post,
-					user: `${name.firstName} ${name.lastName}`,
-					city: `@${post.city.toLowerCase()}`,
-				};
-			})
-		);
-		setCurrentPosts(posts);
-	};
+		if (lastElementVisible && hasMore && !loading && posts.length > 0) {
+			setPageNumber((prev) => prev + 1);
+		}
+	}, [posts, hasMore, lastElementVisible, loading]);
 
 	//! add post sorting
 	return (
@@ -72,7 +63,7 @@ const Explore = () => {
 					<WritePost />
 				</div>
 			</div>
-			{currentPosts.map((post, index) => (
+			{posts.map((post, index) => (
 				<Post
 					foruser
 					id={post._id}
@@ -87,6 +78,7 @@ const Explore = () => {
 					downvotes={post.downvotes.length}
 				/>
 			))}
+			<SkeletonPost lastElementRef={lastElementRef} />
 		</div>
 	);
 };

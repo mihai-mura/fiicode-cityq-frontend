@@ -123,7 +123,7 @@ const Authentification = () => {
 		if (address === '') {
 			setAddressError(LANGUAGE.register_modal_address_error[selectedLanguage]);
 		}
-		if (city === '' || city === 'Select city') {
+		if (city === '' || city === 'City') {
 			setCityError(LANGUAGE.register_modal_city_error[selectedLanguage]);
 		}
 

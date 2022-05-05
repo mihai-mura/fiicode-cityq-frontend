@@ -1,8 +1,10 @@
 import './Post.scss';
-import { IconArrowBigDownLine, IconArrowBigUpLine } from '@tabler/icons';
+import { IconArrowBigDownLine, IconArrowBigUpLine, IconChevronLeft, IconChevronRight } from '@tabler/icons';
 import 'swiper/scss';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification, infoNotification } from '../Notifications/Notifications';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +19,7 @@ import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import LANGUAGE from '../../utils/languages.json';
 import ROLE from '../../utils/roles.js';
+import { Pagination } from 'swiper';
 
 //* to not exceed quota
 const loadFirebaseFiles = false;
@@ -26,6 +29,7 @@ const Post = (props) => {
 	const dispatch = useDispatch();
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
+	const swiperRef = useRef(null);
 	const [upvotes, setUpvotes] = useState(0);
 	const [downvotes, setDownvotes] = useState(0);
 
@@ -137,7 +141,7 @@ const Post = (props) => {
 				{props.foruser && <div className='post-city'>{props.city}</div>}
 			</div>
 			<div className='post-carousel-container'>
-				<Swiper autoHeight slidesPerView={1}>
+				<Swiper ref={swiperRef} modules={[Pagination]} pagination={{ clickable: true }} autoHeight slidesPerView={1}>
 					{props.fileUrls?.map((file, index) => (
 						<SwiperSlide className='carousel-slide' key={index}>
 							{file.includes('.mp4?') ? (
@@ -148,6 +152,12 @@ const Post = (props) => {
 						</SwiperSlide>
 					))}
 				</Swiper>
+				<div className='swiper-button previous-button' onClick={() => swiperRef.current.swiper.slidePrev()}>
+					<IconChevronLeft className='button-icon' />
+				</div>
+				<div className='swiper-button next-button' onClick={() => swiperRef.current.swiper.slideNext()}>
+					<IconChevronRight className='button-icon' />
+				</div>
 			</div>
 			<div className='post-title'>{props.title}</div>
 			<div className='post-description'>{props.description}</div>
