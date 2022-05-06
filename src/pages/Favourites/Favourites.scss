@@ -1,0 +1,12 @@
+.page-favourites {
+	position: relative;
+	overflow: hidden;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
+	overflow-y: overlay;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 2rem 1rem;
+	gap: 50px;
+}

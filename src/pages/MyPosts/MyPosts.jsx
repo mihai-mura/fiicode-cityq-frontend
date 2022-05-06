@@ -6,7 +6,6 @@ import EmptyStatePlaceholder from '../../components/EmptyStatePlaceholder/EmptyS
 import LANGUAGE from '../../utils/languages.json';
 import './MyPosts.scss';
 import { useSelector } from 'react-redux';
-import { Button } from '@mantine/core';
 
 const MyPosts = () => {
 	const selectedLanguage = useSelector((store) => store.language);
@@ -36,7 +35,7 @@ const MyPosts = () => {
 						};
 					})
 				);
-				setPosts(readyPosts);
+				setPosts(readyPosts.reverse());
 			} else if (res.status === 404) {
 				setPosts([]);
 			} else {

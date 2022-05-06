@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './Navbar.scss';
-import { IconBell, IconMessageDots } from '@tabler/icons';
+import { IconBell, IconHeart, IconMessageDots } from '@tabler/icons';
 // import { FiSearch } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeModalState, setLanguage } from '../../redux/actions';
@@ -10,8 +10,10 @@ import UserMenu from '../UserMenu/UserMenu';
 import CityQLogo from '../../images/CityQ.svg';
 import MobileHamburger from '../../images/mobile-hamburger.svg';
 import { Button } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = ({ toggleMobileMenu }) => {
+	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const selectedLanguage = useSelector((state) => state.language);
@@ -30,8 +32,7 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 	const userLoggedIcons = (
 		<>
-			<IconMessageDots className='user-icon comments' />
-			<IconBell className='user-icon notifications' />
+			<IconHeart className='favourites-icon' onClick={() => navigate('/favourites')} />
 			<UrlFetchImg
 				url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 				alt='user'

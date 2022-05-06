@@ -4,8 +4,10 @@ const SkeletonPost = (props) => {
 	return (
 		<div className='post-container' ref={props.lastElementRef}>
 			<div className='post-header'>
-				<Skeleton height={10} radius='xl' width='20%' />
-				<Skeleton height={10} radius='xl' mt={5} width='15%' />
+				<div style={{ width: '90px', height: '100%' }}>
+					<Skeleton height={10} radius='xl' width='100%' />
+					<Skeleton height={10} radius='xl' mt={5} width='80%' />
+				</div>
 			</div>
 			<div className='post-carousel-container'>
 				<Skeleton height='100%' radius='lg' width='100%' />

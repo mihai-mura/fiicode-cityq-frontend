@@ -1,5 +1,5 @@
 import { showNotification } from '@mantine/notifications';
-import { IconArrowBigUpLine, IconArrowBigDownLine } from '@tabler/icons';
+import { IconArrowBigUpLine, IconArrowBigDownLine, IconHeart } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -9,10 +9,12 @@ import ROLE from '../../utils/roles';
 import './PostPage.scss';
 import {
 	addLoggedUserDownvotes,
-	addLoggedUserUpotes,
+	addLoggedUserUpvotes,
 	changeModalState,
 	removeLoggedUserDownvotes,
-	removeLoggedUserUpotes,
+	removeLoggedUserUpvotes,
+	addFavourite,
+	removeFavourite,
 } from '../../redux/actions';
 import { Button } from '@mantine/core';
 import LANGUAGE from '../../utils/languages.json';
@@ -120,16 +122,16 @@ const PostPage = () => {
 				if (response === 'added upvote') {
 					//add upvote
 					setUpvotes((prev) => prev + 1);
-					dispatch(addLoggedUserUpotes(post?._id));
+					dispatch(addLoggedUserUpvotes(post?._id));
 				} else if (response === 'removed upvote') {
 					// remove upvote
 					setUpvotes((prev) => prev - 1);
-					dispatch(removeLoggedUserUpotes(post?._id));
+					dispatch(removeLoggedUserUpvotes(post?._id));
 				} else if (response === 'added upvote and removed downvote') {
 					//add upvote and remove downvote
 					setUpvotes((prev) => prev + 1);
 					setDownvotes((prev) => prev - 1);
-					dispatch(addLoggedUserUpotes(post?._id));
+					dispatch(addLoggedUserUpvotes(post?._id));
 					dispatch(removeLoggedUserDownvotes(post?._id));
 				}
 			} else {
@@ -160,7 +162,32 @@ const PostPage = () => {
 					setUpvotes((prev) => prev - 1);
 					setDownvotes((prev) => prev + 1);
 					dispatch(addLoggedUserDownvotes(post?._id));
-					dispatch(removeLoggedUserUpotes(post?._id));
+					dispatch(removeLoggedUserUpvotes(post?._id));
+				}
+			} else {
+				showNotification(errorNotification());
+			}
+		} else dispatch(changeModalState('login', true));
+	};
+
+	const handleFavourite = async () => {
+		if (loggedUser && loggedUser.role === ROLE.USER) {
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/favourite/${post?._id}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `Bearer ${localStorage.getItem('api-token')}`,
+				},
+			});
+			const response = await res.text();
+			if (res.status === 200) {
+				if (response === 'added to favourites') {
+					//add favourite
+					showNotification(infoNotification(LANGUAGE.notification_added_to_favourites[selectedLanguage], 'blue'));
+					dispatch(addFavourite(post?._id));
+				} else if (response === 'removed from favourites') {
+					//remove downvote
+					showNotification(infoNotification(LANGUAGE.notification_removed_from_favourites[selectedLanguage], 'blue'));
+					dispatch(removeFavourite(post?._id));
 				}
 			} else {
 				showNotification(errorNotification());
@@ -230,6 +257,11 @@ const PostPage = () => {
 								onClick={loggedUser?.role === ROLE.USER ? handleDownvote : null}
 							/>
 							<p>{downvotes}</p>
+							<IconHeart
+								className='favourite-icon'
+								style={{ color: loggedUser?.favouritePosts?.includes(post?._id) ? 'red' : 'black' }}
+								onClick={handleFavourite}
+							/>
 						</div>
 						<p className='status'>Status: {post?.status}</p>
 						{(loggedUser?._id === post?.user || loggedUser?.role === ROLE.LOCAL_ADMIN) && (

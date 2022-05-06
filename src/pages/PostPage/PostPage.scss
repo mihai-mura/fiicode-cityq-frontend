@@ -3,6 +3,8 @@
 	flex-direction: column;
 	align-items: center;
 	overflow: hidden;
+	overflow-y: scroll;
+	scroll-behavior: smooth;
 
 	.post-carousel-container {
 		width: 100%;
@@ -39,7 +41,7 @@
 
 	.body {
 		width: 100%;
-		height: 50%;
+		height: fit-content;
 		padding: 2rem 3rem;
 
 		@media only screen and (max-width: 400px) {
@@ -53,8 +55,10 @@
 		}
 
 		.description {
-			font-size: 1.2rem;
 			margin-bottom: 1rem;
+			font-size: 1.2rem;
+			word-break: break-all;
+			white-space: normal;
 		}
 
 		.votes {
@@ -68,6 +72,16 @@
 
 			.downvote-icon {
 				cursor: pointer;
+			}
+
+			.favourite-icon {
+				width: 25px;
+				height: 25px;
+				margin-left: 0.5rem;
+
+				&:hover {
+					cursor: pointer;
+				}
 			}
 		}
 

@@ -56,6 +56,16 @@ const loggedUser = (state = null, action) => {
 				...state,
 				downvotedPosts: state.downvotedPosts.filter((post) => post !== action.payload),
 			};
+		case 'addFavourite':
+			return {
+				...state,
+				favouritePosts: [...state.favouritePosts, action.payload],
+			};
+		case 'removeFavourite':
+			return {
+				...state,
+				favouritePosts: state.favouritePosts.filter((post) => post !== action.payload),
+			};
 		default:
 			return state;
 	}

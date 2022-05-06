@@ -8,11 +8,11 @@ export const setLoggedUser = (payload) => ({
 	payload,
 });
 
-export const addLoggedUserUpotes = (payload) => ({
+export const addLoggedUserUpvotes = (payload) => ({
 	type: 'addUpvotes',
 	payload,
 });
-export const removeLoggedUserUpotes = (payload) => ({
+export const removeLoggedUserUpvotes = (payload) => ({
 	type: 'removeUpvotes',
 	payload,
 });
@@ -22,6 +22,16 @@ export const addLoggedUserDownvotes = (payload) => ({
 });
 export const removeLoggedUserDownvotes = (payload) => ({
 	type: 'removeDownvotes',
+	payload,
+});
+
+export const addFavourite = (payload) => ({
+	type: 'addFavourite',
+	payload,
+});
+
+export const removeFavourite = (payload) => ({
+	type: 'removeFavourite',
 	payload,
 });
 

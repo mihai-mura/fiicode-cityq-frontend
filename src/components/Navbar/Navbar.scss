@@ -1,5 +1,5 @@
 .navbar {
-	height: 120px;
+	height: 100px;
 	background-color: #fdfdfd;
 	width: 100%;
 	display: flex;
@@ -69,6 +69,15 @@
 		cursor: pointer;
 		span {
 			transition: all 0.5s;
+		}
+	}
+
+	.favourites-icon {
+		width: 25px;
+		height: 25px;
+
+		&:hover {
+			cursor: pointer;
 		}
 	}
 

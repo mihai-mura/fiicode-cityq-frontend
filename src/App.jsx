@@ -26,6 +26,7 @@ import RouteHandler from './pages/_RouteHandler/RouteHandler';
 import MyPosts from './pages/MyPosts/MyPosts';
 import EditPostModal from './components/_Modals/EditPostModal/EditPostModal';
 import PostVerification from './pages/PostVerification/PostVerification';
+import Favourites from './pages/Favourites/Favourites';
 
 function App() {
 	const [mobileSidebarOpen, setmobileSidebarOpen] = useState(false);
@@ -81,6 +82,8 @@ function App() {
 
 					<Routes>
 						<Route path='/' element={<Explore />} />
+						<Route path='/post/:id' element={<PostPage />} />
+						<Route path='/recover-password/:token' element={<RestorePassword />} />
 						<Route
 							path='/my-posts'
 							element={
@@ -89,8 +92,14 @@ function App() {
 								</RouteHandler>
 							}
 						/>
-						<Route path='/post/:id' element={<PostPage />} />
-						<Route path='/recover-password/:token' element={<RestorePassword />} />
+						<Route
+							path='/favourites'
+							element={
+								<RouteHandler logged>
+									<Favourites />
+								</RouteHandler>
+							}
+						/>
 						<Route
 							path='/settings'
 							element={

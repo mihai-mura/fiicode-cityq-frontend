@@ -603,5 +603,17 @@
 	"post_request_denied": {
 		"en": "Post denied",
 		"ro": "Postarea a fost respinsa"
+	},
+	"notification_added_to_favourites": {
+		"en": "Post added to favourites",
+		"ro": "Postarea a fost adaugata la favorite"
+	},
+	"notification_removed_from_favourites": {
+		"en": "Post removed from favourites",
+		"ro": "Postarea a fost stearsa din favorite"
+	},
+	"no_favourite_posts": {
+		"en": "No favourite posts yet!",
+		"ro": "Nu exista postari favorite!"
 	}
 }
