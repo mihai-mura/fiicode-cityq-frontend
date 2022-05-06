@@ -1,3 +1,4 @@
+import { LoadingOverlay } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -10,6 +11,7 @@ const PostVerification = () => {
 	const loggedUser = useSelector((store) => store.loggedUser);
 	const selectedLanguage = useSelector((store) => store.language);
 	const [posts, setPosts] = useState([]);
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 
 	useEffect(() => {
 		(async () => {
@@ -18,6 +20,7 @@ const PostVerification = () => {
 	}, [loggedUser]);
 
 	const getPosts = async () => {
+		setLoadingOverlay(true);
 		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/unverified`, {
 			method: 'GET',
 			headers: {
@@ -42,10 +45,12 @@ const PostVerification = () => {
 		} else {
 			showNotification(errorNotification());
 		}
+		setLoadingOverlay(false);
 	};
 
 	return (
 		<div className='page  page-post-verification'>
+			<LoadingOverlay visible={loadingOverlay} />
 			<div className='header'>
 				<p>{loggedUser?.city}</p>
 				<p>{`${posts.length} ${LANGUAGE.posts_count[selectedLanguage]}`}</p>

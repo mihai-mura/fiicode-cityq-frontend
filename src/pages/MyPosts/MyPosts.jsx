@@ -6,15 +6,18 @@ import EmptyStatePlaceholder from '../../components/EmptyStatePlaceholder/EmptyS
 import LANGUAGE from '../../utils/languages.json';
 import './MyPosts.scss';
 import { useSelector } from 'react-redux';
+import { LoadingOverlay } from '@mantine/core';
 
 const MyPosts = () => {
 	const selectedLanguage = useSelector((store) => store.language);
 
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 	const [posts, setPosts] = useState([]);
 
 	//get my posts
 	useEffect(() => {
 		(async () => {
+			setLoadingOverlay(true);
 			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/user/all`, {
 				method: 'GET',
 				headers: {
@@ -41,11 +44,13 @@ const MyPosts = () => {
 			} else {
 				showNotification(errorNotification());
 			}
+			setLoadingOverlay(false);
 		})();
-	});
+	}, []);
 
 	return (
 		<div className='page page-my-posts'>
+			<LoadingOverlay visible={loadingOverlay} />
 			{posts.map((post, index) => (
 				<Post
 					forme

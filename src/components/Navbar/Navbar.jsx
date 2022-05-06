@@ -11,6 +11,7 @@ import CityQLogo from '../../images/CityQ.svg';
 import MobileHamburger from '../../images/mobile-hamburger.svg';
 import { Button } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
+import ROLE from '../../utils/roles';
 
 const Navbar = ({ toggleMobileMenu }) => {
 	const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 	const userLoggedIcons = (
 		<>
-			<IconHeart className='favourites-icon' onClick={() => navigate('/favourites')} />
+			{loggedUser?.role === ROLE.USER && <IconHeart className='favourites-icon' onClick={() => navigate('/favourites')} />}
 			<UrlFetchImg
 				url={`${process.env.REACT_APP_API_URL}/users/profile-pic/${loggedUser?._id}`}
 				alt='user'

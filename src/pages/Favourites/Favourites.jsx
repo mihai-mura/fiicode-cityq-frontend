@@ -6,11 +6,13 @@ import { errorNotification } from '../../components/Notifications/Notifications'
 import LANGUAGE from '../../utils/languages.json';
 import Post from '../../components/Post/Post';
 import EmptyStatePlaceholder from '../../components/EmptyStatePlaceholder/EmptyStatePlaceholder';
+import { LoadingOverlay } from '@mantine/core';
 
 const Favourites = () => {
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((store) => store.loggedUser);
 
+	const [loadingOverlay, setLoadingOverlay] = useState(false);
 	const [posts, setPosts] = useState([]);
 
 	//get posts for this city
@@ -21,6 +23,7 @@ const Favourites = () => {
 	}, [loggedUser]);
 
 	const getPosts = async () => {
+		setLoadingOverlay(true);
 		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/favourites`, {
 			method: 'GET',
 			headers: {
@@ -45,10 +48,12 @@ const Favourites = () => {
 		} else {
 			showNotification(errorNotification());
 		}
+		setLoadingOverlay(false);
 	};
 
 	return (
 		<div className='page page-favourites'>
+			<LoadingOverlay visible={loadingOverlay} />
 			{posts.map((post, index) => (
 				<Post
 					foruser
