@@ -1,6 +1,6 @@
 import { showNotification } from '@mantine/notifications';
-import { IconArrowBigUpLine, IconArrowBigDownLine, IconHeart } from '@tabler/icons';
-import { useEffect, useState } from 'react';
+import { IconArrowBigUpLine, IconArrowBigDownLine, IconHeart, IconChevronLeft, IconChevronRight } from '@tabler/icons';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -19,6 +19,7 @@ import {
 import { Button } from '@mantine/core';
 import LANGUAGE from '../../utils/languages.json';
 import { useModals } from '@mantine/modals';
+import { Pagination } from 'swiper';
 
 //* to not exceed quota
 const loadFirebaseFiles = false;
@@ -30,6 +31,7 @@ const PostPage = () => {
 	const id = useParams().id;
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
+	const swiperRef = useRef(null);
 	const [notFound, setNotFound] = useState(false);
 	const [post, setPost] = useState(null);
 	const [upvotes, setUpvotes] = useState(0);
@@ -229,7 +231,12 @@ const PostPage = () => {
 			{!notFound ? (
 				<>
 					<div className='post-carousel-container'>
-						<Swiper autoHeight slidesPerView={1}>
+						<Swiper
+							ref={swiperRef}
+							modules={[Pagination]}
+							pagination={{ clickable: true }}
+							autoHeight
+							slidesPerView={1}>
 							{post?.file_urls.map((file, index) => (
 								<SwiperSlide className='carousel-slide' key={index}>
 									{file.includes('.mp4?') ? (
@@ -240,6 +247,12 @@ const PostPage = () => {
 								</SwiperSlide>
 							))}
 						</Swiper>
+						<div className='swiper-button previous-button' onClick={() => swiperRef.current.swiper.slidePrev()}>
+							<IconChevronLeft className='button-icon' />
+						</div>
+						<div className='swiper-button next-button' onClick={() => swiperRef.current.swiper.slideNext()}>
+							<IconChevronRight className='button-icon' />
+						</div>
 					</div>
 					<div className='body'>
 						<p className='title'>{post?.title}</p>

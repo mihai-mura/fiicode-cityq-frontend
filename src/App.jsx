@@ -112,7 +112,7 @@ function App() {
 						<Route
 							path='/moderator'
 							element={
-								<RouteHandler logged>
+								<RouteHandler allow={ROLE.MODERATOR} logged>
 									<PostVerification />
 								</RouteHandler>
 							}
