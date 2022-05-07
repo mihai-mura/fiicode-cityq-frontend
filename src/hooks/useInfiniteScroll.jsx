@@ -1,14 +1,18 @@
 import { useEffect, useState } from 'react';
 
-const useInfiniteScroll = (page, limit) => {
+const useInfiniteScroll = (page, limit, sort = 'date') => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [hasMore, setHasMore] = useState(true);
 
 	useEffect(() => {
+		setPosts([]);
+	}, [sort]);
+
+	useEffect(() => {
 		(async () => {
 			setLoading(true);
-			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/all?limit=${limit}&page=${page}`);
+			const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/all?limit=${limit}&page=${page}&sort=${sort}`);
 			const data = await res.json();
 			//set name and city
 			const readyPosts = await Promise.all(
@@ -22,11 +26,12 @@ const useInfiniteScroll = (page, limit) => {
 					};
 				})
 			);
+
 			setPosts((prev) => [...prev, ...readyPosts]);
 			setHasMore(data.posts.length > 0);
 			setLoading(false);
 		})();
-	}, [page]);
+	}, [page, sort]);
 
 	return { posts, loading, hasMore };
 };

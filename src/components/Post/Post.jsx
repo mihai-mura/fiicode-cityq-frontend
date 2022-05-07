@@ -32,8 +32,28 @@ const Post = (props) => {
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const swiperRef = useRef(null);
+	const [status, setStatus] = useState('');
 	const [upvotes, setUpvotes] = useState(0);
 	const [downvotes, setDownvotes] = useState(0);
+
+	useEffect(() => {
+		switch (props.status) {
+			case 'sent':
+				setStatus(LANGUAGE.post_status_sent[selectedLanguage]);
+				break;
+			case 'seen':
+				setStatus(LANGUAGE.post_status_seen[selectedLanguage]);
+				break;
+			case 'in-progress':
+				setStatus(LANGUAGE.post_status_in_progress[selectedLanguage]);
+				break;
+			case 'resolved':
+				setStatus(LANGUAGE.post_status_resolved[selectedLanguage]);
+				break;
+			default:
+				break;
+		}
+	}, [props.status, selectedLanguage]);
 
 	useEffect(() => {
 		if (props.upvotes) {
@@ -224,15 +244,23 @@ const Post = (props) => {
 							radius='xl'
 							size='xs'
 							onClick={() => navigate(`/post/${props.id}`)}>
-							View
+							{LANGUAGE.post_card_view_button[selectedLanguage]}
 						</Button>
-						<div className='post-status'>{props.status}</div>
+						<div className='post-status'>{status}</div>
 					</>
 				)}
 				{props.foradmin && (
-					<Button onClick={() => navigate(`/post/${props.id}`)} radius='xl'>
-						{LANGUAGE.post_card_view_button[selectedLanguage]}
-					</Button>
+					<>
+						<Button
+							style={{ marginRight: '3.2rem' }}
+							variant='subtle'
+							radius='xl'
+							size='xs'
+							onClick={() => navigate(`/post/${props.id}`)}>
+							{LANGUAGE.post_card_view_button[selectedLanguage]}
+						</Button>
+						<div className='post-status'>{status}</div>
+					</>
 				)}
 				{props.forme && (
 					<Button onClick={() => navigate(`/post/${props.id}`)} variant='subtle' radius='xl'>

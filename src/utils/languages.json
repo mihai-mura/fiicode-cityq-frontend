@@ -615,5 +615,33 @@
 	"no_favourite_posts": {
 		"en": "No favourite posts yet!",
 		"ro": "Nu exista postari favorite!"
+	},
+	"post_sort_new": {
+		"en": "New",
+		"ro": "Noi"
+	},
+	"post_sort_upvotes": {
+		"en": "Upvotes",
+		"ro": "Positive"
+	},
+	"post_sort_downvotes": {
+		"en": "Downvotes",
+		"ro": "Negative"
+	},
+	"post_sort_sent": {
+		"en": "Sent",
+		"ro": "Trimise"
+	},
+	"post_sort_seen": {
+		"en": "Seen",
+		"ro": "Vazute"
+	},
+	"post_sort_in_progress": {
+		"en": "In progress",
+		"ro": "In progres"
+	},
+	"post_sort_resolved": {
+		"en": "Resolved",
+		"ro": "Rezolvate"
 	}
 }

@@ -7,18 +7,25 @@
 	flex-direction: column;
 	align-items: center;
 	padding: 2rem 1rem;
-	gap: 50px;
+	gap: 2rem;
 
 	.createpost-header {
 		width: 100%;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+		gap: 1rem;
 	}
 	.createpost-reactive {
-		width: 600px;
+		width: 100%;
+		max-width: 600px;
 		background: #ffffff;
 		border-radius: 10px;
 		cursor: pointer;
+	}
+	.sort-controller {
+		width: 80%;
+		max-width: 550px;
 	}
 }

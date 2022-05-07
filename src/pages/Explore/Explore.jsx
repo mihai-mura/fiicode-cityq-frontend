@@ -1,7 +1,7 @@
 import './Explore.scss';
 import Post from '../../components/Post/Post';
 import { PostsData } from '../../components/Post/PostsData';
-import { Button } from '@mantine/core';
+import { Button, SegmentedControl } from '@mantine/core';
 import { IconCirclePlus } from '@tabler/icons';
 import { useDispatch } from 'react-redux';
 import { changeModalState } from '../../redux/actions';
@@ -24,9 +24,10 @@ const Explore = () => {
 	const loggedUser = useSelector((state) => state.loggedUser);
 
 	const lastElementRef = useRef();
+	const [sortValue, setSortValue] = useState('date');
 	const [pageNumber, setPageNumber] = useState(1);
 
-	const { posts, loading, hasMore } = useInfiniteScroll(pageNumber, 10);
+	const { posts, loading, hasMore } = useInfiniteScroll(pageNumber, 10, sortValue);
 
 	const lastElementVisible = useOnScreen(lastElementRef);
 
@@ -43,7 +44,6 @@ const Explore = () => {
 		}
 	}, [posts, hasMore, lastElementVisible, loading]);
 
-	//! add post sorting
 	return (
 		<div className='page page-explore'>
 			<div className='createpost-header'>
@@ -62,6 +62,25 @@ const Explore = () => {
 					}}>
 					<WritePost />
 				</div>
+				<SegmentedControl
+					className='sort-controller'
+					color='blue'
+					radius='lg'
+					value={sortValue}
+					onChange={(value) => {
+						setSortValue(value);
+						setPageNumber(1);
+					}}
+					data={[
+						{ label: LANGUAGE.post_sort_new[selectedLanguage], value: 'date' },
+						{ label: LANGUAGE.post_sort_upvotes[selectedLanguage], value: 'upvotes' },
+						{ label: LANGUAGE.post_sort_downvotes[selectedLanguage], value: 'downvotes' },
+						{ label: LANGUAGE.post_sort_sent[selectedLanguage], value: 'sent' },
+						{ label: LANGUAGE.post_sort_seen[selectedLanguage], value: 'seen' },
+						{ label: LANGUAGE.post_sort_in_progress[selectedLanguage], value: 'in-progress' },
+						{ label: LANGUAGE.post_sort_resolved[selectedLanguage], value: 'resolved' },
+					]}
+				/>
 			</div>
 			{posts.map((post, index) => (
 				<Post

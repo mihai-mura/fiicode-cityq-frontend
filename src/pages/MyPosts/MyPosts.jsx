@@ -38,7 +38,7 @@ const MyPosts = () => {
 						};
 					})
 				);
-				setPosts(readyPosts.reverse());
+				setPosts(readyPosts);
 			} else if (res.status === 404) {
 				setPosts([]);
 			} else {
