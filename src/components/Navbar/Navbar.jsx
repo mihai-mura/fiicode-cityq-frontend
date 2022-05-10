@@ -48,14 +48,6 @@ const Navbar = ({ toggleMobileMenu }) => {
 
 	return (
 		<div className='navbar'>
-			{/* <div className='slide-content'>
-				<div className='search'>
-					<div className='search-icon'>
-						<FiSearch />
-					</div>
-					<input className='search-input' placeholder='Search anything' />
-				</div>
-			</div> */}
 			<div className='fixed-content'>
 				<div
 					className='language-switch'

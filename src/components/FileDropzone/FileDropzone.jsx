@@ -25,7 +25,6 @@ function ImageUploadIcon({ status, ...props }) {
 }
 
 const dropzoneChildrenRegister = (status, files = null, noFileError, loadingOverlay, selectedLanguage, modal) => {
-	//!  image preview size
 	return (
 		<>
 			<LoadingOverlay visible={loadingOverlay} />

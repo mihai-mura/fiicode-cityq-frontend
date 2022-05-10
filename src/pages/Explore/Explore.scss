@@ -24,8 +24,30 @@
 		border-radius: 10px;
 		cursor: pointer;
 	}
-	.sort-controller {
+
+	.segmented-control-default {
 		width: 80%;
 		max-width: 550px;
+	}
+
+	.sort-controller-container {
+		display: none;
+		width: 80%;
+		max-width: 550px;
+		overflow: hidden;
+		border-radius: 20px;
+
+		.sort-controller-inner {
+			width: fit-content;
+		}
+	}
+
+	@media screen and (max-width: 650px) {
+		.sort-controller-container {
+			display: block;
+		}
+		.segmented-control-default {
+			display: none;
+		}
 	}
 }

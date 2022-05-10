@@ -247,12 +247,18 @@ const PostPage = () => {
 								</SwiperSlide>
 							))}
 						</Swiper>
-						<div className='swiper-button previous-button' onClick={() => swiperRef.current.swiper.slidePrev()}>
-							<IconChevronLeft className='button-icon' />
-						</div>
-						<div className='swiper-button next-button' onClick={() => swiperRef.current.swiper.slideNext()}>
-							<IconChevronRight className='button-icon' />
-						</div>
+						{post?.file_urls?.length !== 1 && (
+							<>
+								<div
+									className='swiper-button previous-button'
+									onClick={() => swiperRef.current.swiper.slidePrev()}>
+									<IconChevronLeft className='button-icon' />
+								</div>
+								<div className='swiper-button next-button' onClick={() => swiperRef.current.swiper.slideNext()}>
+									<IconChevronRight className='button-icon' />
+								</div>
+							</>
+						)}
 					</div>
 					<div className='body'>
 						<p className='title'>{post?.title}</p>
@@ -297,7 +303,7 @@ const PostPage = () => {
 								</Button>
 							</div>
 						)}
-						{loggedUser?.role === ROLE.USER && (
+						{loggedUser?.role === ROLE.USER && loggedUser?._id === post?.user && (
 							<div className='buttons'>
 								<Button color='red' radius='lg' onClick={() => openDeletePostModal()}>
 									{LANGUAGE.delete_post_button[selectedLanguage]}

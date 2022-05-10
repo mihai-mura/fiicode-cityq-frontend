@@ -6,15 +6,42 @@
 	flex-direction: column;
 	align-items: center;
 	.header {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 		padding: 1rem;
 		p {
 			font-size: 1.2rem;
 		}
 	}
 
-	.sort-controller {
+	.segmented-control-default {
+		margin-top: 10px;
 		width: 80%;
 		max-width: 550px;
+	}
+
+	.sort-controller-container {
+		display: none;
+		width: 80%;
+		max-width: 550px;
+		overflow: hidden;
+		border-radius: 20px;
+
+		.sort-controller-inner {
+			width: fit-content;
+		}
+	}
+
+	@media screen and (max-width: 650px) {
+		.sort-controller-container {
+			display: block;
+		}
+		.segmented-control-default {
+			display: none;
+		}
 	}
 
 	.body {

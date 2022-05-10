@@ -58,7 +58,6 @@ const Authentification = () => {
 	}, [modals]);
 
 	//handle enter key
-	//! switching forms too slow
 	useEffect(() => {
 		const listener = (event) => {
 			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
@@ -477,7 +476,7 @@ const Authentification = () => {
 							error={cityError}
 						/>
 					</div>
-					<PasswordInput
+					{/* <PasswordInput
 						className='auth-input'
 						icon={<CgPassword />}
 						variant='filled'
@@ -490,14 +489,14 @@ const Authentification = () => {
 							setRegisterPasswordError(false);
 						}}
 						error={registerPasswordError}
-					/>
+					/> */}
 					{/*//* ⬇️⬇️🐣⬇️⬇️ */}
-					{/* <PasswordStrength
+					<PasswordStrength
 						value={registerPassword}
 						setRegisterPassword={setRegisterPassword}
 						setRegisterPasswordError={setRegisterPasswordError}
 						error={registerPasswordError}
-					/> */}
+					/>
 					<PasswordInput
 						className='auth-input'
 						icon={<CgPassword />}

@@ -207,12 +207,16 @@ const Post = (props) => {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<div className='swiper-button previous-button' onClick={() => swiperRef.current.swiper.slidePrev()}>
-					<IconChevronLeft className='button-icon' />
-				</div>
-				<div className='swiper-button next-button' onClick={() => swiperRef.current.swiper.slideNext()}>
-					<IconChevronRight className='button-icon' />
-				</div>
+				{props.fileUrls?.length !== 1 && (
+					<>
+						<div className='swiper-button previous-button' onClick={() => swiperRef.current.swiper.slidePrev()}>
+							<IconChevronLeft className='button-icon' />
+						</div>
+						<div className='swiper-button next-button' onClick={() => swiperRef.current.swiper.slideNext()}>
+							<IconChevronRight className='button-icon' />
+						</div>
+					</>
+				)}
 			</div>
 			<div className='post-title'>{props.title}</div>
 			<div className='post-description'>

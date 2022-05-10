@@ -9,7 +9,6 @@ import { errorNotification, infoNotification } from '../../components/Notificati
 import { useSelector, useDispatch } from 'react-redux';
 import { setLanguage } from '../../redux/actions';
 
-//! invalid link page
 const RestorePassword = () => {
 	const params = useParams();
 	const navigate = useNavigate();

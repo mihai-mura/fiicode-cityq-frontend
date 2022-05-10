@@ -2,7 +2,6 @@ import LANGUAGE from './languages.json';
 import ROLE from './roles';
 import { IconBrandSafari, IconChecklist, IconSettings, IconUser } from '@tabler/icons';
 
-//!  language based route name
 const getRoutes = (role, selectedLanguage) => {
 	switch (role) {
 		case ROLE.USER:
