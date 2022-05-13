@@ -24,7 +24,7 @@ import ROLE from '../../utils/roles.js';
 import { Pagination } from 'swiper';
 
 //* to not exceed quota
-const loadFirebaseFiles = false;
+const loadPostFiles = true;
 
 const Post = (props) => {
 	const navigate = useNavigate();
@@ -199,10 +199,10 @@ const Post = (props) => {
 				<Swiper ref={swiperRef} modules={[Pagination]} pagination={{ clickable: true }} autoHeight slidesPerView={1}>
 					{props.fileUrls?.map((file, index) => (
 						<SwiperSlide className='carousel-slide' key={index}>
-							{file.includes('.mp4?') ? (
-								<video controls src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} />
+							{file.includes('.mp4') ? (
+								<video controls src={loadPostFiles ? file : 'https://source.unsplash.com/random'} />
 							) : (
-								<img src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
+								<img src={loadPostFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
 							)}
 						</SwiperSlide>
 					))}

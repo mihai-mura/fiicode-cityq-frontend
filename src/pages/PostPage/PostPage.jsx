@@ -22,7 +22,7 @@ import { useModals } from '@mantine/modals';
 import { Pagination } from 'swiper';
 
 //* to not exceed quota
-const loadFirebaseFiles = false;
+const loadPostFiles = true;
 
 const PostPage = () => {
 	const dispatch = useDispatch();
@@ -239,10 +239,10 @@ const PostPage = () => {
 							slidesPerView={1}>
 							{post?.file_urls.map((file, index) => (
 								<SwiperSlide className='carousel-slide' key={index}>
-									{file.includes('.mp4?') ? (
-										<video controls src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} />
+									{file.includes('.mp4') ? (
+										<video controls src={loadPostFiles ? file : 'https://source.unsplash.com/random'} />
 									) : (
-										<img src={loadFirebaseFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
+										<img src={loadPostFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
 									)}
 								</SwiperSlide>
 							))}
