@@ -17,7 +17,7 @@ import {
 	addFavourite,
 	removeFavourite,
 } from '../../redux/actions';
-import { Button } from '@mantine/core';
+import { Button, LoadingOverlay } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import LANGUAGE from '../../utils/languages.json';
 import ROLE from '../../utils/roles.js';
@@ -32,6 +32,8 @@ const Post = (props) => {
 	const selectedLanguage = useSelector((store) => store.language);
 	const loggedUser = useSelector((state) => state.loggedUser);
 	const swiperRef = useRef(null);
+	const [fileLoadingOverlay, setFileLoadingOverlay] = useState(true);
+	const loadingCounter = useRef(0);
 	const [status, setStatus] = useState('');
 	const [upvotes, setUpvotes] = useState(0);
 	const [downvotes, setDownvotes] = useState(0);
@@ -179,6 +181,14 @@ const Post = (props) => {
 		}
 	};
 
+	//stops loading overlay
+	const fileLoaded = () => {
+		loadingCounter.current += 1;
+		if (loadingCounter.current >= props.fileUrls?.length) {
+			setFileLoadingOverlay(false);
+		}
+	};
+
 	return (
 		<div
 			className={`post-container ${props.foradmin ? 'post-for-admin' : ''} ${props.forme ? 'post-for-me' : ''} ${
@@ -196,13 +206,22 @@ const Post = (props) => {
 				/>
 			</div>
 			<div className='post-carousel-container'>
+				<LoadingOverlay visible={fileLoadingOverlay} />
 				<Swiper ref={swiperRef} modules={[Pagination]} pagination={{ clickable: true }} autoHeight slidesPerView={1}>
 					{props.fileUrls?.map((file, index) => (
 						<SwiperSlide className='carousel-slide' key={index}>
 							{file.includes('.mp4') ? (
-								<video controls src={loadPostFiles ? file : 'https://source.unsplash.com/random'} />
+								<video
+									onLoadedData={fileLoaded}
+									controls
+									src={loadPostFiles ? file : 'https://source.unsplash.com/random'}
+								/>
 							) : (
-								<img src={loadPostFiles ? file : 'https://source.unsplash.com/random'} alt='post' />
+								<img
+									onLoad={fileLoaded}
+									src={loadPostFiles ? file : 'https://source.unsplash.com/random'}
+									alt='post'
+								/>
 							)}
 						</SwiperSlide>
 					))}
