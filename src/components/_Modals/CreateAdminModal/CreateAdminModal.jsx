@@ -34,20 +34,6 @@ const CreateAdminModal = () => {
 	//overlay
 	const [loadingOverlay, setLoadingOverlay] = useState(false);
 
-	//enter key
-	useEffect(() => {
-		const listener = (event) => {
-			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-				event.preventDefault();
-				handleCreateAdmin();
-			}
-		};
-		document.addEventListener('keydown', listener);
-		return () => {
-			document.removeEventListener('keydown', listener);
-		};
-	}, [firstName, lastName, email, password, confirmPassword, city]);
-
 	const handleCreateAdmin = async () => {
 		//email format verification
 		if (email.indexOf('@') === -1 || email.lastIndexOf('.') < email.indexOf('@')) {

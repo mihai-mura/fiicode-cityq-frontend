@@ -9,7 +9,7 @@ import { MdAlternateEmail } from 'react-icons/md';
 import { showNotification } from '@mantine/notifications';
 import { errorNotification, infoNotification } from '../../Notifications/Notifications';
 
-const CreateAdminModal = () => {
+const CreateModeratorModal = () => {
 	const dispatch = useDispatch();
 	const createModeratorModal = useSelector((state) => state.modals.createModerator);
 	const selectedLanguage = useSelector((state) => state.language);
@@ -29,20 +29,6 @@ const CreateAdminModal = () => {
 
 	//overlay
 	const [loadingOverlay, setLoadingOverlay] = useState(false);
-
-	//enter key
-	useEffect(() => {
-		const listener = (event) => {
-			if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-				event.preventDefault();
-				handleCreateModerator();
-			}
-		};
-		document.addEventListener('keydown', listener);
-		return () => {
-			document.removeEventListener('keydown', listener);
-		};
-	}, [firstName, lastName, email, password, confirmPassword]);
 
 	const handleCreateModerator = async () => {
 		//email format verification
@@ -235,4 +221,4 @@ const CreateAdminModal = () => {
 		</Modal>
 	);
 };
-export default CreateAdminModal;
+export default CreateModeratorModal;
