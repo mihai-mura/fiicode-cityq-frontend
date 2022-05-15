@@ -19,7 +19,9 @@ Stocarea fisierelor a fost realizata folosind `firebase storage`, iar pentru tri
 Site: https://cityq.mwewghwai.online
 
 Cont admin general:
+
 Email: admin@admin.com
+
 Password: 12345678
 
 Videoclip de prezentare: https://youtu.be/MTOdHeUngnw
