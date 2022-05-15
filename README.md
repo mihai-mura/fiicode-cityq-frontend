@@ -16,5 +16,8 @@ Stocarea fisierelor a fost realizata folosind `firebase storage`, iar pentru tri
 - Setarile userului unde se poate adauga o poza de profil si se pot edita datele (nume,prenume,parola,adresa).
 - Email-uri de informare pentru user (cand este respinsa o postare sau nu este acceptata verificarea adresei).
 
+Cont admin general:
+Email: admin@admin.com
+Password: 12345678
 
-Videoclip de prezentare: 
+Videoclip de prezentare: https://youtu.be/MTOdHeUngnw
