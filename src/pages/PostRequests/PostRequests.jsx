@@ -35,6 +35,7 @@ const PostRequests = () => {
 	}, [loggedUser, sortValue]);
 
 	const getPosts = async () => {
+		setPosts([]);
 		setLoadingOverlay(true);
 		const res = await fetch(`${process.env.REACT_APP_API_URL}/posts/city/${loggedUser?.city}?sort=${sortValue}`);
 		if (res.status === 200) {
