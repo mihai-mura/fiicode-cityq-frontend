@@ -22,7 +22,7 @@ const requirements = [
 ];
 
 function getStrength(password) {
-	let multiplier = password.length > 8 ? 0 : 1;
+	let multiplier = password.length >= 8 ? 0 : 1;
 
 	requirements.forEach((requirement) => {
 		if (!requirement.re.test(password)) {
@@ -74,7 +74,7 @@ const PasswordStrength = (props) => {
 				/>
 			}>
 			<Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} />
-			<PasswordRequirement label='Includes at least 8 characters' meets={value.length > 8} />
+			<PasswordRequirement label='Includes at least 8 characters' meets={value.length >= 8} />
 			{checks}
 		</Popover>
 	);
