@@ -1,6 +1,6 @@
 # CityQ
 
-CityQ este o aplicatie web care faciliteaza comunicrea intre cetatenii unui oras si administratia acestuia.
+CityQ este o aplicatie web care faciliteaza comunicarea intre cetatenii unui oras si administratia acestuia.
 
 Aplictia permite creearea unor postari care reprezinta schimbarile dorite intr-un anumit oras.
 
